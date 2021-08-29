@@ -91,3 +91,32 @@ class LinkedList:
             new_node = Node(data)
             new_node.next_node = current
             previous.next_node = new_node
+
+    def remove(self, data):
+        """"
+            l.remove(3) will remove the first node that has a data value of 3
+            Rturns the removed node if the data is found in the list
+            Returns None if the data is not found in the list
+            Returns None if the list is empty
+        """
+        if not self.head:
+            return None
+        current = self.head
+        previous = None
+        found = False
+
+        while current and not found:
+            if current.data == data:
+                found = True
+            else:
+                previous = current
+                current = current.next_node
+
+        if current == self.head:
+            self.head = current.next_node
+            return current
+        elif not current and not found:
+            return None
+        else:
+            previous.next_node = current.next_node
+            return current

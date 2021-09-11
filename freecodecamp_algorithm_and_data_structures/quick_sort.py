@@ -1,4 +1,8 @@
 def quicksort(values):
+    """
+    best case: O(n log n)
+    worst case: O(n^2)
+    """
     if len(values) <= 1:
         return values
 

@@ -1,4 +1,7 @@
 def selection_sort(values):
+    """
+    O(n) = n^2
+    """
     sorted_list = []
     print("%-25s %-25s" % (values, sorted_list))
     for i in range(0, len(values)):

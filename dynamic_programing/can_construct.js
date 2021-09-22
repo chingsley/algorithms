@@ -78,4 +78,4 @@ console.log(
     'eeee',
     'eeeee',
   ])
-); // expect: true
+); // expect: false

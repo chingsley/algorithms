@@ -6,22 +6,24 @@
  *    In how many ways can you travel to the goal on a grid with dimensions m * n
  *
  * Analysis:
- *    without memoization:
- *          Time complexity = O(2^(m+n))
- *          Space complexity = O(m+n)
- *    with memoization:
- *          Time complexity = O(m*n)
- *          Space complexity = O(m+n)
+ *      Time complexity = O(m*n) = O(mn)
+ *      Space complexity = O(m*n) = O(mn)
  */
-const gridTraveler = (m, n, memo = {}) => {
-  const key = m + ',' + n;
+const gridTraveler = (m, n) => {
+  const table = Array(m + 1)
+    .fill()
+    .map(() => Array(n + 1).fill(0));
 
-  if (key in memo) return memo[key];
-  if (m === 1 && n === 1) return 1;
-  if (m === 0 || n === 0) return 0;
+  table[1][1] = 1;
 
-  memo[key] = gridTraveler(m - 1, n, memo) + gridTraveler(m, n - 1, memo);
-  return memo[key];
+  for (let i = 0; i <= m; i++) {
+    for (let j = 0; j <= n; j++) {
+      const current = table[i][j];
+      if (j + 1 <= n) table[i][j + 1] += current;
+      if (i + 1 <= m) table[i + 1][j] += current;
+    }
+  }
+  return table[m][n];
 };
 
 console.log(gridTraveler(1, 1)); // 1

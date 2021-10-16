@@ -8,6 +8,7 @@
  *          - you may assume that all input numbers are nonnegative
  *
  * Analysis:
+ *    Let m = targetSum, n = length of numbers array
  *     Time complexity = O(m*n)
  *     Space complexity = O(m)
  */

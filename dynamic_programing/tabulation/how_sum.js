@@ -15,6 +15,7 @@
  *              howSum(0, [1, 2, 3]) => []
  *
  * Analysis:
+ *    Let m = targetSum, n = length of numbers array
  *      Time complexity = O(m * n * m) = O(n * m^2)
  *      Space complexity = O(m * m) = O(m^2)
  */

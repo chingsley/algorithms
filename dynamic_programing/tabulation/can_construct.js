@@ -13,6 +13,7 @@
  *              canConstruct('', [cat, dog, mouse]) => true => returns true if target string is empty
  *
  * Analysis:
+ *    Let m = length of targetString, n = length of the wordBank array
  *     Time complexity = O(m * n * m) = O(n * m^2) the " * m " is due to the slice operator
  *     Space complexity = O(m * m) = O(m)
  */

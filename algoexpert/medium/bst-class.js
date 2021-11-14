@@ -19,14 +19,14 @@ class BST {
     while (true) {
       if (value < currentNode.value) {
         if (currentNode.left === null) {
-          currentNode.left = BST(value);
+          currentNode.left = new BST(value);
           break;
         } else {
           currentNode = currentNode.left;
         }
       } else {
         if (currentNode.right === null) {
-          currentNode.right = BST(value);
+          currentNode.right = new BST(value);
           break;
         } else {
           currentNode = currentNode.right;
@@ -57,7 +57,7 @@ class BST {
   }
 
   getMinValue() {
-    currentNode = this;
+    let currentNode = this;
     while (currentNode.left !== null) {
       currentNode = currentNode.left;
     }
@@ -82,10 +82,9 @@ class BST {
         // case  1, the node to be has both left and right child nodes, and is not root node
         if (currentNode.left !== null && currentNode.right !== null) {
           // set currentNode.value to smallest value for right subtree
-          const smallestRightValue = currentNode.right.getMinValue();
-          currentNode.value = smallestRightValue;
+          currentNode.value = currentNode.right.getMinValue();
           // remove the smallest value in right subtree
-          currentNode.right.remove(smallestRightValue, currentNode);
+          currentNode.right.remove(currentNode.value, currentNode);
         } else if (parentNode === null) {
           // case 2, current node is root node
 

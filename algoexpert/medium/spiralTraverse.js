@@ -1,4 +1,4 @@
-/**
+/** SOLUTION 1: ITERATIVE SOLUTION
  * Time: O(N) where N = total no. of
  *       elements in the 2D array
  * Space: (N) due to returned 1D array

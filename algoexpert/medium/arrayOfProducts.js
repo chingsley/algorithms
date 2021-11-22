@@ -65,5 +65,32 @@
   console.log(arrayOfProducts(ts1.array));
 }
 
+// SOLUTION 3
+{
+  function arrayOfProducts(array) {
+    const result = [];
+
+    const leftProducts = [1];
+    for (let i = 1; i < array.length; i++) {
+      leftProducts[i] = leftProducts[i - 1] * array[i - 1];
+    }
+
+    const rightProducts = new Array(array.length);
+    rightProducts[array.length - 1] = 1;
+    for (let j = array.length - 2; j >= 0; j--) {
+      rightProducts[j] = rightProducts[j + 1] * array[j + 1];
+    }
+
+    for (let k = 0; k < leftProducts.length; k++) {
+      result.push(leftProducts[k] * rightProducts[k]);
+    }
+    return result;
+  }
+
+  // Do not edit the line below.
+  exports.arrayOfProducts = arrayOfProducts;
+
+}
+
 // Do not edit the line below.
 // exports.arrayOfProducts = arrayOfProducts;

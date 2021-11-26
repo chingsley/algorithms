@@ -35,3 +35,40 @@ function isNodeInCycle(iNode, edges, visited, currentlyInStack) {
     currentlyInStack[iNode] = false;
     return false;
 }
+// SOLUTION 2:
+{
+    const [WHITE, GREY, BLACK] = [0, 1, 2];
+    function cycleInGraphV2(edges) {
+        const numberOfNodes = edges.length;
+        const colors = new Array(numberOfNodes).fill(WHITE);
+        for (let iNode = 0; iNode < numberOfNodes; iNode++) {
+            if (colors[iNode] != WHITE) {
+                continue;
+            }
+            const containsCycle = traverseAndColorNodes(iNode, edges, colors);
+            if (containsCycle) {
+                return true;
+            }
+        }
+        return false;
+    }
+    function traverseAndColorNodes(iNode, edges, colors) {
+        colors[iNode] = GREY;
+        const iNeighbors = edges[iNode];
+        for (let iNeighbor of iNeighbors) {
+            const iNeighborColor = colors[iNeighbor];
+            if (iNeighbor === GREY) {
+                return true;
+            }
+            if (iNeighborColor === BLACK) {
+                continue;
+            }
+            const containsCycle = traverseAndColorNodes(iNeighbor, edges, colors);
+            if (containsCycle) {
+                return false;
+            }
+        }
+        colors[iNode] = BLACK;
+        return false;
+    }
+}

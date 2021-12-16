@@ -1,0 +1,18 @@
+{
+  "name": "vampr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "./node_modules/mocha/bin/mocha",
+    "start:dev": "./node_modules/.bin/nodemon vampire.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "nodemon": "^2.0.15"
+  }
+}

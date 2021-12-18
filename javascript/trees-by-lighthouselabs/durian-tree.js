@@ -32,6 +32,40 @@ class Employee {
   hasSameBoss(employee) {
     return this.boss === employee.boss;
   }
+
+  /**
+   * Let's create a method to find every 
+   * single employee under Ada, that makes 
+   * over $418,401 a year.
+   */
+  employeesThatMakeOver(amount) {
+
+    let employees = []; // 1
+
+    if (this.salary > amount) {
+      employees.push(this); // 2
+    }
+
+    for (const subordinate of this.subordinates) {
+      const subordinatesThatMakeOver = subordinate.employeesThatMakeOver(amount); // 3
+      employees = employees.concat(subordinatesThatMakeOver);
+    }
+
+    return employees;
+  }
+
+
+  get totalEmployees() {
+
+    let totalEmployees = 0;
+
+    for (const subordinate of this.subordinates) {
+      totalEmployees += subordinate.totalEmployees + 1;
+
+    }
+
+    return totalEmployees;
+  }
 }
 
 const ada = new Employee("Ada", "CEO", 3000000.00);
@@ -49,3 +83,4 @@ console.log(ada.numberOfSubordinates);
 console.log(angela.numberOfPeopleToCEO);
 console.log(craig.boss === phil.boss);
 console.log(craig.hasSameBoss(phil));
+console.log(ada.totalEmployees);

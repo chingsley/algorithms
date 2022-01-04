@@ -4,7 +4,7 @@ export class Node {
   prev: Node | null;
   next: Node | null;
 
-  constructor(value) {
+  constructor(value: number) {
     this.value = value;
     this.prev = null;
     this.next = null;
@@ -13,18 +13,19 @@ export class Node {
 
 // Feel free to add new properties and methods to the class.
 export class DoublyLinkedList {
-  head: null | Node
-  tail: null | Node
+  head: Node | null;
+  tail: Node | null;
 
   constructor() {
     this.head = null;
     this.tail = null;
   }
 
-  setHead(node: Node) {
+setHead(node: Node) {
     if(this.head === null) {// if list is empty: ie. no head, no tail 
       this.head = node;
-      this.tail = node
+      this.tail = node;
+			return;
     }
 
     this.insertBefore(this.head, node)
@@ -33,6 +34,7 @@ export class DoublyLinkedList {
   setTail(node: Node) {
     if(this.tail === null) {// if list is empty: ie. no head, no tail 
       this.setHead(node)
+			return;
     }
 
     this.insertAfter(this.tail, node)
@@ -88,7 +90,7 @@ export class DoublyLinkedList {
     }
   }
 
-  removeNodesWithValue(value) {
+  removeNodesWithValue(value: number) {
     let node = this.head;
     while(node !== null) {
       let nodeToRemove = node;
@@ -116,6 +118,7 @@ export class DoublyLinkedList {
     return node !== null;
   }
 }
+
 
 // // Do not edit the lines below.
 // exports.Node = Node;

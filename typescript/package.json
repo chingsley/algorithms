@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "algoexpert": "ts-node-dev --rs --notify false algoexpert/index.ts"
+    "start": "ts-node-dev --rs --notify false algoexpert/index.ts"
   },
   "keywords": [],
   "author": "",

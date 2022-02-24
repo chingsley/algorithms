@@ -1,3 +1,3 @@
-import { getPermutations } from "./medium/getPermutations";
+import { powerset } from "./medium/powerset";
 
-console.log(getPermutations([1, 2, 3]))
+console.log(powerset([1, 2, 3]));

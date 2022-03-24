@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "javascript/algoexpert/medium",
-    "target": "es6"
+    "target": "es6",
+    "lib": [
+      "ES2017",
+      "DOM"
+    ]
   },
 }

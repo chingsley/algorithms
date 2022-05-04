@@ -16,7 +16,7 @@ class BinaryTree {
 export function branchSums(root: BinaryTree): number[] {
   const result: number[] = [];
   const runningSum = 0;
-  sumBranches(root, runningSum, result);
+  sumBranches2(root, runningSum, result);
 
   return result;
 }
@@ -36,24 +36,23 @@ function sumBranches(
     sumBranches(currentNode.right, runningSum + currentNode.value, result);
 }
 
-{
-  // METHOD 2 OF IMPLEMENTING THE sumBranches2 recursive function
-  function sumBranches2(
-    currentNode: BinaryTree | null,
-    runningSum: number,
-    result: number[]
-  ) {
-    if (currentNode === null) {
-      return;
-    }
-
-    if (currentNode.left === null && currentNode.right === null) {
-      return result.push(runningSum + currentNode.value);
-    }
-
-    sumBranches2(currentNode.left, runningSum + currentNode.value, result);
-    sumBranches2(currentNode.right, runningSum + currentNode.value, result);
+// METHOD 2 OF IMPLEMENTING THE sumBranches2 recursive function
+function sumBranches2(
+  currentNode: BinaryTree | null,
+  runningSum: number,
+  resultArr: number[]
+) {
+  if (currentNode === null) {
+    return;
   }
+
+  // if we're at a leaf node
+  if (currentNode.left === null && currentNode.right === null) {
+    return resultArr.push(runningSum + currentNode.value);
+  }
+
+  sumBranches2(currentNode.left, runningSum + currentNode.value, resultArr);
+  sumBranches2(currentNode.right, runningSum + currentNode.value, resultArr);
 }
 
 const one = new BinaryTree(1); // one is the root

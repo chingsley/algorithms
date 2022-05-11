@@ -12,7 +12,7 @@ class BST {
 
 /**
  *
- * SOLTION 2: USING RECURSION
+ * SOLTION 1: USING RECURSION
  */
 // Average Case: O(log(n)) time | O(log(n)) space
 // Worst Case: O(n) time | O(n) space
@@ -38,36 +38,4 @@ function findClosestValueInBstHelper(
   } else {
     return closest;
   }
-}
-
-/**
- *
- * SOLTION 2: USING ITERATION
- */
-// Average Case: O(log(n)) time | O(1) space
-// Worst Case: O(n) time | O(1) space
-export function findClosestValueInBst2(tree: BST, target: number) {
-  return findClosestValueInBstHelper2(tree, target, Infinity);
-}
-
-function findClosestValueInBstHelper2(
-  tree: BST | null,
-  target: number,
-  closest: number
-): number {
-  let currentNode = tree;
-  while (currentNode !== null) {
-    if (Math.abs(target - closest) > Math.abs(target - currentNode.value)) {
-      closest = currentNode.value;
-    }
-    if (target < currentNode.value) {
-      currentNode = currentNode.left;
-    } else if (target > currentNode.value) {
-      currentNode = currentNode.right;
-    } else {
-      break;
-    }
-  }
-
-  return closest;
 }

@@ -53,4 +53,20 @@ console.log(
     3: [2, 4],
     4: [3, 2]
   })
-); // EXPECT 2
+);
+// EXPECT 2console.log(
+
+
+console.log(
+
+  connectedComponentCount({
+    3: [7],
+    4: [6],
+    6: [4, 5, 7, 8],
+    8: [6],
+    7: [6],
+    5: [6],
+    1: [2],
+    2: [1, 4]
+  })
+);

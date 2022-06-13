@@ -1,5 +1,3 @@
-import { buildGraph, Graph } from "../../edgelistToAdjancencyList/typescript/solution1";
-
 /**
  * Question:
  *  Write a function, countIslands, that takes in an array of

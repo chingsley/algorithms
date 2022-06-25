@@ -1,6 +1,6 @@
 import { Node, LinkedList } from "../../buildLinkedList/typescript/solution3";
 
-// O(n) time, O(1) space
+// O(n) time, O(n) space
 // n = no. of nodes in the list
 function reverseLinkedList(head: Node | null, prev: Node | null = null): Node | null {
   if (head === null) return prev;

@@ -9,7 +9,19 @@ export class Node {
     this.next = null;
   }
 
+  print() {
+    const array: number[] = this.traverse(this);
+    console.log(array.join(' -> '));
+  }
+
+  traverse(node: Node, array: number[] = []) {
+    if (node === null) return array;
+    array.push(node.value);
+    return this.traverse(node.next, array);
+  }
 }
+
+
 
 export class LinkedList {
   head: Node | null;
@@ -63,3 +75,9 @@ const testRun = () => {
 };
 
 // testRun();
+
+
+export default {
+  LinkedList,
+  Node,
+};

@@ -1,6 +1,6 @@
 // {
 //   /**
-//    * Time: O(n)
+//    * Time: O(n + nlog(n)) = O( nlog(n) ) // nlog(n) is due to the soert
 //    * Space: O(n)
 //    * @param {array} array array of intervals
 //    * @returns array of merged intervals
@@ -55,6 +55,7 @@
 // }
 
 {
+  //    * Time: O(n + nlog(n)) = O() nlog(n) ) // nlog(n) is due to the soert
   function mergeOverlappingIntervals(array) {
     array.sort((a, b) => a[0] - b[0]);
     const output = [array[0]];

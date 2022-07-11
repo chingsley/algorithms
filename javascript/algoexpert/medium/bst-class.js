@@ -101,11 +101,11 @@ class BST {
             // we want to remove a root node that does not have any children nodes
             currentNode.value = null;
           }
-        } else if ((parentNode.left = currentNode)) {
+        } else if ((parentNode.left === currentNode)) {
           // case 2, ?
           parentNode.left =
             currentNode.left !== null ? currentNode.left : currentNode.right;
-        } else if ((parentNode.right = currentNode)) {
+        } else if ((parentNode.right === currentNode)) {
           // case 3, ?
           parentNode.right =
             currentNode.left !== null ? currentNode.left : currentNode.right;

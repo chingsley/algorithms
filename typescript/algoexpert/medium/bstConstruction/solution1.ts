@@ -72,7 +72,7 @@ export class BST {
         // ............ this may or may not be the root node
         if (currentNode.left !== null && currentNode.right !== null) {
           // get the smallest value in the right subtree
-          const smallestValue = currentNode.right.getWithMinValue();
+          const smallestValue = currentNode.right.getMinValue();
           // set currentNode.value to the smallest value in the right subtree
           currentNode.value = smallestValue;
           // delete the node with smallest value in the right subtree
@@ -112,7 +112,7 @@ export class BST {
     return this;
   }
 
-  getWithMinValue() {
+  getMinValue() {
     let currentNode: BST = this;
     while (currentNode.left !== null) {
       currentNode = currentNode.left;

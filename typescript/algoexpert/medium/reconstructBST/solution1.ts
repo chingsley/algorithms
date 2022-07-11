@@ -42,3 +42,28 @@ export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
   );
   return new BST(currentValue, leftSubtree, rightSubtree);
 }
+
+
+// PRACTICES
+{
+  {
+
+    // export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+    //   if(preOrderTraversalValues.length < 1) return null;
+
+    //   const currValue = preOrderTraversalValues[0];
+    //   let rightNodeIdx: number = preOrderTraversalValues.length;
+    //   for(let i = 1; i < preOrderTraversalValues.length; i++) {
+    //     if(preOrderTraversalValues[i] >= currValue) {
+    //       rightNodeIdx = i;
+    //       break;
+    //     }
+    //   }
+
+    //   const leftSubtree: BST | null = reconstructBst(preOrderTraversalValues.slice(1, rightNodeIdx));
+    //   const rightSubtree: BST | null = reconstructBst(preOrderTraversalValues.slice(rightNodeIdx));
+    //   return new BST(currValue, leftSubtree, rightSubtree);
+    // }
+  }
+}
+

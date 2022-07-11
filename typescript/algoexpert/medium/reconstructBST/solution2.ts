@@ -28,7 +28,7 @@ export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
   return reconstructBstFromRange(-Infinity, Infinity, preOrderTraversalValues, treeInfo);
 }
 
-function reconstructBstFromRange(lowerBound: number, upperBound: number, preOrderTraversalValues: number[], currentSubtreeInfo: TreeInfo): BST | null{
+function reconstructBstFromRange(lowerBound: number, upperBound: number, preOrderTraversalValues: number[], currentSubtreeInfo: TreeInfo): BST | null {
   if (currentSubtreeInfo.rootIdx === preOrderTraversalValues.length) {
     return null;
   }
@@ -42,4 +42,49 @@ function reconstructBstFromRange(lowerBound: number, upperBound: number, preOrde
   const leftSubtree = reconstructBstFromRange(lowerBound, rootValue, preOrderTraversalValues, currentSubtreeInfo);
   const rightSubtree = reconstructBstFromRange(rootValue, upperBound, preOrderTraversalValues, currentSubtreeInfo);
   return new BST(rootValue, leftSubtree, rightSubtree);
+}
+
+
+
+// PRACTICE
+{
+  {
+    //   export class BST {
+    //     value: number;
+    //     left: BST | null;
+    //     right: BST | null;
+
+    //     constructor(value: number, left: BST | null, right: BST | null) {
+    //       this.value = value;
+    //       this.left = left;
+    //       this.right = right;
+    //     }
+    //   }
+
+    //   interface TreeInfo {
+    //     rootIdx: number;
+    //   }
+
+    //   // O(n) time | O(h) space (if only recursive space cost are considered)
+    //   // O(n) time | O(n) space (if we consider the output tree constructed)
+    //   export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+    //     const treeInfo: TreeInfo = { rootIdx: 0 }
+    //     return reconstructFromRange(-Infinity, Infinity, preOrderTraversalValues, treeInfo);
+    //   }
+
+
+
+    //   function reconstructFromRange(lowerBound: number, upperBound: number, array: number[], treeInfo: TreeInfo): BST | null {
+    //     const iArr = treeInfo.rootIdx;
+    //     if(iArr > array.length - 1) return null;
+
+    //     const value = array[iArr];
+    //     if(value < lowerBound || value >= upperBound) return null;
+
+    //     treeInfo.rootIdx += 1;
+    //     const left = reconstructFromRange(lowerBound, value, array, treeInfo);
+    //     const right = reconstructFromRange(value, upperBound, array, treeInfo);
+    //     return new BST(value, left, right);
+    //   }
+  }
 }

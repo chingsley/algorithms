@@ -87,4 +87,38 @@ function reconstructBstFromRange(lowerBound: number, upperBound: number, preOrde
     //     return new BST(value, left, right);
     //   }
   }
+  {
+    // class BST {
+    //   value: number;
+    //   left: BST | null;
+    //   right: BST | null;
+
+    //   constructor(value: number, left: BST | null, right: BST | null) {
+    //     this.value = value;
+    //     this.left = left;
+    //     this.right = right;
+    //   }
+    // }
+
+    // export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+    //   const tInfo: TreeInfo = { rootIdx: 0 };
+    //   return reconstructFromRange(-Infinity, Infinity, preOrderTraversalValues, tInfo);
+    // }
+
+    // function reconstructFromRange(lowerBound: number, upperBound: number, array: number[], tInfo: TreeInfo): BST | null {
+    //   if(tInfo.rootIdx > array.length - 1) return null;
+
+    //   const val = array[tInfo.rootIdx];
+    //   if(val < lowerBound || val >= upperBound) return null;  // val must be >= lower and strictly < upper
+
+    //   tInfo.rootIdx += 1;
+    //   const left = reconstructFromRange(lowerBound, val, array, tInfo)
+    //   const right = reconstructFromRange(val, upperBound, array, tInfo);
+    //   return new BST(val, left, right);
+    // }
+
+    // interface TreeInfo {
+    //   rootIdx: number;
+    // }
+  }
 }

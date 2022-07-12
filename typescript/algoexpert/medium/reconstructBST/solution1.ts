@@ -1,3 +1,14 @@
+/**
+ * Question:
+ * The pre-order traversal of a Binaray Tree is a traversal technique that starts at the tree's
+ * root node and visists nodes in the following order:
+ * 1. current node
+ * 2. left subtree
+ * e. right subtree
+ * Geven a non-empty array of integers representing the pre-order traversal of a Binary Search
+ * Tree (BST), write a function that creates the relevant BST and returns it's root node.
+ */
+
 // This is an input class. Do not edit.
 export class BST {
   value: number;
@@ -46,6 +57,41 @@ export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
 
 // PRACTICES
 {
+  {
+    // class BST {
+    //   value: number;
+    //   left: BST | null;
+    //   right: BST | null;
+
+    //   constructor(value: number, left: BST | null, right: BST | null) {
+    //     this.value = value;
+    //     this.left = left;
+    //     this.right = right;
+    //   }
+    // }
+
+    // export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+    //   return reconstructFromList(preOrderTraversalValues);
+    // }
+
+    // function reconstructFromList(array: number[]): BST | null {
+    //   if(array.length < 1) return null;
+
+    //   const val = array[0];
+    //   let endIdx = array.length;
+    //   for(let i = 1; i < array.length; i++) {
+    //     if(array[i] >= val) {
+    //       endIdx = i;
+    //       break;
+    //     }
+    //   }
+
+
+    //   const left = reconstructFromList(array.slice(1, endIdx))
+    //   const right = reconstructFromList(array.slice(endIdx));
+    //   return new BST(val, left, right);
+  }
+
   {
 
     // export function reconstructBst(preOrderTraversalValues: number[]): BST | null {

@@ -12,13 +12,6 @@ export function nonConstructibleChange(coins: number[]) {
 
 
 
-// // O(nlog(n)) time | O(1) space
-// export function nonConstructibleChange(coins: number[]) {
-//   coins.sort((a, b) => a - b);
-//   let currChange: number = 0;
-//   for(let coin of coins) {
-//     if(coin > currChange + 1) return currChange + 1;
-//     currChange += coin;
-//   }
-//   return currChange + 1;
-// }
+/**
+ * SEE SOLUTION 2 IN solution2.ts FOR A CLEARER SOLUTION
+ */

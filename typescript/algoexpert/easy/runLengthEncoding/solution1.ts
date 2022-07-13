@@ -3,10 +3,10 @@
 export function runLengthEncoding(string: string) {
   let encoded = '';
   let i = 0;
-  while(i < string.length) {
+  while (i < string.length) {
     let count = 1;
-    let j = i
-    while(j < string.length && count < 9 && string[j] === string[j+1]) {
+    let j = i;
+    while (j < string.length && count < 9 && string[j] === string[j + 1]) {
       count++;
       j++;
     }
@@ -17,5 +17,5 @@ export function runLengthEncoding(string: string) {
 }
 
 console.log(
-  runLengthEncoding('zAAAAAAAAAAAAABBCCCCDD') // expect '9A4A2B4C2D'
+  runLengthEncoding('AAAAAAAAAAAAABBCCCCDD') // expect '9A4A2B4C2D'
 );

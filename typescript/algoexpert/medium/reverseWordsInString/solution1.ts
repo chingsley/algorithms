@@ -1,3 +1,12 @@
+
+/**
+ * O(n) time
+ * O(n) space; b/c of the revArr
+ * where n = length of the strToReverse
+ *
+ * @param strToReverse 
+ * @returns 
+ */
 function reverseWordsInString(strToReverse: string): string {
   const revArr: string[] = [];
 

@@ -1,6 +1,6 @@
 // This is the class of the input root.
 // Do not edit it.
-class BinaryTree {
+export class BinaryTree {
   value: number;
   left: BinaryTree | null;
   right: BinaryTree | null;
@@ -21,7 +21,7 @@ export function branchSums(root: BinaryTree): number[] {
   return result;
 }
 
-function sumBranches(
+export function sumBranches(
   currentNode: BinaryTree,
   runningSum: number,
   result: number[]

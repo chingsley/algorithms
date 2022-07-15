@@ -1,4 +1,4 @@
-class BinaryTree {
+export class BinaryTree {
   value: number;
   left: BinaryTree | null;
   right: BinaryTree | null;

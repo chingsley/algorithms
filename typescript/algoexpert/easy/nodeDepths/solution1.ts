@@ -13,7 +13,7 @@ export function nodeDepths(root: BinaryTree | null, depth: number = 0): number {
 }
 
 // This is the class of the input binary tree.
-class BinaryTree {
+export class BinaryTree {
   value: number;
   left: BinaryTree | null;
   right: BinaryTree | null;

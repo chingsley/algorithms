@@ -10,19 +10,44 @@
  */
 export function tournamentWinner(competitions: string[][], results: number[]) {
   const scores: { [key: string]: number; } = {};
-  let champion: string = '';
-  let highestScore: number = -Infinity;
+  const champion: Champion = { name: '', score: -Infinity };
 
   for (let i = 0; i < competitions.length; i++) {
     const [home, away] = competitions[i];
-    const currentWinner = results[i] === 1 ? home : away;
-    scores[currentWinner] = currentWinner in scores ? scores[currentWinner] += 3 : scores[currentWinner] = 3;
-
-    if (scores[currentWinner] > highestScore) {
-      champion = currentWinner;
-      highestScore = scores[currentWinner];
+    const winner = results[i] === 1 ? home : away;
+    (winner in scores) ? scores[winner] += 3 : scores[winner] = 3;
+    if (scores[winner] > champion.score) {
+      champion.name = winner;
+      champion.score = scores[winner];
     }
   }
 
-  return champion;
+  return champion.name;
+}
+
+interface Champion {
+  name: string;
+  score: number;
+}
+{
+  {
+    // export function tournamentWinner(competitions: string[][], results: number[]) {
+    //   const scores: { [key: string]: number; } = {};
+    //   let champion: string = '';
+    //   let highestScore: number = -Infinity;
+
+    //   for (let i = 0; i < competitions.length; i++) {
+    //     const [home, away] = competitions[i];
+    //     const currentWinner = results[i] === 1 ? home : away;
+    //     scores[currentWinner] = currentWinner in scores ? scores[currentWinner] += 3 : scores[currentWinner] = 3;
+
+    //     if (scores[currentWinner] > highestScore) {
+    //       champion = currentWinner;
+    //       highestScore = scores[currentWinner];
+    //     }
+    //   }
+
+    //   return champion;
+    // }
+  }
 }

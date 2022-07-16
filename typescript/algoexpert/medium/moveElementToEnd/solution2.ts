@@ -54,30 +54,71 @@ function swap(i: number, j: number, array: number[]) {
 
 
 /****  PRACTICE ****/
-//  export function moveElementToEnd(array: number[], toMove: number) {
-//   let [i, j] = [0, array.length - 1];
-//   while(i < j) {
-//     if(array[i] === toMove && array[j] !== toMove) {
-//       swap(i, j, array);
-//       [i, j] = [i + 1, j - 1]
-//     } else if(array[i] === toMove && array[j] === toMove) {
-//       j -= 1;
-//     } else if(array[i] !== toMove && array[j] !== toMove) {
-//       i += 1
-//     } else {
-//       [i, j] = [i + 1, j - 1]
-//     }
-//   }
-//   return array;
-// }
+{
+  {
 
-// function swap(i: number, j: number, array: number[]) {
-//   const temp = array[i];
-//   array[i] = array[j];
-//   array[j] = temp;
-// }
+    // export function moveElementToEnd(array: number[], toMove: number) {
+    //   let left = 0;
+    //   let right = array.length - 1;
+    //   while (left < right) {
+    //     if (array[left] === toMove && array[right] === toMove) {
+    //       right -= 1;
+    //     } else if (array[left] !== toMove && array[right] !== toMove) {
+    //       left += 1;
+    //     } else {
+    //       if (array[left] === toMove) swap(left, right, array);
+    //       left += 1;
+    //       right -= 1;
+    //     }
+    //   }
+    //   return array;
+    // }
 
-// // 2 2      <--
-// // 2 3  swap ---> <---
-// // 3 2  ---> <---
-// // 3 3  --->
+    // function swap(i: number, j: number, array: number[]) {
+    //   const temp = array[i];
+    //   array[i] = array[j];
+    //   array[j] = temp;
+    // }
+
+    /*
+    toMove = 2, any other number = '3'
+  
+    i   j
+    2   2         <-
+    3   3      ->
+    3   2      -> <-
+    2   3 swap -> <-
+    */
+  }
+
+  {
+    //  export function moveElementToEnd(array: number[], toMove: number) {
+    //   let [i, j] = [0, array.length - 1];
+    //   while(i < j) {
+    //     if(array[i] === toMove && array[j] !== toMove) {
+    //       swap(i, j, array);
+    //       [i, j] = [i + 1, j - 1]
+    //     } else if(array[i] === toMove && array[j] === toMove) {
+    //       j -= 1;
+    //     } else if(array[i] !== toMove && array[j] !== toMove) {
+    //       i += 1
+    //     } else {
+    //       [i, j] = [i + 1, j - 1]
+    //     }
+    //   }
+    //   return array;
+    // }
+
+    // function swap(i: number, j: number, array: number[]) {
+    //   const temp = array[i];
+    //   array[i] = array[j];
+    //   array[j] = temp;
+    // }
+
+    // // 2 2      <--
+    // // 2 3  swap ---> <---
+    // // 3 2  ---> <---
+    // // 3 3  --->
+  }
+
+}

@@ -122,4 +122,64 @@ import { BinaryTree } from './solution1';
       return getRightMostParent(node.parent);
     }
   }
+  {
+    // O(n) time | O(1) space
+    // n = no. of tree nodes;
+    // O(1) space because ghe getRightMin and getRightMostParent functions
+    // are implemented iteratively
+    function findSuccessor(tree: BinaryTree, node: BinaryTree) {
+      if (node.right !== null) {
+        return getRightMin(node.right);
+      }
+
+      const rightMostParent = getRightMostParent(node);
+      return rightMostParent.parent;
+    }
+
+    function getRightMin(node: BinaryTree): BinaryTree {
+      let currentNode = node;
+      while (currentNode.left !== null) {
+        currentNode = currentNode.left;
+      }
+
+      return currentNode;
+    }
+
+    function getRightMostParent(node: BinaryTree): BinaryTree {
+      let currentNode = node;
+      while (currentNode.parent !== null && currentNode === currentNode.parent.right) {
+        currentNode = currentNode.parent;
+      }
+      return currentNode;
+    }
+    function getRightMinByRecursion(node: BinaryTree): BinaryTree {
+      if (node.left === null) return node;
+      return getRightMin(node.left);
+    }
+    function getRightMostParentByRecursion(node: BinaryTree): BinaryTree {
+      if (!(node.parent !== null && node === node.parent.right)) {
+        return node;
+      }
+      return getRightMostParent(node.parent);
+    }
+  }
+  {
+    function findSuccessor(tree: BinaryTree, node: BinaryTree) {
+      const nodeInfo: NodeInfo = { idx: 0 };
+      const array: BinaryTree[] = [];
+      inOrderTraverse(tree, node, array, nodeInfo);
+      return array[nodeInfo.idx + 1] || null;
+    }
+
+    function inOrderTraverse(tree: BinaryTree | null, node: BinaryTree, array: BinaryTree[], nodeInfo: NodeInfo) {
+      if (tree === null) return;
+
+      inOrderTraverse(tree.left, node, array, nodeInfo);
+      array.push(tree);
+      if (node === tree) nodeInfo.idx = array.length - 1;
+      inOrderTraverse(tree.right, node, array, nodeInfo);
+    }
+
+    interface NodeInfo { idx: number; };
+  }
 }

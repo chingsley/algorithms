@@ -16,26 +16,20 @@ class BST {
  */
 // Average Case: O(log(n)) time | O(1) space
 // Worst Case: O(n) time | O(1) space
-export function findClosestValueInBst2(tree: BST, target: number) {
-  return findClosestValueInBstHelper2(tree, target, Infinity);
-}
-
-function findClosestValueInBstHelper2(
-  tree: BST | null,
-  target: number,
-  closest: number
-): number {
-  let currentNode = tree;
+export function findClosestValueInBst(tree: BST, target: number): number {
+  let closest: number = Infinity;
+  let currentNode: BST | null = tree;
   while (currentNode !== null) {
-    if (Math.abs(target - closest) > Math.abs(target - currentNode.value)) {
+    if (Math.abs(currentNode.value - target) < Math.abs(closest - target)) {
       closest = currentNode.value;
     }
-    if (target < currentNode.value) {
+
+    if (currentNode.value === target) {
+      return currentNode.value;
+    } else if (target < currentNode.value) {
       currentNode = currentNode.left;
-    } else if (target > currentNode.value) {
-      currentNode = currentNode.right;
     } else {
-      break;
+      currentNode = currentNode.right;
     }
   }
 

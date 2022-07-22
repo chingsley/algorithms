@@ -44,4 +44,24 @@ import { BinaryTree } from './solution1';
     }
 
   }
+  {
+    function branchSums(root: BinaryTree): number[] {
+      const arr: number[] = [];
+      const stack: [[BinaryTree, number]] = [[root, root.value]];
+
+      while (stack.length > 0) {
+        const [node, runningSum] = stack.pop()!;
+
+        if (node.left === null && node.right === null) {
+          arr.push(runningSum);
+        }
+
+        if (node.right) stack.push([node.right, runningSum + node.right.value]);
+        if (node.left) stack.push([node.left, runningSum + node.left.value]);
+      }
+      return arr;
+    }
+
+
+  }
 }

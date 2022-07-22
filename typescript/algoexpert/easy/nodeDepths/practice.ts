@@ -52,4 +52,51 @@ import { BinaryTree } from './solution1';
       return totalDepth + leftDepth + rightDepth;
     }
   }
+  { // ITERATION (DFS) | O(n) time | O(d) space 
+    function nodeDepths(root: BinaryTree) {
+      const stack: [[BinaryTree, number]] = [[root, 0]];
+      let sum = 0;
+
+      while (stack.length > 0) {
+        const [node, depth] = stack.pop()!;
+        sum += depth;
+        if (node.left) stack.push([node.left, depth + 1]);
+        if (node.right) stack.push([node.right, depth + 1]);
+      }
+
+      return sum;
+    }
+  }
+  { // ITERATION (BFS) | O(n) time | O(d) space 
+    function nodeDepths(root: BinaryTree) {
+      const queue: [[BinaryTree, number]] = [[root, 0]];
+      let sum = 0;
+
+      while (queue.length > 0) {
+        const [node, depth] = queue.shift()!;
+        sum += depth;
+        if (node.left) queue.push([node.left, depth + 1]);
+        if (node.right) queue.push([node.right, depth + 1]);
+      }
+
+      return sum;
+    }
+  }
+  { // RECURSION ("top-down, then bubble up")
+    function nodeDepths(root: BinaryTree) {
+      return calcNodeDepth(root, 0);
+    }
+
+    function calcNodeDepth(root: BinaryTree | null, currentNodeDepth: number): number {
+      if (root === null) return 0;
+
+      if (root.left === null && root.right === null) {
+        return currentNodeDepth;
+      }
+
+      const left = calcNodeDepth(root.left, currentNodeDepth + 1);
+      const right = calcNodeDepth(root.right, currentNodeDepth + 1);
+      return left + right + currentNodeDepth;
+    }
+  }
 }

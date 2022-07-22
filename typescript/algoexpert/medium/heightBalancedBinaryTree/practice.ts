@@ -52,4 +52,20 @@ import { BinaryTree } from './solution1';
     }
 
   }
+  {
+    function heightBalancedBinaryTree(tree: BinaryTree): boolean {
+      const [isBalanced, _] = validateHeight(tree);
+      return isBalanced;
+    }
+
+    function validateHeight(tree: BinaryTree | null): [boolean, number] {
+      if (tree === null) return [true, 0];
+
+      const [isLeftBalanced, leftHeight] = validateHeight(tree.left);
+      const [isRightBalanced, rightHeight] = validateHeight(tree.right);
+
+      const isCurrentBalanced = Math.abs(leftHeight - rightHeight) <= 1 && isLeftBalanced && isRightBalanced;
+      return [isCurrentBalanced, Math.max(leftHeight, rightHeight) + 1];
+    }
+  }
 }

@@ -16,7 +16,7 @@ interface Graph { [key: number]: number[]; };
 interface Visited { [key: number]: number; };
 
 {
-  { // RECURSIN
+  { // RECURSION
     function connectedComponents(graph: Graph): number[][] {
       const components: number[][] = [];
       const visited: Visited = {};
@@ -136,8 +136,109 @@ interface Visited { [key: number]: number; };
       return array;
     }
 
-    console.log(
-      connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]],,
-    );
+    // console.log(
+    //   connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]],,
+    // );
+  }
+  { // RECURSION (METHOD 1) - PREFERRED (no spread operator which can incure additional time cost)
+    // O(e) time | O(n) space
+    // e = no. of edges | n = no. of nodes
+    function connectedComponents(graph: Graph): number[][] {
+
+      const array: number[][] = [];
+      const visited: Visited = new Set();
+      for (let node in graph) {
+        const components = getComponents(Number(node), graph, visited, []);
+        if (components.length > 0) array.push(components);
+      }
+
+      return array;
+    }
+
+    function getComponents(node: number, graph: Graph, visited: Visited, components: number[]): number[] {
+      if (visited.has(node)) return [];
+      visited.add(node);
+
+      components.push(node);
+      for (let childNode of graph[node]) {
+        if (!visited.has(childNode)) {
+          getComponents(childNode, graph, visited, components);
+        }
+      }
+      return components;
+    }
+
+    interface Graph { [key: number]: number[]; };
+    type Visited = Set<number>;
+
+    // console.log(
+    //   connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    // );
+  }
+  {// RECURSION (METHOD 2)
+    function connectedComponents(graph: Graph): number[][] {
+
+      const array: number[][] = [];
+      const visited: Visited = new Set();
+      for (let node in graph) {
+        const components = getComponents(Number(node), graph, visited);
+        if (components.length > 0) array.push(components);
+      }
+
+      return array;
+    }
+
+    function getComponents(node: number, graph: Graph, visited: Visited): number[] {
+      if (visited.has(node)) return [];
+      visited.add(node);
+
+      const arr: number[] = [node];
+      for (let childNode of graph[node]) {
+        if (!visited.has(childNode)) {
+          const res = getComponents(childNode, graph, visited);
+          arr.push(...res);
+        }
+      }
+      return arr;
+    }
+
+    interface Graph { [key: number]: number[]; };
+    type Visited = Set<number>;
+
+    // console.log(
+    //   connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    // );
+  }
+  {
+    function connectedComponents(graph: Graph): number[][] {
+      const groups: number[][] = [];
+      const visited: Visited = new Set();
+
+      for (let node in graph) {
+        if (visited.has(Number(node))) continue;
+
+        const stack: number[] = [Number(node)];
+        const array: number[] = [];
+        while (stack.length > 0) {
+          const current = stack.pop();
+          array.push(current);
+          visited.add(current);
+
+          for (let childNode of graph[current]) {
+            if (!visited.has(childNode)) stack.push(childNode);
+          }
+        }
+        groups.push(array);
+      }
+
+      return groups;
+    }
+
+    interface Graph { [key: number]: number[]; };
+    type Visited = Set<number>;
+
+    // console.log(
+    //   connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    // );
   }
 }

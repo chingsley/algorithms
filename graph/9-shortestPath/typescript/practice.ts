@@ -47,14 +47,39 @@ const edges: string[][] = [
       return -1;
     }
 
-    console.log(
-      shortestPath(edges, 'w', 'z'), // expect 2,
-    );
+    // console.log(
+    //   shortestPath(edges, 'w', 'z'), // expect 2,
+    // );
   }
   {
     function shortestPath(edgeList: string[][], src: string, dst: string): number {
-      return - 1;
+      const graph: Graph = buildGraph(edgeList);
+      const queue: [[string, number]] = [[src, 0]];
+      const visited: Visited = new Set();
+
+      while (queue.length > 0) {
+        const [current, length] = queue.shift();
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        if (current === dst) return length;
+
+        for (let node of graph[current]) {
+          if (!visited.has(node)) {
+            queue.push([node, length + 1]);
+          }
+        }
+      }
+
+      return -1;
     }
+
+    interface Graph { [key: string]: string[]; };
+    type Visited = Set<string>;
+
+    // console.log(
+    //   shortestPath(edges, 'w', 'z'), // expect 2,
+    // );
   }
 }
 

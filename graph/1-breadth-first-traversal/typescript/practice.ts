@@ -1,3 +1,12 @@
+const graph = {
+  a: ['c', 'b'],
+  b: ['d'],
+  c: ['e'],
+  d: ['f'],
+  e: [],
+  f: []
+};
+
 {
   {
 
@@ -17,18 +26,33 @@
       }
       return res;
     }
+    // console.log(
+    //   breadthFirstPrint(graph, 'a')
+    // );
+    // expect [ 'a', 'c', 'b', 'e', 'd', 'f' ] or [ 'a', 'b', 'c', 'd', 'e', 'f' ]
+  }
+  {
+    interface Graph { [key: string]: string; };
+
+    function breadFirstPrint(graph: Graph, src: string) {
+      const arr: string[] = [];
+      const queue: string[] = [src];
+
+      while (queue.length > 0) {
+        const current = queue.shift();
+        arr.push(current);
+        for (let node of graph[current]) {
+          queue.push(node);
+        }
+      }
+
+      return arr;
+    }
+    console.log(
+      breadthFirstPrint(graph, 'a') // expect [ 'a', 'c', 'b', 'e', 'd', 'f' ] or [ 'a', 'b', 'c', 'd', 'e', 'f' ]
+    );
   }
 }
 
-const graph = {
-  a: ['c', 'b'],
-  b: ['d'],
-  c: ['e'],
-  d: ['f'],
-  e: [],
-  f: []
-};
 
-console.log(
-  breadthFirstPrint(graph, 'a') // expect [ 'a', 'c', 'b', 'e', 'd', 'f' ] or [ 'a', 'b', 'c', 'd', 'e', 'f' ]
-);
+

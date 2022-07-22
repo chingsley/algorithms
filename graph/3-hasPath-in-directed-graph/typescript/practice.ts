@@ -25,10 +25,10 @@ const graph_test_01: Graph = {
       return false;
     }
 
-    console.log(
-      hasPath(graph_test_01, 'f', 'k'), // expect true,
-      hasPath(graph_test_01, 'f', 'j') // expect false
-    );
+    // console.log(
+    //   hasPath(graph_test_01, 'f', 'k'), // expect true,
+    //   hasPath(graph_test_01, 'f', 'j') // expect false
+    // );
   }
   { // ITERATION (DEPTH FIRST SEARCH)
     // O(e) time, O(n) space
@@ -44,10 +44,10 @@ const graph_test_01: Graph = {
       return false;
     }
 
-    console.log(
-      hasPath(graph_test_01, 'f', 'k'), // expect true,
-      hasPath(graph_test_01, 'f', 'j') // expect false
-    );
+    // console.log(
+    //   hasPath(graph_test_01, 'f', 'k'), // expect true,
+    //   hasPath(graph_test_01, 'f', 'j') // expect false
+    // );
   }
   { // ITERATION (BREADTH FIRST SEARCH)
     // O(e) time, O(n) space
@@ -63,6 +63,24 @@ const graph_test_01: Graph = {
       return false;
     }
 
+    // console.log(
+    //   hasPath(graph_test_01, 'f', 'k'), // expect true,
+    //   hasPath(graph_test_01, 'f', 'j') // expect false
+    // );
+  }
+  {
+    function hasPath(graph: Graph, src: string, dst: string): boolean {
+      if (src === dst) return true;
+
+      for (let node of graph[src]) {
+        const res = hasPath(graph, node, dst);
+        if (res === true) return true;
+      }
+
+      return false;
+    }
+
+    interface Graph { [key: string]: string[]; };
     console.log(
       hasPath(graph_test_01, 'f', 'k'), // expect true,
       hasPath(graph_test_01, 'f', 'j') // expect false

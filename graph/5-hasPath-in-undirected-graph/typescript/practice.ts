@@ -34,10 +34,10 @@ const edges: string[][] = [
       return false;
     }
 
-    console.log(
-      hasPath(edges, 'i', 'l'), // expect true,
-      hasPath(edges, 'k', 'o'), // expect false,
-    );
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
 
   }
   {// RECURSION (SOLUTION 2)
@@ -64,10 +64,10 @@ const edges: string[][] = [
       return false;
     }
 
-    console.log(
-      hasPath(edges, 'i', 'l'), // expect true,
-      hasPath(edges, 'k', 'o'), // expect false,
-    );
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
 
   }
 
@@ -93,10 +93,10 @@ const edges: string[][] = [
       return false;
     }
 
-    console.log(
-      hasPath(edges, 'i', 'l'), // expect true,
-      hasPath(edges, 'k', 'o'), // expect false,
-    );
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
   }
   { // ITERATION (BFS)
     // O(e) time | O(n) space
@@ -119,6 +119,65 @@ const edges: string[][] = [
       }
       return false;
     }
+
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
+  }
+  {
+
+    function hasPath(edgeList: string[][], src: string, dst: string): boolean {
+      const graph: Graph = buildGraph(edgeList);
+      const stack: string[] = [src];
+      const visited: Set<string> = new Set();
+
+      while (stack.length > 0) {
+        const current = stack.pop();
+        visited.add(current);
+        if (current === dst) return true;
+        for (let node of graph[current]) {
+          if (!(visited.has(node))) {
+            stack.push(node);
+          }
+        }
+      }
+
+      return false;
+    }
+
+    interface Graph { [key: string]: string[]; };
+
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
+  }
+  {
+    function hasPath(edgeList: string[][], src: string, dst: string): boolean {
+      const graph = buildGraph(edgeList);
+      const visited: Set<string> = new Set();
+      return isPathFound(graph, src, dst, visited);
+    }
+
+    function isPathFound(graph: Graph, src: string, dst: string, visited: Set<string>): boolean {
+      if (visited.has(src)) return false;
+      visited.add(src);
+
+      if (src === dst) return true;
+
+      for (let node of graph[src]) {
+        if (!(visited.has(node))) {
+          const result = isPathFound(graph, node, dst, visited);
+          if (result === true) return true;
+        };
+      }
+
+      return false;
+    }
+
+    interface Graph { [key: string]: string[]; };
+
 
     console.log(
       hasPath(edges, 'i', 'l'), // expect true,

@@ -180,10 +180,68 @@ interface Graph { [key: number]: number[]; };
       return true;
     }
 
-    test(connectedComponentCount);
+    // test(connectedComponentCount);
     // expect count 2, array: [ 4, 3 ];
     // expect count 3, numOfNodesInComponents: [2, 1, 5]
     // expect count 1, numOfNodesInComponents: [3]
+  }
+  {
+    function connectedComponentCount(graph: Graph): number {
+      let count = 0;
+      const visited: Visited = new Set();
+      for (let node in graph) {
+        const result = countComponents(Number(node), graph, visited);
+        if (result === true) count++;
+      }
+
+      return count;
+    }
+
+    function countComponents(node: number, graph: Graph, visited: Visited): boolean {
+      if (visited.has(node)) return false;
+      visited.add(node);
+
+      for (let childNode of graph[node]) {
+        if (!visited.has(childNode)) {
+          countComponents(childNode, graph, visited);
+        }
+      }
+
+      return true;
+    }
+
+    interface Graph { [key: number]: number[]; };
+    type Visited = Set<number>;
+
+    // test(connectedComponentCount);
+  }
+  {
+    function connectedComponentCount(graph: Graph): number {
+      let count = 0;
+      const visited: Visited = new Set();
+      for (let node in graph) {
+        if (visited.has(Number(node))) continue;
+
+        const stack: number[] = [Number(node)];
+        while (stack.length > 0) {
+          const current = stack.pop();
+          visited.add(current);
+          for (let node of graph[current]) {
+            if (!visited.has(node)) {
+              stack.push(node);
+            }
+          }
+        }
+        count += 1;
+      }
+
+      return count;
+    }
+
+    interface Graph { [key: number]: number[]; };
+    type Visited = Set<number>;
+
+    test(connectedComponentCount);
   }
 }
 

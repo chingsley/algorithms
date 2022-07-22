@@ -16,7 +16,7 @@ const arr: string[][] = [
      * Where: e = no. of edges in the graph
      *        n = no. of nodes in the graph
      * 
-     * @param graph Grahp
+     * @param arr string[]
      * @returns number
      */
     function countIslands(arr: string[][]): number {
@@ -120,11 +120,11 @@ const arr: string[][] = [
 
     interface Visited { [key: string]: string; };
 
-    console.log(
-      countIslands(arr), // expect 2,
-    );
+    // console.log(
+    //   countIslands(arr), // expect 2,
+    // );
   }
-  {
+  {// RECURSION (* * * * *)
     /**
      * Question:
      * 
@@ -136,105 +136,96 @@ const arr: string[][] = [
      * @param graph Grahp
      * @returns number
      */
-    function countIslands(arr: string[][]): number[] {
-      let islandSizes: number[] = [];
-      const visited: Visited = {};
+    function countIslands(array: string[][]): number {
+      const visited: Visited = new Set();
+      let islandsCount = 0;
 
-      const isWater = (i: number, j: number) => arr[i][j] === 'w';
-      for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr[i].length; j++) {
-          if (isWater(i, j)) continue;
-          const size = explore(arr, i, j, visited);
-          if (size > 0) {
-            islandSizes.push(size);
-          }
+      for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].length; j++) {
+          if (array[i][j] === 'w') continue;
+
+          const islandSize = islandCountHelper(array, [i, j], visited);
+          if (islandSize > 0) islandsCount += 1;
         }
       }
 
-      return islandSizes;
+      return islandsCount;
     }
 
-    function explore(arr: string[][], row: number, col: number, visited: Visited): number {
-      const key = row + ',' + col;
+    function islandCountHelper(array: string[][], pos: number[], visited: Visited): number {
+      const key = pos.join(',');
+      if (visited.has(key)) return 0;
+      visited.add(key);
 
-      if (key in visited) return 0;
-      visited[key] = key;
+      const [row, col] = pos;
+      if (row < 0 || row >= array.length) return 0;
+      if (col < 0 || col >= array[row].length) return 0;
 
-      if (row < 0 || row >= arr.length) return 0;
-      if (col < 0 || col >= arr[row].length) return 0;
+      if (array[row][col] === 'w') return 0;
 
-      if (!(arr[row][col] === 'l')) return 0;
+      let size = 1;
+      size += islandCountHelper(array, [row - 1, col], visited);
+      size += islandCountHelper(array, [row + 1, col], visited);
+      size += islandCountHelper(array, [row, col - 1], visited);
+      size += islandCountHelper(array, [row, col + 1], visited);
 
-      let count = 1;
-      count += explore(arr, row, col - 1, visited); // left
-      count += explore(arr, row, col + 1, visited); // right
-      count += explore(arr, row - 1, col, visited); // top
-      count += explore(arr, row + 1, col, visited); // down
-
-      return count;
+      return size;
     }
 
-    interface Visited { [key: string]: string; };
+    type Visited = Set<string>;
 
-    console.log(
-      countIslands(arr), // expect [ 5, 1 ]
-    );
+    // console.log(
+    //   countIslands(arr), // // expect 2
+    // );
   }
-  {
-    /**
-     * Question:
-     * 
-     * Time: O(e)
-     * Space: O(n)
-     * Where: e = no. of edges in the graph
-     *        n = no. of nodes in the graph
-     * 
-     * @param graph Grahp
-     * @returns number
-     */
-    function smallestIsland(arr: string[][]): number {
-      let smallestSize = Infinity;
-      const visited: Visited = {};
+  {// ITERATION (* * * * *)
+    function countIslands(array: string[][]): number {
+      const visited: Visited = new Set();
+      let islandsCount = 0;
 
-      const isWater = (i: number, j: number) => arr[i][j] === 'w';
-      for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr[i].length; j++) {
-          if (isWater(i, j)) continue;
-          const size = explore(arr, i, j, visited);
-          if (size > 0 && size < smallestSize) {
-            smallestSize = size;
-          }
+      for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].length; j++) {
+          if (array[i][j] === 'w') continue;
+
+          const islandSize = islandCountHelper(array, [i, j], visited);
+          if (islandSize > 0) islandsCount += 1;
         }
       }
 
-      return smallestSize;
+      return islandsCount;
     }
 
-    function explore(arr: string[][], row: number, col: number, visited: Visited): number {
-      const key = row + ',' + col;
+    function islandCountHelper(array: string[][], pos, visited: Visited): number {
+      const stack: number[][] = [pos];
 
-      if (key in visited) return 0;
-      visited[key] = key;
+      let size = 0;
+      while (stack.length > 0) {
+        const [row, col] = stack.pop();
+        const key = [row, col].join(',');
+        if (visited.has(key)) continue;
+        visited.add(key);
 
-      if (row < 0 || row >= arr.length) return 0;
-      if (col < 0 || col >= arr[row].length) return 0;
+        if (row < 0 || row >= array.length) continue;
+        if (col < 0 || col >= array[row].length) continue;
 
-      if (!(arr[row][col] === 'l')) return 0;
+        if (array[row][col] === 'w') continue;
 
-      let count = 1;
-      count += explore(arr, row, col - 1, visited); // left
-      count += explore(arr, row, col + 1, visited); // right
-      count += explore(arr, row - 1, col, visited); // top
-      count += explore(arr, row + 1, col, visited); // down
+        stack.push([row - 1, col]);
+        stack.push([row + 1, col]);
+        stack.push([row, col - 1]);
+        stack.push([row, col + 1]);
 
-      return count;
+        size += 1;
+      }
+
+      return size;
     }
 
-    interface Visited { [key: string]: string; };
+    type Visited = Set<string>;
 
-    console.log(
-      smallestIsland(arr), // expect 1
-    );
+    // console.log(
+    //   countIslands(arr), // // expect 2
+    // );
   }
 }
 
@@ -242,4 +233,4 @@ const arr: string[][] = [
 
 
 
-export const _ = '_';
+export const __ = '__';

@@ -116,9 +116,79 @@ const testGraph: Graph = {
       return count;
     }
 
-    console.log(
-      largestComponent(testGraph), // expect 5,
-    );
+    // console.log(
+    //   largestComponent(testGraph), // expect 5,
+    // );
+  }
+  {
+    function largestComponent(graph: Graph): number {
+      let max = 0;
+      const visited: Visited = new Set();
+
+      for (let node in graph) {
+        const size = countComponents(Number(node), graph, visited);
+        if (size > max) max = size;
+      }
+
+      return max;
+    }
+
+    function countComponents(node: number, graph: Graph, visited: Visited): number {
+      if (visited.has(node)) return 0;
+      visited.add(node);
+
+      let count = 1;
+      for (let childNode of graph[node]) {
+        if (!visited.has(childNode)) {
+          count += countComponents(childNode, graph, visited);
+        }
+      }
+
+      return count;
+    }
+
+    interface Graph { [key: number]: number[]; };
+    type Visited = Set<number>;
+
+
+    // console.log(
+    //   largestComponent(testGraph), // expect 5,
+    // );
+  }
+  {
+    function largestComponent(graph: Graph): number {
+      let max = 0;
+      const visited: Visited = new Set();
+
+      for (let node in graph) {
+        if (visited.has(Number(node))) continue;
+        const stack: number[] = [Number(node)];
+        let count = 0;
+        while (stack.length > 0) {
+          const current = stack.pop();
+          visited.add(current);
+
+          for (let node of graph[current]) {
+            if (!visited.has(node)) {
+              stack.push(node);
+            }
+          }
+          count += 1;
+        }
+        // console.log({ count });
+        if (count > max) max = count;
+
+      }
+
+      return max;
+    }
+
+    interface Graph { [key: number]: number[]; };
+    type Visited = Set<number>;
+
+    // console.log(
+    //   largestComponent(testGraph), // expect 5,
+    // );
   }
 }
 

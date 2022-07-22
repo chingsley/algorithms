@@ -58,4 +58,24 @@ import { BinaryTree } from './solution1';
       maxDiameter: number;
     }
   }
+  {
+    // O(n) time | O(d) space
+    function binaryTreeDiameter(tree: BinaryTree) {
+      return traverse(tree)[0];
+    }
+
+    function traverse(tree: BinaryTree | null): [number, number] {
+      if (tree === null) return [0, 0];
+
+      const [leftMaxDiam, leftHeight] = traverse(tree.left);
+      const [rightMaxDiam, rightHeight] = traverse(tree.right);
+      const diameterAtNode = leftHeight + rightHeight;
+
+      return [
+        Math.max(diameterAtNode, leftMaxDiam, rightMaxDiam),
+        Math.max(leftHeight, rightHeight) + 1
+      ];
+
+    }
+  }
 }

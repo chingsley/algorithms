@@ -75,28 +75,67 @@
      */
   }
   {
-    // export function validIPAddresses2(string: string) {
-    //   const result: string[] = [];
+    function validIPAddresses(string: string) {
+      const result: string[] = [];
 
-    //   for (let first = 1; first < 4; first++) {  // slice: 0-1, 0-2, 0-3
-    //     const val1 = string.slice(0, first);
-    //     if (!isValidByte(val1)) continue;
+      for (let first = 1; first < 4; first++) {  // slice: 0-1, 0-2, 0-3
+        const val1 = string.slice(0, first);
+        if (!isValidByte(val1)) continue;
 
-    //     for (let second = first + 1; second < first + 4; second++) {
-    //       const val2 = string.slice(first, second);
-    //       if (!isValidByte(val2)) continue;
+        for (let second = first + 1; second < first + 4; second++) {
+          const val2 = string.slice(first, second);
+          if (!isValidByte(val2)) continue;
 
-    //       for (let third = second; third <= second + 4; third++) {
-    //         const val3 = string.slice(second, third);
-    //         const val4 = string.slice(third);
-    //         if (!isValidByte(val3) || !isValidByte(val4)) continue;
+          for (let third = second; third <= second + 4; third++) {
+            const val3 = string.slice(second, third);
+            const val4 = string.slice(third);
+            if (!isValidByte(val3) || !isValidByte(val4)) continue;
 
-    //         result.push([val1, val2, val3, val4].join('.'));
-    //       }
-    //     }
-    //   }
+            result.push([val1, val2, val3, val4].join('.'));
+          }
+        }
+      }
 
-    //   return result;
-    // }
+      return result;
+    }
+
+    function isValidByte(value: string): boolean {
+      const num = parseFloat(value);
+      if (num < 0 || num > 255) return false;
+      return num.toString().length === value.length;
+    }
+  }
+  {
+    function validIPAddresses(string: string) {
+      const result: string[] = [];
+
+      for (let i = 0; i < 3; i++) {
+        const p1 = string.slice(0, i + 1);
+        if (!validUnit(p1)) continue;
+
+        for (let j = i + 1; j < i + 4; j++) {
+          const p2 = string.slice(i + 1, j + 1);
+          if (!validUnit(p2)) continue;
+
+          for (let k = j + 1; k < j + 4; k++) {
+            const p3 = string.slice(j + 1, k + 1);
+            const p4 = string.slice(k + 1);
+            if (!validUnit(p3)) continue;
+            if (!validUnit(p4)) continue;
+
+            result.push([p1, p2, p3, p4].join('.'));
+          }
+        }
+      }
+      return result;
+    }
+
+    function validUnit(unit: string): boolean {
+      const numUnit = parseFloat(unit);
+      if (numUnit < 0 || numUnit > 255) return false;
+      return String(numUnit).length === unit.length;
+    }
   }
 }
+
+export const ___ = '___';

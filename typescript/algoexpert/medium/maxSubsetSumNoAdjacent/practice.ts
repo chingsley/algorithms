@@ -34,6 +34,8 @@
         maxSums[0] = maxSums[1];
         maxSums[1] = nextMaxSum;
       }
+
+      // return maxSums[maxSums.length - 1]; same thing as line below
       return maxSums[1];
     }
   }

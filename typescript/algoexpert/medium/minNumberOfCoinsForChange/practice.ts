@@ -23,6 +23,23 @@
     }
 
   }
+  {
+    function minNumberOfCoinsForChange(n: number, denoms: number[]) {
+      const array = new Array(n + 1).fill(Infinity);
+      array[0] = 0;
+
+      for (let denom of denoms) {
+        for (let i = 1; i < array.length; i++) {
+          if (i < denom) continue;
+          array[i] = Math.min(
+            array[i],
+            1 + array[i - denom]
+          );
+        }
+      }
+      return array[n] < Infinity ? array[n] : -1;
+    }
+  }
 }
 
 export const __ = '__';

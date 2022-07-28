@@ -27,6 +27,32 @@
       levenshteinDistance('abc', 'yabd')
     );
   }
+  {
+    function levenshteinDistance(str1: string, str2: string): number {
+      const arr = new Array(str2.length + 1).fill(0).map(
+        () => new Array(str1.length + 1).fill(0)
+      );
+
+      for (let i = 0; i < arr.length; i++) arr[i][0] = i;
+      for (let j = 0; j < arr[0].length; j++) arr[0][j] = j;
+
+      for (let i = 1; i < arr.length; i++) {
+        for (let j = 1; j < arr[i].length; j++) {
+          if (str2[i - 1] === str1[j - 1]) {
+            arr[i][j] = arr[i - 1][j - 1];
+          } else {
+            arr[i][j] = 1 + Math.min(
+              arr[i - 1][j],
+              arr[i][j - 1],
+              arr[i - 1][j - 1]
+            );
+          }
+        }
+      }
+
+      return arr[str2.length][str1.length];
+    }
+  }
 }
 
 export const ___ = '___';

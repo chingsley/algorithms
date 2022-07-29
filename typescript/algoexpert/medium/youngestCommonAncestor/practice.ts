@@ -11,6 +11,61 @@
       }
     }
 
+    // O(d) time | O(1) space
+    // d = depth of the tree
+    function getYoungestCommonAncestor(
+      topAncestor: AncestralTree,
+      descendantOne: AncestralTree,
+      descendantTwo: AncestralTree,
+    ) {
+      const h1 = getHeight(descendantOne);
+      const h2 = getHeight(descendantTwo);
+
+      if (h1 > h2) {
+        return backTrack(descendantOne, descendantTwo, h1 - h2);
+      } else {
+        return backTrack(descendantTwo, descendantOne, h2 - h1);
+      }
+    }
+
+    function getHeight(desc: AncestralTree) {
+      let height = 0;
+      while (desc.ancestor !== null) {
+        height += 1;
+        desc = desc.ancestor!;
+      }
+
+      return height;
+    }
+
+    function backTrack(lowerDesc: AncestralTree, upperDesc: AncestralTree, diff: number) {
+      while (diff > 0) {
+        lowerDesc = lowerDesc.ancestor!;
+        diff -= 1;
+      }
+
+      if (lowerDesc === upperDesc) return lowerDesc;
+
+      while (lowerDesc.ancestor !== upperDesc.ancestor) {
+        lowerDesc = lowerDesc.ancestor!;
+        upperDesc = upperDesc.ancestor!;
+      }
+
+      return lowerDesc.ancestor;
+    }
+  }
+  {
+    // This is an input class. Do not edit.
+    class AncestralTree {
+      name: string;
+      ancestor: AncestralTree | null;
+
+      constructor(name: string) {
+        this.name = name;
+        this.ancestor = null;
+      }
+    }
+
     function getYoungestCommonAncestor(
       topAncestor: AncestralTree, // can be solved without this. We know that a desc.ancestor === null, then desc is the topAncestor
       descendantOne: AncestralTree,

@@ -24,6 +24,21 @@
 
   }
   {
+    /**
+   * Time: O(e + v) time
+   * Space: O(v) space
+   * e = no. of edges
+   * v = no. of vertices
+   * 
+   * In times of the edgeList
+   * Time = O(n * m)
+   * Space = O(n)
+   * n = length of the edges array
+   * m = length of the longest child array in the edges list
+   * 
+   * @param edges l
+   * @returns boolean
+   */
     function cycleInGraph(edges: number[][]) {
       for (let i = 0; i < edges.length; i++) {
 
@@ -46,6 +61,21 @@
 
   }
   {
+    /**
+     * Time: O(e + v) time
+     * Space: O(v) space
+     * e = no. of edges
+     * v = no. of vertices
+     * 
+     * In times of the edgeList
+     * Time = O(n * m)
+     * Space = O(n)
+     * n = length of the edges array
+     * m = length of the longest child array in the edges list
+     * 
+     * @param edges l
+     * @returns boolean
+     */
     function cycleInGraph(edges: number[][]) {
       for (let i = 0; i < edges.length; i++) {
 
@@ -70,29 +100,26 @@
     }
 
   }
-  { // FAILED RECURSIVE SOLUTION
+  { // RECURSIVE SOLUTION
     function cycleInGraph(edges: number[][]) {
-      for (let edge = 0; edge < edges.length; edge++) {
-        const hasCycle = checkCycle(edge, edges, new Set(), edge);
-        if (hasCycle === true) return true;
+      for (let v = 0; v < edges.length; v++) {
+        const visited: Set<number> = new Set();
+        const hasCycle = checkCycle(v, v, edges, visited);
+        if (hasCycle) return true;
       }
 
       return false;
     }
 
-    function checkCycle(edge: number, edges: number[][], visited: Set<number>, target: number): boolean {
-      if (visited.has(edge)) return false;
-      visited.add(edge);
+    function checkCycle(v: number, current: number, edges: number[][], visited: Set<number>): boolean {
+      visited.add(current);
 
-      for (let num of edges[edge]) {
-        if (edge === 2) {
-          console.log({ num, target, }, num === target);
-        }
-        if (num === target) return true;
-        if (!visited.has(num)) {
-          return checkCycle(num, edges, visited, target);
-        }
+      for (let child of edges[current]) {
+        if (child === v) return true;
+        if (visited.has(child)) continue;
+        if (checkCycle(v, child, edges, visited) === true) return true;
       }
+
       return false;
     }
 
@@ -108,3 +135,5 @@
 
   }
 }
+
+export const __ = '___';

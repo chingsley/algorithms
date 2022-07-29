@@ -72,15 +72,16 @@
       const stack: number[][] = [pos];
       while (stack.length > 0) {
         const current = stack.pop()!;
-        const key = current.join(',');
-        if (visited.has(key)) continue;
-        visited.add(key);
 
         const [row, col] = current;
         if (row < 0 || row >= matrix.length) continue;
         if (col < 0 || col >= matrix[row].length) continue;
 
         if (matrix[row][col] === 0) continue;
+
+        const key = current.join(',');
+        if (visited.has(key)) continue;
+        visited.add(key);
 
         stack.push([row - 1, col]);
         stack.push([row + 1, col]);

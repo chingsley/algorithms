@@ -12,48 +12,53 @@ export function removeIslands(matrix: number[][]) {
   const visited: Set<string> = new Set();
   for (let i = 1; i < matrix.length - 1; i++) {
     for (let j = 1; j < matrix[i].length - 1; j++) {
-      const locations = traverse(matrix, i, j, visited);
+      if (matrix[i][j] === 0) continue;
+
+      const [locations, hasBorderLand] = getIlandsAt([i, j], matrix, visited);
+      if (hasBorderLand) continue;
+
       for (let [row, col] of locations) {
         matrix[row][col] = 0;
       }
     }
   }
+
   return matrix;
 }
 
-
-function traverse(matrix: number[][], i: number, j: number, visited: Set<string>): number[][] {
-  let locations: number[][] = [];
-  const stack: number[][] = [[i, j]];
-
+function getIlandsAt(pos: number[], matrix: number[][], visited: Set<string>): [number[][], boolean] {
+  const stack: number[][] = [pos];
+  const locations: number[][] = [];
+  let hasBorderLand = false;
 
   while (stack.length > 0) {
-    const [row, col] = stack.pop()!;
-    // const row = current![0];
-    // const col = current![1];
-    const key = row + ',' + col;
+    const current = stack.pop()!;
 
-    if (row < 0 || row > matrix.length - 1) continue;
-    if (col < 0 || col > matrix[row].length - 1) continue;
-    if (matrix[row][col] === 0) continue;
+    const key = current.join(',');
     if (visited.has(key)) continue;
-
-    locations.push([row, col]);
     visited.add(key);
 
-    if ((row === 0 || col === 0) || row === matrix.length - 1 || col === matrix[row].length - 1) {
-      locations = [];
-      break;
-    };
+    const [i, j] = current;
+    if (matrix[i][j] === 0) continue;
 
-    stack.push([row, col - 1]);
-    stack.push([row, col + 1]);
-    stack.push([row - 1, col]);
-    stack.push([row + 1, col]);
+    if (
+      i === 0 || j === 0 ||
+      i === matrix.length - 1 ||
+      j === matrix[i].length - 1
+    ) {
+      hasBorderLand = true;
+      continue;
+    }
+
+    locations.push([i, j]);
+
+    stack.push([i - 1, j]);
+    stack.push([i + 1, j]);
+    stack.push([i, j - 1]);
+    stack.push([i, j + 1]);
   }
 
-
-  return locations;
+  return [locations, hasBorderLand];
 }
 
 

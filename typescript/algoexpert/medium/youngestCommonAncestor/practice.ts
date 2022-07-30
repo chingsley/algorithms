@@ -185,6 +185,68 @@
       return height;
     }
   }
+  {
+    // This is an input class. Do not edit.
+    class AncestralTree {
+      name: string;
+      ancestor: AncestralTree | null;
+
+      constructor(name: string) {
+        this.name = name;
+        this.ancestor = null;
+      }
+    }
+
+    // O(d) time | O(1) space
+    // d = depth of the tree
+    function getYoungestCommonAncestor(
+      topAncestor: AncestralTree,
+      descendantOne: AncestralTree,
+      descendantTwo: AncestralTree,
+    ) {
+      const h1 = getHeight(descendantOne);
+      const h2 = getHeight(descendantTwo);
+
+      if (h1 > h2) {
+        return backtrack(descendantOne, descendantTwo, h1 - h2);
+      } else {
+        return backtrack(descendantTwo, descendantOne, h2 - h1);
+      }
+    }
+
+    function backtrack(dLower: AncestralTree, dHigher: AncestralTree, heightDiff: number): AncestralTree {
+      while (heightDiff > 0) {
+        dLower = dLower.ancestor!;
+        heightDiff -= 1;
+      }
+
+      if (dLower === dHigher) return dLower;
+
+      while (dLower.ancestor !== dHigher.ancestor) {
+        dLower = dLower.ancestor!;
+        dHigher = dHigher.ancestor!;
+      }
+
+      return dLower.ancestor!;
+    }
+
+    function getHeight(node: AncestralTree) {
+      let height = 0;
+      while (node.ancestor !== null) {
+        height += 1;
+        node = node.ancestor;
+      }
+
+      return height;
+    }
+
+    // not in use!
+    function getHeightByRecursion(node: AncestralTree, height: number = 0): number {
+      if (node.ancestor === null) return height;
+      return getHeightByRecursion(node.ancestor, height + 1);
+    }
+
+  }
 }
 
 export const ___ = '___';

@@ -49,6 +49,31 @@
       }
     }
   }
+  {
+    function hasSingleCycle(array: number[]) {
+      const visited: Set<number> = new Set();
+
+      let startIdx = 0;
+      let i = startIdx;
+      visited.add(startIdx);
+      while (true) {
+        let nextIdx = i + array[i];
+        while (nextIdx < 0) nextIdx += array.length;
+        while (nextIdx > array.length - 1) nextIdx -= array.length;
+
+        if (visited.has(nextIdx)) {
+          if (nextIdx === startIdx && visited.size === array.length) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+        visited.add(nextIdx);
+        i = nextIdx;
+      }
+    }
+  }
 }
 
 export const ___ = '___';

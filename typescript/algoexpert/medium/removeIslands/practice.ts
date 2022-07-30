@@ -45,7 +45,7 @@ const matrix = [
 
     function findIslands(matrix: number[][], pos: number[], locations: number[][], visited: Set<string>, graphInfo: GraphInfo) {
       // we can place the visited checks at this point b/c we're not
-      // include the borders in the nested for loop of the main function
+      // including the borders in the nested for loop of the main function
       // see the next solution to know the right place to place the visited
       // check if you're inlcuding the border in the loop
       const key = pos.join(',');
@@ -71,9 +71,9 @@ const matrix = [
       findIslands(matrix, [row, col + 1], locations, visited, graphInfo);
     }
 
-    console.log(
-      removeIslands(matrix)
-    );
+    // console.log(
+    //   removeIslands(matrix)
+    // );
 
   }
   {// RECURSION
@@ -111,7 +111,7 @@ const matrix = [
       if (col === 0 || col === matrix[row].length - 1) return graphInfo.containsBorder = true;
 
       // this is the best place to place the visited checks
-      // b/c we want to identify a border '1' because checking
+      // b/c we want to identify a border '1' before checking
       // if has been visited
       const key = pos.join(',');
       if (visited.has(key)) return;
@@ -178,6 +178,156 @@ const matrix = [
       return [locations, hasBorderLand];
     }
 
+  }
+  {// RECURSION
+    function removeIslands(matrix: number[][]) {
+      const visited: Set<string> = new Set();
+      for (let i = 1; i < matrix.length - 1; i++) {
+        for (let j = 1; j < matrix[i].length - 1; j++) {
+          if (matrix[i][j] === 0) continue;
+
+          const res: Res = { positions: [], containsBorder: false };
+          getIslands([i, j], matrix, visited, res);
+          if (res.containsBorder) continue;
+
+          for (let [row, col] of res.positions) matrix[row][col] = 0;
+        }
+      }
+
+      return matrix;
+    }
+
+    function getIslands(pos: number[], matrix: number[][], visited: Set<string>, res: Res) {
+      const key = pos.join(',');
+      if (visited.has(key)) return;
+      visited.add(key);
+
+      const [i, j] = pos;
+      if (i < 0 || i >= matrix.length) return;
+      if (j < 0 || j >= matrix[i].length) return;
+
+      if (matrix[i][j] === 0) return;
+
+      if (res.containsBorder === true) return;
+      if (i === 0 || i === matrix.length - 1) res.containsBorder = true;
+      if (j === 0 || j === matrix[i].length - 1) res.containsBorder = true;
+
+
+
+
+      res.positions.push([i, j]);
+      getIslands([i - 1, j], matrix, visited, res);
+      getIslands([i + 1, j], matrix, visited, res);
+      getIslands([i, j - 1], matrix, visited, res);
+      getIslands([i, j + 1], matrix, visited, res);
+    }
+
+    type Res = { positions: number[][], containsBorder: boolean; };
+
+
+    // console.log(
+    //   removeIslands(
+    //     [
+    //       [1, 0, 0, 0, 1, 0, 0, 0],
+    //       [1, 0, 1, 0, 1, 0, 1, 0],
+    //       [1, 1, 0, 1, 0, 0, 1, 0],
+    //       [1, 1, 0, 1, 1, 0, 1, 0],
+    //       [1, 0, 0, 0, 1, 0, 0, 0]
+    //     ]
+    //   )
+    // );
+  }
+  { // ITERATION
+    function removeIslands(matrix: number[][]) {
+      const visited: Set<string> = new Set();
+      for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (matrix[i][j] === 0) continue;
+
+          const res: Res = { positions: [], containsBorder: false };
+          getIslands([i, j], matrix, visited, res);
+          if (res.containsBorder) continue;
+
+          for (let [row, col] of res.positions) matrix[row][col] = 0;
+        }
+      }
+
+      return matrix;
+    }
+
+    function getIslands(pos: number[], matrix: number[][], visited: Set<string>, res: Res) {
+      const stack: number[][] = [pos];
+
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+
+        const key = [i, j].join(',');
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        if (i < 0 || i >= matrix.length) continue;
+        if (j < 0 || j >= matrix[i].length) continue;
+
+        if (matrix[i][j] === 0) continue;
+
+        if (i === 0 || i === matrix.length - 1) res.containsBorder = true;
+        if (j === 0 || j === matrix[i].length - 1) res.containsBorder = true;
+
+        res.positions.push([i, j]);
+        stack.push([i - 1, j]);
+        stack.push([i + 1, j]);
+        stack.push([i, j - 1]);
+        stack.push([i, j + 1]);
+      }
+    }
+
+    type Res = { positions: number[][], containsBorder: boolean; };
+  }
+  { // RECURSION WITH RETURN VALUES
+    // O(m * n) time | O(m * n) space
+    // m = no. of rows in matrix;
+    // n = no. of colums in matrix
+    function removeIslands(matrix: number[][]) {
+      const visited: Set<string> = new Set();
+      for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (matrix[i][j] === 0) continue;
+
+          const res: Res = { containsBorder: false };
+          const positions = getIslands([i, j], matrix, visited, res);
+          if (res.containsBorder) continue;
+
+          for (let [row, col] of positions) matrix[row][col] = 0;
+        }
+      }
+
+      return matrix;
+    }
+
+    function getIslands(pos: number[], matrix: number[][], visited: Set<string>, res: Res) {
+      const [i, j] = pos;
+
+      const key = [i, j].join(',');
+      if (visited.has(key)) return [];
+      visited.add(key);
+
+      if (i < 0 || i >= matrix.length) return [];
+      if (j < 0 || j >= matrix[i].length) return [];
+
+      if (matrix[i][j] === 0) return [];
+
+      if (i === 0 || i === matrix.length - 1) res.containsBorder = true;
+      if (j === 0 || j === matrix[i].length - 1) res.containsBorder = true;
+
+      const positions = [[i, j]];
+      positions.push(...getIslands([i - 1, j], matrix, visited, res));
+      positions.push(...getIslands([i + 1, j], matrix, visited, res));
+      positions.push(...getIslands([i, j - 1], matrix, visited, res));
+      positions.push(...getIslands([i, j + 1], matrix, visited, res));
+      return positions;
+    }
+
+    type Res = { containsBorder: boolean; };
   }
 }
 

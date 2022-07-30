@@ -134,6 +134,34 @@
     ); // expect true // but the soluton is buggy (correct answer is true)
 
   }
+  {// RECURSION
+    // O(e + v) time | O(v) space
+    // e = no. of edges, v = no. of vertices
+    function cycleInGraph(edges: number[][]) {
+      for (let i = 0; i < edges.length; i++) {
+        const visited: Set<number> = new Set();
+        const hasCycle = checkCycle(i, i, edges, visited);
+        if (hasCycle) return true;
+      }
+
+      return false;
+    }
+
+    function checkCycle(i: number, src: number, edges: number[][], visited: Set<number>): boolean {
+      visited.add(i);
+
+      for (let child of edges[i]) {
+        if (child === src) return true;
+        if (visited.has(child)) continue;
+
+        const hasCycle = checkCycle(child, src, edges, visited);
+        if (hasCycle) return true;
+      }
+
+      return false;
+    }
+
+  }
 }
 
 export const __ = '___';

@@ -86,6 +86,31 @@
       traverse(idx + step, buildings, step, result);
     }
   }
+  {
+    enum Direction {
+      East = 'EAST',
+      West = 'WEST',
+    }
+
+    function sunsetViews(buildings: number[], direction: Direction) {
+      if (buildings.length === 0) return [];
+      const isWest = direction === Direction.West;
+
+      let startIdx = isWest ? 0 : buildings.length - 1;
+      let step = isWest ? 1 : -1;
+
+      let result = [startIdx];
+      let idx = startIdx + step;
+      while (idx >= 0 && idx < buildings.length) {
+        if (buildings[idx] > buildings[result[result.length - 1]]) {
+          result.push(idx);
+        }
+        idx += step;
+      }
+
+      return isWest ? result : result.reverse();
+    }
+  }
 }
 
 export const ___ = '___';

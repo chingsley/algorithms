@@ -81,6 +81,24 @@
       numberOfWaysToTraverseGraph(2, 1)
     );
   }
+  {
+    // O(wh) time | O(wh) space (space due to memo)
+    // w = width, h = height
+    function numberOfWaysToTraverseGraph(width: number, height: number): number {
+      const memo: { [key: string]: number; } = {};
+      return waysOf(width, height, memo);
+    }
+
+    function waysOf(w: number, h: number, memo: { [key: string]: number; }): number {
+      if (h <= 1 || w <= 1) return 1;
+
+      const key = [w, h].join(',');
+      if (key in memo) return memo[key];
+
+      memo[key] = waysOf(w - 1, h, memo) + waysOf(w, h - 1, memo);
+      return memo[key];
+    }
+  }
 }
 
 

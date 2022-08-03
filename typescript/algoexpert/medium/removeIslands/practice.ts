@@ -329,6 +329,97 @@ const matrix = [
 
     type Res = { containsBorder: boolean; };
   }
+  {
+    function removeIslands(matrix: number[][]) {
+      const visited: Set<string> = new Set();
+
+      for (let i = 1; i < matrix.length - 1; i++) {
+        for (let j = 1; j < matrix[i].length - 1; j++) {
+          if (matrix[i][j] === 0) continue;
+
+          const res: Res = { coords: [], hasBorder: false };
+          fillIslands([i, j], res, matrix, visited);
+          if (res.hasBorder === true) continue;
+
+          for (const [x, y] of res.coords) matrix[x][y] = 0;
+        }
+      }
+
+      return matrix;
+    }
+
+    function fillIslands(pos: number[], res: Res, matrix: number[][], visited: Set<string>) {
+      const [i, j] = pos;
+
+      if (i < 0 || i >= matrix.length) return;
+      if (j < 0 || j >= matrix[i].length) return;
+
+      if (matrix[i][j] === 0) return;
+
+      if (i === 0 || i === matrix.length - 1) res.hasBorder = true;
+      if (j === 0 || j === matrix[i].length - 1) res.hasBorder = true;
+
+      const key = [i, j].join(',');
+      if (visited.has(key)) return;
+      visited.add(key);
+
+      res.coords.push([i, j]);
+      fillIslands([i - 1, j], res, matrix, visited);
+      fillIslands([i + 1, j], res, matrix, visited);
+      fillIslands([i, j - 1], res, matrix, visited);
+      fillIslands([i, j + 1], res, matrix, visited);
+    }
+
+    interface Res { coords: number[][], hasBorder: boolean; };
+  }
+  {// ITERATION (WITH STACK)
+    function removeIslands(matrix: number[][]) {
+      const visited: Set<string> = new Set();
+
+      for (let i = 1; i < matrix.length; i++) {
+        for (let j = 1; j < matrix[i].length; j++) {
+          if (matrix[i][j] === 0) continue;
+
+          const res: Res = { coords: [], hasBorder: false };
+          fillIslands([i, j], res, matrix, visited);
+          if (res.hasBorder === true) continue;
+
+          for (const [x, y] of res.coords) matrix[x][y] = 0;
+        }
+      }
+
+      return matrix;
+    }
+
+    function fillIslands(pos: number[], res: Res, matrix: number[][], visited: Set<string>) {
+      const stack: number[][] = [pos];
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+
+        if (i < 0 || i >= matrix.length) continue;
+        if (j < 0 || j >= matrix[i].length) continue;
+
+        if (matrix[i][j] === 0) continue;
+
+        if (i === 0 || i === matrix.length - 1) res.hasBorder = true;
+        if (j === 0 || j === matrix[i].length - 1) res.hasBorder = true;
+
+        const key = [i, j].join(',');
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        res.coords.push([i, j]);
+        stack.push([i - 1, j]);
+        stack.push([i + 1, j]);
+        stack.push([i, j - 1]);
+        stack.push([i, j + 1]);
+      }
+
+      return;
+    }
+
+    interface Res { coords: number[][], hasBorder: boolean; };
+  }
 }
 
 

@@ -247,6 +247,61 @@
     }
 
   }
+  {
+    // This is an input class. Do not edit.
+    class AncestralTree {
+      name: string;
+      ancestor: AncestralTree | null;
+
+      constructor(name: string) {
+        this.name = name;
+        this.ancestor = null;
+      }
+    }
+
+    // O(d) time | O(1) space
+    // d = depth of the tree
+    function getYoungestCommonAncestor(
+      topAncestor: AncestralTree,
+      descendantOne: AncestralTree,
+      descendantTwo: AncestralTree,
+    ) {
+      const h1 = getHeight(descendantOne);
+      const h2 = getHeight(descendantTwo);
+
+      if (h1 > h2) {
+        return backtrack(descendantOne, descendantTwo, h1 - h2);
+      } else {
+        return backtrack(descendantTwo, descendantOne, h2 - h1);
+      }
+    }
+
+    function backtrack(d1: AncestralTree, d2: AncestralTree, heightDiff: number): AncestralTree {
+      while (heightDiff > 0) {
+        d1 = d1.ancestor!;
+        heightDiff -= 1;
+      }
+
+      if (d1 === d2) return d1;
+
+      while (d1.ancestor !== d2.ancestor) {
+        d1 = d1.ancestor!;
+        d2 = d2.ancestor!;
+      }
+
+      return d1.ancestor!;
+    }
+
+    function getHeight(d: AncestralTree): number {
+      let height = 0;
+      while (d.ancestor !== null) {
+        d = d.ancestor!;
+        height += 1;
+      }
+      return height;
+    }
+
+  }
 }
 
 export const ___ = '___';

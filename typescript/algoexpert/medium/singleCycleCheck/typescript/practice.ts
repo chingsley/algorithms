@@ -74,6 +74,28 @@
       }
     }
   }
+  {
+    // O(n) time | O(n) space;
+    // n = length of array
+    function hasSingleCycle(array: number[]) {
+      const idxVisisted: Set<number> = new Set();
+      const startIdx = 0;
+      idxVisisted.add(startIdx);
+      let idx = startIdx;
+      while (true) {
+        let nextIdx = idx + array[idx];
+        while (nextIdx < 0) nextIdx += array.length;
+        while (nextIdx >= array.length) nextIdx -= array.length;
+
+        if (idxVisisted.has(nextIdx)) {
+          return nextIdx === startIdx && idxVisisted.size === array.length;
+        }
+
+        idxVisisted.add(nextIdx);
+        idx = nextIdx;
+      }
+    }
+  }
 }
 
 export const ___ = '___';

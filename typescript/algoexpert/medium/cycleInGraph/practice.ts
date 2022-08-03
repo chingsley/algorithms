@@ -162,6 +162,61 @@
     }
 
   }
+  {// RECURSION
+    // O(v + e) time | O(v) space
+    function cycleInGraph(edges: number[][]) {
+      for (let i = 0; i < edges.length; i++) {
+        const visited: Set<number> = new Set();
+        const hasCycle = checkCycle(i, i, edges, visited);
+        if (hasCycle === true) return true;
+      }
+
+      return false;
+    }
+
+    function checkCycle(node: number, src: number, edges: number[][], visited: Set<number>) {
+      visited.add(node);
+
+      for (let child of edges[node]) {
+        if (child === src) return true;
+        if (visited.has(child)) continue;
+
+        const hasCycle = checkCycle(child, src, edges, visited);
+        if (hasCycle === true) return true;
+      }
+
+      return false;
+    }
+  }
+  {// ITERATION
+    function cycleInGraph(edges: number[][]) {
+      for (let i = 0; i < edges.length; i++) {
+        const visited: Set<number> = new Set();
+        const hasCycle = checkCycle(i, edges, visited);
+        if (hasCycle === true) return true;
+      }
+
+      return false;
+    }
+
+    function checkCycle(node: number, edges: number[][], visited: Set<number>) {
+      const stack: number[] = [node];
+
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        visited.add(current);
+
+        for (let child of edges[current]) {
+          if (child === node) return true;
+          if (visited.has(child)) continue;
+
+          stack.push(child);
+        }
+      }
+
+      return false;
+    }
+  }
 }
 
 export const __ = '___';

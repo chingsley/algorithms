@@ -94,6 +94,47 @@
       return size;
     }
   }
+  {
+    function riverSizes(matrix: number[][]) {
+      const sizes: number[] = [];
+      const visited: Set<string> = new Set();
+
+      for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (matrix[i][j] === 0) continue;
+
+          const size = getRiverSize([i, j], matrix, visited);
+          if (size > 0) sizes.push(size);
+        }
+      }
+
+      return sizes;
+    }
+
+    function getRiverSize([x, y]: number[], matrix: number[][], visited: Set<string>): number {
+      let size = 0;
+      const stack = [[x, y]];
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+        const key = [i, j].join(',');
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        if (i < 0 || i >= matrix.length) continue;
+        if (j < 0 || j >= matrix[i].length) continue;
+
+        if (matrix[i][j] === 0) continue;
+
+        size += 1;
+        stack.push([i - 1, j]);
+        stack.push([i + 1, j]);
+        stack.push([i, j - 1]);
+        stack.push([i, j + 1]);
+      }
+
+      return size;
+    }
+  }
 }
 
 export const ___ = '___';

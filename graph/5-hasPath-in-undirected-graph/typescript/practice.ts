@@ -179,10 +179,87 @@ const edges: string[][] = [
     interface Graph { [key: string]: string[]; };
 
 
-    console.log(
-      hasPath(edges, 'i', 'l'), // expect true,
-      hasPath(edges, 'k', 'o'), // expect false,
-    );
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
+  }
+  {
+    type Graph = { [key: string]: string[]; };
+
+    function hasPath(edgeList: string[][], src: string, dst: string): boolean {
+      const graph = buildGraph(edgeList);
+      const visited: Set<string> = new Set();
+      return hasPathHelper(graph, src, dst, visited);
+
+    }
+
+    function hasPathHelper(graph: Graph, src: string, dst: string, visited: Set<string>): boolean {
+      if (src === dst) return true;
+
+      // if (visited.has(src)) return false;// you can have this check here or in the for loop
+      visited.add(src);
+
+      for (let node of graph[src]) {
+        if (visited.has(node)) continue;
+        if (hasPathHelper(graph, node, dst, visited) === true) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
+  }
+  {
+    function hasPath(edgeList: string[][], src: string, dst: string): boolean {
+      const graph = buildGraph(edgeList);
+      const visited: Set<string> = new Set();
+      const stack = [src];
+
+      while (stack.length > 0) {
+        const current = stack.pop();
+        if (current === dst) return true;
+        visited.add(current);
+        for (let node of graph[current]) {
+          if (!(visited.has(node))) stack.push(node);
+        }
+      }
+
+      return false;
+    }
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
+  }
+  {
+    {
+      function hasPath(edgeList: string[][], src: string, dst: string): boolean {
+        const graph = buildGraph(edgeList);
+        const visited: Set<string> = new Set();
+        const queue = [src];
+
+        while (queue.length > 0) {
+          const current = queue.shift();
+          if (current === dst) return true;
+          visited.add(current);
+          for (let node of graph[current]) {
+            if (!(visited.has(node))) queue.push(node);
+          }
+        }
+
+        return false;
+      }
+      // console.log(
+      //   hasPath(edges, 'i', 'l'), // expect true,
+      //   hasPath(edges, 'k', 'o'), // expect false,
+      // );
+    }
   }
 }
 

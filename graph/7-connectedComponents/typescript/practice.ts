@@ -241,4 +241,62 @@ interface Visited { [key: number]: number; };
     //   connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
     // );
   }
+  {
+    function connectedComponents(graph: Graph): number[][] {
+      const result: number[][] = [];
+      const visited: Set<number> = new Set();
+      for (let key in graph) {
+        const components = getComponents(Number(key), graph, visited);
+        if (components.length > 0) result.push(components);
+      }
+
+      return result;
+    }
+
+    function getComponents(src: number, graph: Graph, visited: Set<number>): number[] {
+      if (visited.has(src)) return [];
+      visited.add(src);
+
+      const components = [src];
+      for (let node of graph[src]) {
+        components.push(...getComponents(node, graph, visited));
+      }
+
+      return components;
+    }
+
+    console.log(
+      connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    );
+  }
+  {
+    function connectedComponents(graph: Graph): number[][] {
+      const result: number[][] = [];
+      const visited: Set<number> = new Set();
+      for (let key in graph) {
+        const components = getComponents(Number(key), graph, visited);
+        if (components.length > 0) result.push(components);
+      }
+
+      return result;
+    }
+
+    function getComponents(src: number, graph: Graph, visited: Set<number>): number[] {
+      const stack = [src];
+      const components: number[] = [];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        components.push(current);
+        stack.push(...graph[current]);
+      }
+
+      return components;
+    }
+    console.log(
+      connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    );
+  }
 }

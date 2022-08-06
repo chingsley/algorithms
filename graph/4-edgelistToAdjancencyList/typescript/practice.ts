@@ -28,9 +28,9 @@ const edges: string[][] = [
       return graph;
     }
 
-    console.log(
-      buildGraph(edges)
-    );
+    // console.log(
+    //   buildGraph(edges)
+    // );
   }
 
 
@@ -62,6 +62,26 @@ const edges: string[][] = [
 
       for (let edge of edgeList) {
         const [a, b] = edge;
+        if (!(a in graph)) graph[a] = [];
+        if (!(b in graph)) graph[b] = [];
+
+        graph[a].push(b);
+        graph[b].push(a);
+      }
+
+      return graph;
+    }
+
+    // console.log(
+    //   buildGraph(edges)
+    // );
+  }
+  {
+    type Graph = { [key: string]: string[]; };
+
+    function buildGraph(edgeList: string[][]): Graph {
+      const graph: Graph = {};
+      for (let [a, b] of edges) {
         if (!(a in graph)) graph[a] = [];
         if (!(b in graph)) graph[b] = [];
 

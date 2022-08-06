@@ -227,6 +227,131 @@ const arr: string[][] = [
     //   countIslands(arr), // // expect 2
     // );
   }
+  {
+    function countIslands(arr: string[][]): number {
+      const visited: Set<string> = new Set();
+      let count = 0;
+
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (arr[i][j] === 'w') continue;
+          if (exploreIsland([i, j], arr, visited) === true) count += 1;
+        }
+      }
+
+      return count;
+    }
+
+
+    function exploreIsland(pos: number[], arr: string[][], visited: Set<string>): boolean {
+      const [i, j] = pos;
+      const key = [i, j].join(',');
+      if (visited.has(key)) return false;
+      visited.add(key);
+
+      if (i < 0 || i >= arr.length) return false;
+      if (j < 0 || j >= arr[i].length) return false;
+      if (arr[i][j] === 'w') return false;
+
+      exploreIsland([i - 1, j], arr, visited);
+      exploreIsland([i + 1, j], arr, visited);
+      exploreIsland([i, j - 1], arr, visited);
+      exploreIsland([i, j + 1], arr, visited);
+
+      return true;
+    }
+
+
+    console.log(
+      countIslands(arr), // // expect 2
+    );
+  }
+  {
+    function countIslands(arr: string[][]): number {
+      const visited: Set<string> = new Set();
+      let count = 0;
+
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (arr[i][j] === 'w') continue;
+          if (visited.has([i, j].join(','))) continue;  // NOTE THIS ***
+          if (exploreIsland([i, j], arr, visited) === true) count += 1;
+        }
+      }
+
+      return count;
+    }
+
+    function exploreIsland(pos: number[], arr: string[][], visited: Set<string>): boolean {
+      const stack = [pos];
+
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+        const key = [i, j].join(',');
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        if (i < 0 || i >= arr.length) continue;
+        if (j < 0 || j >= arr.length) continue;
+        if (arr[i][j] === 'w') continue;
+
+        stack.push([i - 1, j]);
+        stack.push([i + 1, j]);
+        stack.push([i, j - 1]);
+        stack.push([i, j + 1]);
+      }
+
+      return true;
+    }
+
+    console.log(
+      countIslands(arr), // // expect 2
+    );
+  }
+  {
+    function countIslands(arr: string[][]): number {
+      const visited: Set<string> = new Set();
+      let count = 0;
+
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (arr[i][j] === 'w') continue;
+          if (exploreIsland([i, j], arr, visited) === true) count += 1;
+        }
+      }
+
+      return count;
+    }
+
+    function exploreIsland(pos: number[], arr: string[][], visited: Set<string>): boolean {
+      const stack = [pos];
+      let hasUnvisitedIsland = false; // NOTE THIS ***
+
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+        const key = [i, j].join(',');
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        if (i < 0 || i >= arr.length) continue;
+        if (j < 0 || j >= arr.length) continue;
+        if (arr[i][j] === 'w') continue;
+
+        stack.push([i - 1, j]);
+        stack.push([i + 1, j]);
+        stack.push([i, j - 1]);
+        stack.push([i, j + 1]);
+
+        hasUnvisitedIsland = true; // NOTE THIS ***
+      }
+
+      return hasUnvisitedIsland; // NOTE THIS ***
+    }
+
+    console.log(
+      countIslands(arr), // // expect 2
+    );
+  }
 }
 
 

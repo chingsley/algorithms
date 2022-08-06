@@ -241,6 +241,61 @@ interface Graph { [key: number]: number[]; };
     interface Graph { [key: number]: number[]; };
     type Visited = Set<number>;
 
+    // test(connectedComponentCount);
+  }
+  {
+    function connectedComponentCount(graph: Graph): number {
+      const visited: Set<number> = new Set();
+      let count = 0;
+      for (let key in graph) {
+        const size = countComponents(Number(key), graph, visited);
+        if (size > 0) count += 1;
+      }
+
+      return count;
+    }
+
+    function countComponents(src: number, graph: Graph, visited: Set<number>) {
+      if (visited.has(src)) return 0;
+      visited.add(src);
+
+      let size = 1;
+      for (let node of graph[src]) {
+        size += countComponents(node, graph, visited);
+      }
+
+      return size;
+    }
+    // test(connectedComponentCount);
+  }
+  {
+    function connectedComponentCount(graph: Graph): number {
+      const visited: Set<number> = new Set();
+      let count = 0;
+      for (let key in graph) {
+        const size = countComponents(Number(key), graph, visited);
+        if (size > 0) count += 1;
+      }
+
+      return count;
+    }
+
+    function countComponents(src: number, graph: Graph, visited: Set<number>) {
+      let size = 0;
+      const stack = [src];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        stack.push(...graph[current]);
+        size += 1;
+      }
+
+      return size;
+    }
+
     test(connectedComponentCount);
   }
 }

@@ -108,6 +108,61 @@ const graph = {
       return arr;
     }
 
+    // console.log(
+    //   depthFirstPrint(graph, 'a') // expect [ 'a', 'b', 'd', 'f', 'c', 'e' ] or [ 'a', 'c', 'e', 'b', 'd', 'f' ]
+    // );
+  }
+  {
+    type Graph = { [key: string]: string[]; };
+
+    function depthFirstPrint(graph: Graph, source: string) {
+      const result = [source];
+      for (let node of graph[source]) {
+        result.push(...depthFirstPrint(graph, node));
+      }
+      return result;
+    }
+
+
+    const graph = {
+      a: ['c', 'b'],
+      b: ['d'],
+      c: ['e'],
+      d: ['f'],
+      e: [],
+      f: []
+    };
+
+    console.log(
+      depthFirstPrint(graph, 'a') // expect [ 'a', 'b', 'd', 'f', 'c', 'e' ] or [ 'a', 'c', 'e', 'b', 'd', 'f' ]
+    );
+  }
+  {
+    type Graph = { [key: string]: string[]; };
+
+    function depthFirstPrint(graph: Graph, source: string) {
+      const result: string[] = [];
+      dft(graph, source, result);
+      return result;
+    }
+
+    function dft(graph: Graph, src: string, array: string[]) {
+      array.push(src);
+      for (let node of graph[src]) {
+        dft(graph, node, array);
+      }
+    }
+
+
+    const graph = {
+      a: ['c', 'b'],
+      b: ['d'],
+      c: ['e'],
+      d: ['f'],
+      e: [],
+      f: []
+    };
+
     console.log(
       depthFirstPrint(graph, 'a') // expect [ 'a', 'b', 'd', 'f', 'c', 'e' ] or [ 'a', 'c', 'e', 'b', 'd', 'f' ]
     );

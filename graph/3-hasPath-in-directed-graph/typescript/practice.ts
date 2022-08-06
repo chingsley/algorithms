@@ -81,6 +81,45 @@ const graph_test_01: Graph = {
     }
 
     interface Graph { [key: string]: string[]; };
+    // console.log(
+    //   hasPath(graph_test_01, 'f', 'k'), // expect true,
+    //   hasPath(graph_test_01, 'f', 'j') // expect false
+    // );
+  }
+  {
+    type Graph = { [key: string]: string[]; };
+
+    function hasPath(graph: Graph, src: string, dst: string): boolean {
+      if (src === dst) return true;
+
+      for (let node of graph[src]) {
+        if (hasPath(graph, node, dst) === true) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    console.log(
+      hasPath(graph_test_01, 'f', 'k'), // expect true,
+      hasPath(graph_test_01, 'f', 'j') // expect false
+    );
+  }
+  {
+    type Graph = { [key: string]: string[]; };
+
+    function hasPath(graph: Graph, src: string, dst: string): boolean {
+      const stack = [src];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (current === dst) return true;
+        stack.push(...graph[current]);
+      }
+
+      return false;
+    }
+
     console.log(
       hasPath(graph_test_01, 'f', 'k'), // expect true,
       hasPath(graph_test_01, 'f', 'j') // expect false

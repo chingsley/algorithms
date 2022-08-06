@@ -81,6 +81,29 @@ const edges: string[][] = [
     //   shortestPath(edges, 'w', 'z'), // expect 2,
     // );
   }
+  {
+    function shortestPath(edgeList: string[][], src: string, dst: string): number {
+      const graph = buildGraph(edgeList);
+      const visited: Set<string> = new Set();
+      const queue: [[string, number]] = [[src, 0]];
+      while (queue.length > 0) {
+        const [current, distance] = queue.shift();
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        if (current === dst) return distance;
+        for (let node of graph[current]) {
+          queue.push([node, distance + 1]);
+        }
+      }
+
+      return -1; // if theres is no path at all
+    }
+
+    console.log(
+      shortestPath(edges, 'w', 'z'), // expect 2,
+    );
+  }
 }
 
 export const _ = '_';

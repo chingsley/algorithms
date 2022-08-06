@@ -190,6 +190,34 @@ const testGraph: Graph = {
     //   largestComponent(testGraph), // expect 5,
     // );
   }
+  {
+    function largestComponent(graph: Graph): number {
+      let largestSize = -Infinity;
+      const visited: Set<number> = new Set();
+
+      for (let key in graph) {
+        const size = getSize(Number(key), graph, visited);
+        if (size > largestSize) largestSize = size;
+      }
+
+      return largestSize;
+    }
+
+    function getSize(src: number, graph: Graph, visited: Set<number>): number {
+      if (visited.has(src)) return 0;
+      visited.add(src);
+
+      let size = 1;
+      for (let node of graph[src]) {
+        size += getSize(node, graph, visited);
+      }
+
+      return size;
+    }
+    console.log(
+      largestComponent(testGraph), // expect 5,
+    );
+  }
 }
 
 export const _ = '_'; // just to make this file a module and avoid dupliate warnings

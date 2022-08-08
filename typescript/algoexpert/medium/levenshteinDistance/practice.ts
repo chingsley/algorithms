@@ -80,6 +80,36 @@
 
 
   }
+  {
+    // O(nm) time | O(nm) space
+    // n = length of str1
+    // m = length of str2
+    function levenshteinDistance(str1: string, str2: string): number {
+      const array = new Array(str2.length + 1).fill(1).map(
+        (_, idx) => new Array(str1.length + 1).fill(idx)
+      );
+
+      for (let j = 1; j < array[0].length; j++) array[0][j] = j;
+
+      for (let i = 1; i < array.length; i++) {
+        for (let j = 1; j < array[i].length; j++) {
+          if (str2[i - 1] === str1[j - 1]) {
+            array[i][j] = array[i - 1][j - 1];
+          } else {
+            array[i][j] = 1 + Math.min(
+              array[i - 1][j],
+              array[i][j - 1],
+              array[i - 1][j - 1]
+            );
+          }
+        }
+      }
+
+      return array[str2.length][str1.length];
+    }
+
+
+  }
 }
 
 export const ___ = '___';

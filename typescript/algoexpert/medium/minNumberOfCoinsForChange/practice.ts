@@ -80,6 +80,24 @@
       return coins[n] < Infinity ? coins[n] : -1;
     }
   }
+  {
+    // O(n*d) time | O(n) space
+    // d = length of denoms
+    function minNumberOfCoinsForChange(n: number, denoms: number[]) {
+      const coins = new Array(n + 1).fill(Infinity);
+      coins[0] = 0;
+      for (let coin of denoms) {
+        for (let amount = coin; amount < coins.length; amount++) {
+          coins[amount] = Math.min(
+            coins[amount],
+            1 + coins[amount - coin]
+          );
+        }
+      }
+
+      return coins[n] < Infinity ? coins[n] : -1;
+    }
+  }
 }
 
 export const __ = '__';

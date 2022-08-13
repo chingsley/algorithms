@@ -1,10 +1,9 @@
-
 /**
  *
  * O(n * 4^n) time | O(n * 4^n) space
  * where n = the length of the phoneNumbrer
  */
- export function phoneNumberMnemonics(phoneNumber: string): string[] {
+export function phoneNumberMnemonics(phoneNumber: string): string[] {
   const currentMnemonic: string[] = new Array(phoneNumber.length).fill('0');
   const mnemonicsFound: string[] = [];
 
@@ -35,7 +34,7 @@ function phoneNumberMnemonicsHelper(
   }
 }
 
-const DIGIT_LETTERS: {[digit: string]: string[]} = {
+const DIGIT_LETTERS: { [digit: string]: string[]; } = {
   '0': ['0'],
   '1': ['1'],
   '2': ['a', 'b', 'c'],

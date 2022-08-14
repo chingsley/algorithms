@@ -64,6 +64,27 @@
       return stack.length === 0;
     }
   }
+  {
+    // O(n) time | O(n) space
+    function balancedBrackets(str: string) {
+      type Hash = { [key: string]: string; };
+      const opens: Hash = { "{": "}", "[": "]", "(": ")" };
+      const closes: Hash = { ")": "(", "}": "{", "]": "[" };
+
+      const stack: string[] = [];
+      for (let ch of str) {
+        if (ch in opens) {
+          stack.push(ch);
+        } else if (ch in closes) {
+          if (stack.length === 0) return false;
+          if (closes[ch] !== stack.pop()) return false;
+        }
+      }
+
+      return stack.length === 0;
+    }
+
+  }
 }
 
 export const ___ = '___';

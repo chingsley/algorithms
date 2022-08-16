@@ -83,7 +83,26 @@
 
       return stack.length === 0;
     }
+  }
+  {
+    // O(n) time | O(n) space
+    function balancedBrackets(str: string) {
+      interface Hash { [key: string]: string; };
+      const opens: Hash = { "{": "}", "[": "]", "(": ")" };
+      const closes: Set<string> = new Set(["]", "}", ")"]);
 
+      const stack: string[] = [];
+      for (let ch of str) {
+        if (ch in opens) {
+          stack.push(ch);
+        } else if (closes.has(ch)) {
+          if (stack.length === 0) return false;
+          if (opens[stack.pop()!] !== ch) return false;
+        }
+      }
+
+      return stack.length === 0;
+    }
   }
 }
 

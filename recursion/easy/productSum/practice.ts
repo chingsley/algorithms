@@ -25,6 +25,43 @@
       return res;
     }
   }
+  {
+    type SpecialArray = Array<number | SpecialArray>;
+
+    // O(n) time (n = total no. of elements, including the nested items);
+    // O(d) space (d = depth of the most nested SpecialArray)
+    function productSum(array: SpecialArray, weight: number = 1) {
+      let sum = 0;
+      for (let value of array) {
+        if (Array.isArray(value)) {
+          sum += weight * productSum(value, weight + 1);
+        } else {
+          sum += weight * value;
+        }
+      }
+
+      return sum;
+    }
+  }
+  {
+    type SpecialArray = Array<number | SpecialArray>;
+
+    // O(n) time | O(d) space
+    // n = total count of numbers in the specialArray, including nested numbers;
+    // d = depth of the most nested array;
+    function productSum(array: SpecialArray, weight: number = 1) {
+      let sum = 0;
+      for (let value of array) {
+        if (Array.isArray(value)) {
+          sum += weight * productSum(value, weight + 1);
+        } else {
+          sum += weight * value;
+        }
+      }
+
+      return sum;
+    }
+  }
 }
 
 export const ___ = '___';

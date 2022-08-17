@@ -114,6 +114,148 @@
       return array[height];
     }
   }
+  {
+    // RECURSION
+    // O(k^n) time (without memoizaiton);
+    // O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      return waysOf(height, maxSteps);
+    }
+
+    function waysOf(height: number, maxSteps: number): number {
+      if (height <= 1) return 1;
+
+      let ways = 0;
+      for (let i = 1; i <= maxSteps; i++) {
+        if (height - i < 0) continue;
+        ways += waysOf(height - i, maxSteps);
+      }
+
+      return ways;
+    }
+
+  }
+  {
+    // RECURSION
+    // O(n) time (with memoization)
+    // O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const memo: { [key: number]: number; } = {};
+      return waysOf(height, maxSteps, memo);
+    }
+
+    function waysOf(height: number, maxSteps: number, memo: { [key: number]: number; }): number {
+      if (height <= 1) return 1;
+
+      if (height in memo) return memo[height];
+
+      memo[height] = 0;
+      for (let i = 1; i <= maxSteps; i++) {
+        if (height - i < 0) continue;
+        memo[height] += waysOf(height - i, maxSteps, memo);
+      }
+
+      return memo[height];
+    }
+
+  }
+  {
+    // O(n * k) time
+    // O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+      for (let i = 2; i < array.length; i++) {
+        array[i] = 0;
+        let j = 1;
+        while (j <= maxSteps) {
+          array[i] += array[i - j] || 0;
+          j += 1;
+        }
+      }
+
+      return array[height];
+    }
+    {
+      // O(n * k) time
+      // O(n) space
+      function staircaseTraversal(height: number, maxSteps: number): number {
+        const array = new Array(height + 1).fill(1);
+        for (let i = 2; i < array.length; i++) {
+          array[i] = 0;
+          let j = 1;
+          while (j <= maxSteps) {
+            if (i - j < 0) break;
+            array[i] += array[i - j];
+            j += 1;
+          }
+        }
+
+        return array[height];
+      }
+    }
+  }
+  {
+    // O(n) time
+    // O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+      let sum = 1;
+      for (let i = 2; i < array.length; i++) {
+        if (i <= maxSteps) {
+          sum += array[i - 1];
+        } else {
+          sum += array[i - 1] - array[i - maxSteps - 1];
+        }
+        array[i] = sum;
+      }
+
+      return array[height];
+    }
+  }
+  {
+    // O(n) time
+    // O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+      let sum = 1;
+      for (let i = 2; i < array.length; i++) {
+        const n = i > maxSteps ? array[i - maxSteps - 1] : 0;
+        sum += array[i - 1] - n;
+        array[i] = sum;
+      }
+
+      return array[height];
+    }
+  }
+  {
+    // O(n) time | O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+      let sum = 1;
+      for (let i = 2; i < array.length; i++) {
+        const x = i > maxSteps ? array[i - maxSteps - 1] : 0;
+        sum = sum + array[i - 1] - x;
+        array[i] = sum;
+      }
+
+      return array[height];
+    }
+
+  }
+  {
+    // O(k * n) time | O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+      for (let i = 2; i < array.length; i++) {
+        array[i] = 0;
+        for (let j = 1; j <= maxSteps; j++) {
+          array[i] += array[i - j] || 0;
+        }
+      }
+
+      return array[height];
+    }
+  }
 }
 
 export const ___ = '___';

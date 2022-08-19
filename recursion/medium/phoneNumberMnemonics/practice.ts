@@ -1,3 +1,5 @@
+import { indent } from "../../../utils/index";
+
 {
   const dict: { [key: string]: string; } = {
     "0": "0",
@@ -90,9 +92,9 @@
       return result;
     }
 
-    console.log(
-      phoneNumberMnemonics('1905')
-    );
+    // console.log(
+    //   phoneNumberMnemonics('1905')
+    // );
   }
   {
     // O(n * 4^n) time | O(n * 4^n) space
@@ -165,6 +167,35 @@
         backtrack(str, idx + 1, current + ch, result);
       }
     }
+  }
+  {// MEMOIZED SOLUTION
+    type Memo = { [key: number]: string[]; };
+
+    // O(4 * n * x) time | O(n * x)
+    // determine x
+    function phoneNumberMnemonics(phoneNumber: string): string[] {
+      return backtrack(phoneNumber, 0);
+    }
+
+    function backtrack(str: string, idx: number, memo: Memo = {}): string[] {
+      if (idx in memo) return memo[idx];
+      console.log(indent(idx * 5), 'backtrack(', str, ',', idx, ')');
+      if (idx >= str.length) return [""];
+
+      const letters = dict[str[idx]];
+      const result: string[] = [];
+      for (let ch of letters) {
+        const res = backtrack(str, idx + 1, memo);
+        for (let val of res) result.push(ch + val); // x
+      }
+      memo[idx] = result;
+      // console.log(memo)
+      return memo[idx];
+    }
+
+    console.log(
+      phoneNumberMnemonics("4163420000")
+    );
   }
 }
 

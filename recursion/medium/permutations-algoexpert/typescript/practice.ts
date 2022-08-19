@@ -69,6 +69,28 @@
       return result;
     }
   }
+  {
+
+    // O(n * n!) time | o(n * n!) space
+    function getPermutations(array: number[]) {
+      if (array.length === 0) return [];
+      return permsOf(array);
+    }
+
+    function permsOf(array: number[]): number[][] {
+      if (array.length <= 1) return [[...array]];
+
+      const [first, ...rest] = array;
+      const permsOfRest = permsOf(rest);
+      const result: number[][] = [];
+      for (let arr of permsOfRest) {
+        for (let i = 0; i <= arr.length; i++) {
+          result.push([...arr.slice(0, i), first, ...arr.slice(i)]);
+        }
+      }
+      return result;
+    }
+  }
 }
 
 export const ___ = '___';

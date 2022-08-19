@@ -256,6 +256,61 @@
       return array[height];
     }
   }
+  {
+    // O(k * n) time | O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      return waysOf(height, maxSteps);
+    }
+
+    type Num = number;
+    type Memo = { [key: number]: number; };
+    function waysOf(height: Num, maxSteps: Num, memo: Memo = { 0: 1, 1: 1 }): number {
+      if (height in memo) return memo[height];
+
+      memo[height] = 0;
+      for (let i = 1; i <= maxSteps; i++) {
+        if (height - i < 0) continue;
+        memo[height] += waysOf(height - i, maxSteps, memo);
+      }
+      return memo[height];
+    }
+
+  }
+  {
+    // O(k * n) time | O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const waysOf = new Array(height + 1).fill(1);
+
+      for (let currentHeight = 2; currentHeight < waysOf.length; currentHeight++) {
+        let kSum = 0;
+        for (let i = 1; i <= maxSteps; i++) {
+          kSum += waysOf[currentHeight - i] || 0;
+        }
+        waysOf[currentHeight] = kSum;
+      }
+
+      return waysOf[height];
+    }
+  }
+  {
+    // O(n) time | O(n) space;
+    // n = height
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const ways = new Array(height + 1).fill(1);
+
+      let kSum = 1;
+      for (let currentHeight = 2; currentHeight < ways.length; currentHeight++) {
+        if (currentHeight <= maxSteps) {
+          kSum = kSum + ways[currentHeight - 1];
+        } else {
+          kSum = kSum + ways[currentHeight - 1] - ways[currentHeight - maxSteps - 1];
+        }
+        ways[currentHeight] = kSum;
+      }
+
+      return ways[height];
+    }
+  }
 }
 
 export const ___ = '___';

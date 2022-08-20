@@ -94,4 +94,46 @@ import { BST } from './solution1';
       }
     }
   }
+  {// ITERATION
+    // O(log(n)) time | O(1) space
+    function findClosestValueInBst(tree: BST, target: number) {
+      let currentNode: BST | null = tree;
+      let closest = Infinity;
+
+      while (currentNode !== null) {
+        if (Math.abs(currentNode.value - target) < Math.abs(closest - target)) {
+          closest = currentNode.value;
+        }
+        if (currentNode.value === target) {
+          return closest;
+        } else if (target < currentNode.value) {
+          currentNode = currentNode.left;
+        } else {
+          currentNode = currentNode.right;
+        }
+      }
+
+      return closest;
+    }
+  }
+  {// RECURSION
+    // O(log(n)) time | O(d) space
+    function findClosestValueInBst(tree: BST, target: number) {
+      return findClosest(tree, target, Infinity);
+    }
+
+    function findClosest(tree: BST | null, target: number, closest: number): number {
+      if (tree === null) return closest;
+      if (tree.value === target) return tree.value;
+
+      closest = Math.abs(tree.value - target) < Math.abs(closest - target) ? tree.value : closest;
+
+      if (target < tree.value) {
+        return findClosest(tree.left, target, closest);
+      } else {
+        return findClosest(tree.right, target, closest);
+      }
+    }
+
+  }
 }

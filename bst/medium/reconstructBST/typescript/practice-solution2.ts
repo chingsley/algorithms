@@ -76,4 +76,24 @@ import { BST } from './solution2';
       rootIdx: number;
     }
   }
+  {
+    // O(n) time | O(n) space
+    function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+      const treeInfo: TreeInfo = { rootIdx: 0 };
+      return reconstructFromRange(-Infinity, Infinity, preOrderTraversalValues, treeInfo);
+    }
+
+    type TreeInfo = { rootIdx: number; };
+
+    function reconstructFromRange(lowerBound: number, upperBound: number, array: number[], treeInfo: TreeInfo): BST | null {
+      if (treeInfo.rootIdx >= array.length) return null;
+      const val = array[treeInfo.rootIdx];
+      if (val >= upperBound || val < lowerBound) return null;
+
+      treeInfo.rootIdx += 1;
+      const left = reconstructFromRange(lowerBound, val, array, treeInfo);
+      const right = reconstructFromRange(val, upperBound, array, treeInfo);
+      return new BST(val, left, right);
+    }
+  }
 }

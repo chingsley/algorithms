@@ -64,22 +64,55 @@ import { BST } from './solution1';
 
     {
 
-      // export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
-      //   if(preOrderTraversalValues.length < 1) return null;
+      function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+        if (preOrderTraversalValues.length < 1) return null;
 
-      //   const currValue = preOrderTraversalValues[0];
-      //   let rightNodeIdx: number = preOrderTraversalValues.length;
-      //   for(let i = 1; i < preOrderTraversalValues.length; i++) {
-      //     if(preOrderTraversalValues[i] >= currValue) {
-      //       rightNodeIdx = i;
-      //       break;
-      //     }
-      //   }
+        const currValue = preOrderTraversalValues[0];
+        let rightNodeIdx: number = preOrderTraversalValues.length;
+        for (let i = 1; i < preOrderTraversalValues.length; i++) {
+          if (preOrderTraversalValues[i] >= currValue) {
+            rightNodeIdx = i;
+            break;
+          }
+        }
 
-      //   const leftSubtree: BST | null = reconstructBst(preOrderTraversalValues.slice(1, rightNodeIdx));
-      //   const rightSubtree: BST | null = reconstructBst(preOrderTraversalValues.slice(rightNodeIdx));
-      //   return new BST(currValue, leftSubtree, rightSubtree);
-      // }
+        const leftSubtree: BST | null = reconstructBst(preOrderTraversalValues.slice(1, rightNodeIdx));
+        const rightSubtree: BST | null = reconstructBst(preOrderTraversalValues.slice(rightNodeIdx));
+        return new BST(currValue, leftSubtree, rightSubtree);
+      }
+    }
+    {
+      class BST {
+        value: number;
+        left: BST | null;
+        right: BST | null;
+        constructor(value: number, left: BST | null, right: BST | null) {
+          this.value = value;
+          this.left = left;
+          this.right = right;
+        }
+      }
+
+      // O(n^2) time | O(n) space
+      function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+        return reconstruct(preOrderTraversalValues);
+      }
+
+      function reconstruct(array: number[]): BST | null {
+        if (array.length === 0) return null;
+
+        let rightIdx = array.length;
+        for (let i = 1; i < array.length; i++) {
+          if (array[i] >= array[0]) {
+            rightIdx = i;
+            break;
+          }
+        }
+        const left = reconstruct(array.slice(1, rightIdx));
+        const right = reconstruct(array.slice(rightIdx));
+        return new BST(array[0], left, right);
+      }
     }
   }
 }
+

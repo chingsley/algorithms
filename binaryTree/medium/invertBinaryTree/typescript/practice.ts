@@ -24,4 +24,16 @@ import { BinaryTree } from './solution1';
       invertBinaryTree(tree.right);
     }
   }
+  {
+    // O(n) time | O(d) space
+    function invertBinaryTree(tree: BinaryTree | null) {
+      if (tree === null) return tree;
+
+      [tree.left, tree.right] = [tree.right, tree.left];
+      invertBinaryTree(tree.left);
+      invertBinaryTree(tree.right);
+
+      return tree;
+    }
+  }
 }

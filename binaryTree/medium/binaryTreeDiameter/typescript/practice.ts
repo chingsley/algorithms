@@ -78,4 +78,28 @@ import { BinaryTree } from './solution1';
 
     }
   }
+  {
+    // O(n) time | O(d) space
+    function binaryTreeDiameter(tree: BinaryTree) {
+      const treeInfo = new TreeInfo();
+      traverse(tree, treeInfo);
+      return treeInfo.maxDiameter;
+    }
+
+    function traverse(tree: BinaryTree | null, treeInfo: TreeInfo): number {
+      if (tree === null) return 0;
+
+      const left = traverse(tree.left, treeInfo);
+      const right = traverse(tree.right, treeInfo);
+      treeInfo.maxDiameter = Math.max(treeInfo.maxDiameter, left + right);
+      return Math.max(left, right) + 1;
+    }
+
+    class TreeInfo {
+      maxDiameter: number;
+      constructor() {
+        this.maxDiameter = -Infinity;
+      }
+    }
+  }
 }

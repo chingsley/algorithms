@@ -64,4 +64,21 @@ import { BinaryTree } from './solution1';
 
 
   }
+  {
+    // O(n) time | O(d) space
+    function branchSums(root: BinaryTree): number[] {
+      const array: number[] = [];
+      traverse(root, 0, array);
+      return array;
+    }
+
+    function traverse(node: BinaryTree | null, sumAtNode: number, array: number[]) {
+      if (node === null) return;
+
+      sumAtNode += node.value;
+      if (node.left === null && node.right === null) array.push(sumAtNode);
+      traverse(node.left, sumAtNode, array);
+      traverse(node.right, sumAtNode, array);
+    }
+  }
 }

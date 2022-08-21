@@ -1,3 +1,4 @@
+import { buildTree } from '../../../../utils/buildTree';
 import { BinaryTree } from './solution1';
 
 {
@@ -67,5 +68,55 @@ import { BinaryTree } from './solution1';
       const isCurrentBalanced = Math.abs(leftHeight - rightHeight) <= 1 && isLeftBalanced && isRightBalanced;
       return [isCurrentBalanced, Math.max(leftHeight, rightHeight) + 1];
     }
+  }
+  {
+    // O(n) time | O(d) space
+    function heightBalancedBinaryTree(tree: BinaryTree): boolean {
+      const treeInfo = new TreeInfo();
+      getTreeHeight(tree, treeInfo);
+      return treeInfo.isBalanced;
+    }
+
+    function getTreeHeight(tree: BinaryTree | null, treeInfo: TreeInfo): number {
+      if (tree === null) return 0;
+
+      // --- OPTIMZED, once a unbalanced node is identifified, no further recursive call is made
+      if (treeInfo.isBalanced === false) return Infinity;
+
+      const left = getTreeHeight(tree.left, treeInfo);
+      const right = getTreeHeight(tree.right, treeInfo);
+
+      if (tree.value === 1) console.log({ left, right });
+      if (tree.value === 2) console.log({ left, right });
+      if (left === Infinity || right === Infinity || Math.abs(left - right) > 1) treeInfo.isBalanced = false;
+      return Math.max(left, right) + 1;
+    }
+
+    class TreeInfo {
+      isBalanced: boolean;
+      constructor() {
+        this.isBalanced = true;
+      }
+    }
+
+    const test = {
+      "nodes": [
+        { "id": "1", "left": "2", "right": "3", "value": 1 },
+        { "id": "2", "left": "4", "right": "5", "value": 2 },
+        { "id": "3", "left": null, "right": "6", "value": 3 },
+        { "id": "4", "left": null, "right": null, "value": 4 },
+        { "id": "5", "left": "7", "right": "8", "value": 5 },
+        { "id": "6", "left": null, "right": null, "value": 6 },
+        { "id": "7", "left": null, "right": "9", "value": 7 },
+        { "id": "8", "left": null, "right": null, "value": 8 },
+        { "id": "9", "left": null, "right": "10", "value": 9 },
+        { "id": "10", "left": null, "right": null, "value": 8 }
+      ],
+      "root": "1"
+    };
+    const tree = buildTree(test.nodes, test.root);
+    console.log(
+      heightBalancedBinaryTree(tree)
+    );
   }
 }

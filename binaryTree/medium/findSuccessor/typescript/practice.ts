@@ -1,4 +1,16 @@
-import { BinaryTree } from './solution1';
+
+export class BinaryTree {
+  value: number;
+  left: BinaryTree | null;
+  right: BinaryTree | null;
+  parent: BinaryTree | null;
+  constructor(value: number) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+    this.parent = null;
+  }
+}
 {
   {
     // O(n) time | O(1) space;
@@ -181,5 +193,64 @@ import { BinaryTree } from './solution1';
     }
 
     interface NodeInfo { idx: number; };
+  }
+  {
+    // O(n) time | O(n) space
+    function findSuccessor(tree: BinaryTree, node: BinaryTree) {
+      const nodeInfo = new NodeInfo();
+      const array: BinaryTree[] = [];
+      inOrderTraverse(tree, node, array, nodeInfo);
+      // console.log(nodeInfo.index)
+      return array[nodeInfo.index + 1] || null;
+    }
+
+    function inOrderTraverse(tree: BinaryTree | null, node: BinaryTree, array: BinaryTree[], nodeInfo: NodeInfo) {
+      if (tree === null) return;
+
+
+      inOrderTraverse(tree.left, node, array, nodeInfo);
+      array.push(tree);
+      if (tree === node) nodeInfo.index = array.length - 1;
+      inOrderTraverse(tree.right, node, array, nodeInfo);
+    }
+
+    class NodeInfo {
+      index: number;
+      constructor() {
+        this.index = 0;
+      }
+    }
+
+  }
+  {
+    // O(d) time | O(1) space
+    function findSuccessor(tree: BinaryTree, node: BinaryTree) {
+      if (node.right !== null) {
+        // return left-most node in the right subtree
+        return getLeftMostNode(node.right);
+      } else {
+        const rightMostParent = getRightMostParent(node);
+        return rightMostParent.parent;
+      }
+    }
+
+    function getLeftMostNode(node: BinaryTree): BinaryTree {
+      let currentNode = node;
+      while (currentNode.left !== null) {
+        currentNode = currentNode.left;
+      }
+
+      return currentNode;
+    }
+
+    function getRightMostParent(node: BinaryTree): BinaryTree {
+      let currentNode = node;
+      while (currentNode.parent && currentNode.parent.right === currentNode) {
+        currentNode = currentNode.parent;
+      }
+
+      return currentNode;
+    }
+
   }
 }

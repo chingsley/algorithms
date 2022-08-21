@@ -99,4 +99,22 @@ import { BinaryTree } from './solution1';
       return left + right + currentNodeDepth;
     }
   }
+  {
+    // O(n) time | O(d) space
+    function nodeDepths(root: BinaryTree) {
+      const treeInfo: TreeInfo = { depthSum: 0 };
+      traverse(root, 0, treeInfo);
+      return treeInfo.depthSum;
+    }
+
+    function traverse(node: BinaryTree | null, currentNodeDepth: number, treeInfo: TreeInfo) {
+      if (node === null) return;
+
+      treeInfo.depthSum += currentNodeDepth;
+      traverse(node.left, currentNodeDepth + 1, treeInfo);
+      traverse(node.right, currentNodeDepth + 1, treeInfo);
+    }
+
+    interface TreeInfo { depthSum: number; };
+  }
 }

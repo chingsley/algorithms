@@ -311,6 +311,79 @@
       return ways[height];
     }
   }
+  {
+    // O(k^n) time
+    // O(n) space
+    // k = maxSteps | n = height
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      return waysOf(height, maxSteps);
+    }
+
+    function waysOf(height: number, maxSteps: number): number {
+      if (height < 0) return 0;
+      if (height < 2) return 1;
+      let ways = 0;
+      for (let i = 1; i <= maxSteps; i++) {
+        ways += waysOf(height - i, maxSteps);
+      }
+
+      return ways;
+    }
+  }
+  {
+    // O(k * n) time
+    // O(n) space
+    // k = maxSteps | n = height
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      return waysOf(height, maxSteps);
+    }
+
+    function waysOf(height: number, maxSteps: number, memo: Memo = { 0: 1, 1: 1 }): number {
+      if (height < 0) return 0;
+      if (height in memo) return memo[height];
+
+      memo[height] = 0;
+      for (let i = 1; i <= maxSteps; i++) {
+        memo[height] += waysOf(height - i, maxSteps, memo);
+      }
+
+      return memo[height];
+    }
+
+    type Memo = { [key: number]: number; };
+  }
+  {
+    // O(k * n) time | O(n) space
+    // n = height | k = maxSteps;
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+
+      for (let hgt = 2; hgt < array.length; hgt++) {
+        array[hgt] = 0;
+        for (let j = 1; j <= maxSteps; j++) {
+          if (hgt - j < 0) continue;
+          array[hgt] += array[hgt - j];
+        }
+      }
+
+      return array[height];
+    }
+  }
+  {
+    // O(n) time | O(n) space
+    // n = height
+    function staircaseTraversal(height: number, maxSteps: number) {
+      const array = new Array(height + 1).fill(1);
+      let kSum = 1;
+      for (let hgt = 2; hgt < array.length; hgt++) {
+        kSum += array[hgt - 1] - (array[hgt - maxSteps - 1] || 0);
+        array[hgt] = kSum;
+      }
+
+      return array[height];
+    }
+
+  }
 }
 
 export const ___ = '___';

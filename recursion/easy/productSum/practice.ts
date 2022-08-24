@@ -82,6 +82,25 @@
 
     type SpecialArray = Array<number | SpecialArray>;
   }
+  {
+    // O(n) time | O(d) space
+    // n = total count of numbers, including nested numbers
+    // d = depth of the most nested array
+    function productSum(array: SpecialArray, weight: number = 1) {
+      let sum = 0;
+      for (let value of array) {
+        if (Array.isArray(value)) {
+          sum += weight * productSum(value, weight + 1);
+        } else {
+          sum += weight * value;
+        }
+      }
+
+      return sum;
+    }
+
+    type SpecialArray = Array<number | SpecialArray>;
+  }
 }
 
 export const ___ = '___';

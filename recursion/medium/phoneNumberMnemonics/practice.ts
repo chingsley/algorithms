@@ -15,20 +15,9 @@ import { indent } from "../../../utils/index";
   };
   {
     function phoneNumberMnemonics(phoneNumber: string): string[] {
-      const dict = {
-        "0": "0",
-        "1": "1",
-        "2": "abc",
-        "3": "def",
-        "4": "ghi",
-        "5": "jkl",
-        "6": "mno",
-        "7": "pqrs",
-        "8": "tuv",
-        "9": "wxyz"
-      };
+      const letterDict = dict;
 
-      const result = backTrack(phoneNumber, 0, dict);
+      const result = backTrack(phoneNumber, 0, letterDict);
       return result.map(arr => arr.join(''));
     }
 
@@ -196,6 +185,110 @@ import { indent } from "../../../utils/index";
     console.log(
       phoneNumberMnemonics("4163420000")
     );
+  }
+  {
+    interface Memo { [key: string]: string[]; }
+
+    // O(4 * n * x) time | O(n * x)
+    // determine x
+    function phoneNumberMnemonics(phoneNumber: string): string[] {
+      const memo: Memo = {};
+      return backtrack(phoneNumber, memo);
+    }
+
+    function backtrack(string: string, memo: Memo): string[] {
+      if (string.length === 0) return [""];
+      if (string in memo) return memo[string];
+
+      const [firstCh, ...rest] = string.split('');
+      const letters = dict[firstCh];
+      const result: string[] = [];
+      for (let ch of letters) {
+        const resOfRest = backtrack(rest.join(''), memo);
+        for (let str of resOfRest) {
+          result.push(ch + str);
+        }
+      }
+
+      console.log(JSON.stringify({ sr: string, r: result }));
+      memo[string] = result;
+      return memo[string];
+    }
+  }
+  {
+    interface Memo { [key: string]: string[]; }
+
+    // O(4 * n * x) time | O(n * x)
+    // determine x
+    function phoneNumberMnemonics(phoneNumber: string): string[] {
+      const memo: Memo = {};
+      return backtrack(phoneNumber, 0, memo);
+    }
+
+    function backtrack(string: string, idx: number, memo: Memo): string[] {
+      if (idx === string.length) return [""];
+      if (string in memo) return memo[string];
+
+      const firstCh = string[idx];
+      const letters = dict[firstCh];
+      const result: string[] = [];
+      for (let ch of letters) {
+        const resOfRest = backtrack(string, idx + 1, memo);
+        for (let str of resOfRest) {
+          result.push(ch + str);
+        }
+      }
+
+      console.log(JSON.stringify({ sr: string, r: result }));
+      memo[string] = result;
+      return memo[string];
+    }
+  }
+  {
+    //   O(n * 4 * 4^n) time | O(n * 4^n)
+    // = O(4n * 4^n) time | O(n * 4^n)
+    // = O(n * 4^n) time | O(n * 4^n)
+    function phoneNumberMnemonics(phoneNumber: string): string[] {
+      return backtrack(phoneNumber, 0);
+    }
+
+    function backtrack(string: string, idx: number): string[] {// called n times
+      if (idx === string.length) return [""];
+
+      const charsOfCurrentNum = dict[string[idx]];
+      const combs = backtrack(string, idx + 1); // calling this here is better than calling it inside the first for loop. When it's called here, then this solution does not need Momoization
+      const result: string[] = [];
+      for (let ch of charsOfCurrentNum) { // charsOfCurrentNum is 4 chars max (e.g digits 7 and 9)
+        for (let str of combs) {// combs has max length 4^n
+          result.push(ch + str);
+        }
+      }
+      console.log({ idx: string[idx], result });
+      return result;
+    }
+    /**
+     * Space = O(n * 4^n)
+     * 
+     * Reason: the final result will have a max lenght of 4^n. Each item in the result
+     * will have same length as the length of the input string (n). Therefore total space
+     * equals O(n * 4^n) space
+     */
+  }
+  {
+    function phoneNumberMnemonics(phoneNumber: string): string[] {
+      const result: string[] = [];
+      backtrack(phoneNumber, 0, "", result);
+      return result;
+    }
+
+    function backtrack(string: string, idx: number, currentPnemonic: string, result: string[]) {// called n times
+      if (idx === string.length) return result.push(currentPnemonic);
+      console.log({ idx, curr: currentPnemonic });
+
+      for (let ch of dict[string[idx]]) {
+        backtrack(string, idx + 1, currentPnemonic + ch, result);
+      }
+    }
   }
 }
 

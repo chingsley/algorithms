@@ -91,6 +91,27 @@
       return result;
     }
   }
+  {
+    // O(n * n!) time | O(n * n!) space
+    function getPermutations(array: number[]) {
+      const result = permsOf(array);
+      return result[0].length > 0 ? result : [];
+    }
+
+    function permsOf(array: number[]): number[][] {
+      if (array.length === 0) return [[]];
+
+      const [first, ...rest] = array;
+      const permsOfRest = permsOf(rest);
+      const result: number[][] = [];
+      for (let perm of permsOfRest) {
+        for (let i = 0; i <= perm.length; i++) {
+          result.push([...perm.slice(0, i), first, ...perm.slice(i)]);
+        }
+      }
+      return result;
+    }
+  }
 }
 
 export const ___ = '___';

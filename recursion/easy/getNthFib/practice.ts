@@ -112,6 +112,43 @@
       return f2;
     }
   }
+  {
+    // O(n) time | O(1) space
+    function getNthFib(n: number): number {
+      let [f1, f2] = [0, 1];
+      if (n <= 2) return [f1, f2][n - 1];
+
+      for (let i = 2; i < n; i++) {
+        [f1, f2] = [f2, f1 + f2];
+      }
+
+      return f2;
+    }
+  }
+  {
+    function getNthFib(n: number): number {
+      const array = new Array(n).fill(1);
+      array[0] = 0;
+
+      for (let i = 2; i < array.length; i++) {
+        array[i] = array[i - 1] + array[i - 2];
+      }
+
+      return array[n - 1];
+    }
+  }
+  {
+    // O(n) time | O(1) space
+    function getNthFib(n: number): number {
+      let [f1, f2] = [0, 1];
+      if (n <= 2) return [f1, f2][n - 1];
+
+      let i = 2;
+      while (i++ < n) [f1, f2] = [f2, f1 + f2];
+
+      return f2;
+    }
+  }
 }
 
 export const ___ = '___';

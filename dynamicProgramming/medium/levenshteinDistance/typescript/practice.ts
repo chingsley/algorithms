@@ -107,8 +107,35 @@
 
       return array[str2.length][str1.length];
     }
+  }
+  {
+    // O(mn) time | O(mn) space
+    // m = length of str1
+    // n = length of str2
+    function levenshteinDistance(str1: string, str2: string): number {
+      const matrix = new Array(str2.length + 1).fill(1).map(
+        (_, idx) => new Array(str1.length + 1).fill(idx)
+      );
+      for (let j = 0; j < matrix[0].length; j++) {
+        matrix[0][j] = j;
+      }
 
+      for (let row = 1; row < matrix.length; row++) {
+        for (let col = 1; col < matrix[row].length; col++) {
+          if (str2[row - 1] === str1[col - 1]) {
+            matrix[row][col] = matrix[row - 1][col - 1];
+          } else {
+            matrix[row][col] = 1 + Math.min(
+              matrix[row - 1][col],
+              matrix[row][col - 1],
+              matrix[row - 1][col - 1]
+            );
+          }
+        }
+      }
 
+      return matrix[str2.length][str1.length];
+    }
   }
 }
 

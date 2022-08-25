@@ -99,6 +99,60 @@
       return memo[key];
     }
   }
+  {
+
+    // O(2^(w +h)) time | O(w + h) space; (without memo)
+    // O(wh) time | O(wh) space (with memoization)
+    function numberOfWaysToTraverseGraph(width: number, height: number) {
+      return waysOf(width, height);
+    }
+
+    function waysOf(w: number, h: number, memo: Memo = {}): number {
+      if (w === 1 || h === 1) return 1;
+
+      const key = [w, h].join(',');
+      if (key in memo) return memo[key];
+
+      memo[key] = waysOf(w - 1, h, memo) + waysOf(w, h - 1, memo);
+      return memo[key];
+    }
+    type Memo = { [key: string]: number; };
+
+  }
+  {
+    // O(wh) time | O(wh) space (with memoization)
+    function numberOfWaysToTraverseGraph(width: number, height: number) {
+      const matrix = new Array(height).fill(1).map(
+        () => new Array(width).fill(1)
+      );
+
+      for (let i = 1; i < matrix.length; i++) {
+        for (let j = 1; j < matrix[i].length; j++) {
+          matrix[i][j] = matrix[i - 1][j] + matrix[i][j - 1];
+        }
+      }
+
+      return matrix[height - 1][width - 1];
+    }
+  }
+  {
+    // O(w + h) time | O(1) space
+    function numberOfWaysToTraverseGraph(width: number, height: number) {
+      const h = height - 1;
+      const v = width - 1;
+      return factorial(h + v) / (factorial(h) * factorial(v));
+    }
+
+    function factorial(num: number) {
+      let result = 1;
+      while (num > 0) {
+        result *= num;
+        num -= 1;
+      }
+
+      return result;
+    }
+  }
 }
 
 

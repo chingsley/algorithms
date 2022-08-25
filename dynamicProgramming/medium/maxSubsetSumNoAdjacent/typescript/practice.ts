@@ -113,6 +113,24 @@
       return maxSums[maxSums.length - 1];
     }
   }
+  {
+    // O(n) time | O(n) space
+    function maxSubsetSumNoAdjacent(array: number[]) {
+      if (array.length === 0) return 0;
+      if (array.length === 1) return array[0];
+
+      const maxAt = new Array(array.length).fill(0);
+      [maxAt[0], maxAt[1]] = [array[0], Math.max(array[0], array[1])];
+      for (let i = 2; i < array.length; i++) {
+        maxAt[i] = Math.max(
+          maxAt[i - 1],
+          array[i] + maxAt[i - 2]
+        );
+      }
+
+      return maxAt[array.length - 1];
+    }
+  }
 }
 
 export const ___ = '___';

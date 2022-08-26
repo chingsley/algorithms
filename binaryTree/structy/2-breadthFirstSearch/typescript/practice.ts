@@ -18,10 +18,27 @@ import { BinaryTree, root } from '../../BinaryTree';
       }
       return array;
     }
+  }
+  {// BFS
+    // O(n) tiem | O(n) space
+    function breadthFirstTraverse(root: BinaryTree) {
+      const queue = [root];
+      const array: number[] = [];
 
+      while (queue.length > 0) {
+        const current = queue.shift();
+        array.push(current.value);
+
+        if (current.left) queue.push(current.left);
+        if (current.right) queue.push(current.right);
+      }
+
+      return array;
+    }
     console.log(
       breadthFirstTraverse(root)
     );
+
   }
 }
 

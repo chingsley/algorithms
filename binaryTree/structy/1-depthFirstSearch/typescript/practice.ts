@@ -77,9 +77,58 @@ import { BinaryTree, root } from '../../BinaryTree';
       dfsHelper(root.right, array);
     }
 
-    console.log(
-      depthFirstTraverse(root)
-    );
+    // console.log(
+    //   depthFirstTraverse(root)
+    // );
+  }
+
+  {// Iteraion (stack)
+    function depthFirstTraverse(root: BinaryTree) {
+      const stack = [root];
+      const array: number[] = [];
+
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        array.push(current.value);
+
+        if (current.left) stack.push(current.left);
+        if (current.right) stack.push(current.right);
+      }
+
+      return array;
+    }
+
+    // console.log(
+    //   depthFirstTraverse(root)
+    // );
+  }
+  {// Recusion (n * d) time | O(n) space
+    function depthFirstTraverse(root: BinaryTree): number[] {
+      if (root === null) return [];
+
+      const result: number[] = [root.value];
+      result.push(...depthFirstTraverse(root.left));
+      result.push(...depthFirstTraverse(root.right));
+      return result;
+    }
+
+    // console.log(
+    //   depthFirstTraverse(root)
+    // );
+  }
+  {// Recursion
+    // O(n) time | O(n) space
+    function depthFirstTraverse(root: BinaryTree, array: number[] = []) {
+      if (root === null) return array;
+
+      array.push(root.value);
+      depthFirstTraverse(root.left, array);
+      depthFirstTraverse(root.right, array);
+      return array;
+    }
+    // console.log(
+    //   depthFirstTraverse(root)
+    // );
   }
 
 

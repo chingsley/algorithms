@@ -47,7 +47,31 @@ import { BinaryTree, root } from '../../BinaryTree';
 
       return sum;
     }
+  }
+  {
+    function treeSum(root: BinaryTree) {
+      const stack = [root];
+      let sum = 0;
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        sum += current.value;
 
+        if (current.left) stack.push(current.left);
+        if (current.right) stack.push(current.right);
+      }
+
+      return sum;
+    }
+  }
+  {
+    function treeSum(root: BinaryTree): number {
+      if (root === null) return 0;
+
+      let sum = root.value;
+      sum += treeSum(root.left);
+      sum += treeSum(root.right);
+      return sum;
+    }
     console.log(treeSum(root));
   }
 }

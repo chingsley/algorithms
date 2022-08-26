@@ -52,10 +52,8 @@ import { BinaryTree, root } from '../../BinaryTree';
 
       return false;
     }
-
-
-    console.log(treeIncludes(root, 10)); // expect true
-    console.log(treeIncludes(root, 123)); // expect false
+    // console.log(treeIncludes(root, 10)); // expect true
+    // console.log(treeIncludes(root, 123)); // expect false
   }
   {
 
@@ -76,10 +74,51 @@ import { BinaryTree, root } from '../../BinaryTree';
       const foundInRight = treeIncludes(root.right, value);
       return foundInLeft || foundInRight;
     }
+  }
+  {// DBS, Iteration, Stack
+    // O(n) time | O(n) space
+    function treeIncludes(root: BinaryTree, value: number) {
+      const stack = [root];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (current.value === value) return true;
 
-
+        if (current.left) stack.push(current.left);
+        if (current.right) stack.push(current.right);
+      }
+      return false;
+    }
     // console.log(treeIncludes(root, 10)); // expect true
     // console.log(treeIncludes(root, 123)); // expect false
+  }
+  {
+    function treeIncludes(root: BinaryTree, value: number) {
+      const queue = [root];
+      while (queue.length > 0) {
+        const current = queue.shift()!;
+        if (current.value === value) return true;
+
+        if (current.left) queue.push(current.left);
+        if (current.right) queue.push(current.right);
+      }
+      return false;
+    }
+
+  }
+  {// O(n) time | O(d) space
+    // n = no. of nodes in the tree
+    // d = depth of the tree
+    function treeIncludes(root: BinaryTree, value: number) {
+      if (root == null) return false;
+
+      if (root.value === value) return true;
+
+      const foundInLeft = treeIncludes(root.left, value);
+      const foundInRight = treeIncludes(root.right, value);
+      return foundInLeft || foundInRight;
+    }
+    console.log(treeIncludes(root, 10)); // expect true
+    console.log(treeIncludes(root, 123)); // expect false
   }
 
 }

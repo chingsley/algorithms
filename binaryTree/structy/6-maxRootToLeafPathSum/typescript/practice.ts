@@ -6,7 +6,7 @@ import { BinaryTree, root } from '../../BinaryTree';
 import { root2 } from '../../testTree2';
 
 {
-  { // RECURSION I
+  { // RECURSION I (best solution)
 
     function maxPathSum(root: BinaryTree): number {
       if (root === null) return -Infinity;
@@ -115,8 +115,49 @@ import { root2 } from '../../testTree2';
       return maxSum;
     }
 
+    // console.log(maxPathSum(root)); // expect 18
+    // console.log(maxPathSum(root2)); // expect 16
+  }
+  {
+    function maxPathSum(root: BinaryTree): number {
+      const max: [number] = [-Infinity];
+      findMaxPathSum(root, 0, max);
+      return max[0];
+    }
+
+    function findMaxPathSum(root: BinaryTree | null, currSum: number, max: [number]) {
+      if (root === null) return;
+      currSum += root.value;
+      if (root.left === null && root.right === null) {
+        if (currSum > max[0]) max[0] = currSum;
+      }
+      // console.log({ node: root.value, currSum });
+      findMaxPathSum(root.left, currSum, max);
+      findMaxPathSum(root.right, currSum, max);
+    }
+
     console.log(maxPathSum(root)); // expect 18
     console.log(maxPathSum(root2)); // expect 16
   }
+
+  {// Recursion
+    // O(n) time | O(d) space
+    function maxPathSum(root: BinaryTree): number {
+      if (root === null) return -Infinity;
+
+      if (root.left === null && root.right === null) {
+        return root.value;
+      }
+
+      return root.value + Math.max(
+        maxPathSum(root.left),
+        maxPathSum(root.right)
+      );
+    }
+
+    console.log(maxPathSum(root)); // expect 18
+    console.log(maxPathSum(root2)); // expect 16
+  }
+
 
 }

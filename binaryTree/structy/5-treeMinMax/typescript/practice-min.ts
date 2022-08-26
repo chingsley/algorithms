@@ -17,7 +17,7 @@ import { BinaryTree, root } from '../../BinaryTree';
       return Math.min(root.value, leftMin, rightMin);
     }
 
-    console.log('min = ', treeMin(root)); // expect 1
+    // console.log('min = ', treeMin(root)); // expect 1
   }
   { // DFT
     // O(n) time | O(n) space
@@ -37,7 +37,7 @@ import { BinaryTree, root } from '../../BinaryTree';
       return min;
     }
 
-    console.log('min = ', treeMin(root)); // expect 1
+    // console.log('min = ', treeMin(root)); // expect 1
   }
   { // BFT
     // O(n) time | O(n) space
@@ -57,6 +57,38 @@ import { BinaryTree, root } from '../../BinaryTree';
       return min;
     }
 
+    // console.log('min = ', treeMin(root)); // expect 1
+  }
+  {// Iteration 
+    // O(n) time | O(1) space (the stack has maximum length of 2 (pushing left and right noeds, each beaing an instance of a tree node with value and a pointer))
+    function treeMin(root: BinaryTree): number {
+      const stack = [root];
+      let min = Infinity;
+
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (current.value < min) min = current.value;
+
+        if (current.left) stack.push(current.left);
+        if (current.right) stack.push(current.right);
+      }
+
+      return min;
+    }
+
+    // console.log('min = ', treeMin(root)); // expect 1
+  }
+  {// Recursion
+    // O(n) time | O(d) space
+    function treeMin(root: BinaryTree): number {
+      if (root === null) return Infinity;
+
+      return Math.min(
+        root.value,
+        treeMin(root.left),
+        treeMin(root.right)
+      );
+    }
     console.log('min = ', treeMin(root)); // expect 1
   }
 }

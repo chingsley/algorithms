@@ -101,10 +101,10 @@ const graph_test_01: Graph = {
       return false;
     }
 
-    console.log(
-      hasPath(graph_test_01, 'f', 'k'), // expect true,
-      hasPath(graph_test_01, 'f', 'j') // expect false
-    );
+    // console.log(
+    //   hasPath(graph_test_01, 'f', 'k'), // expect true,
+    //   hasPath(graph_test_01, 'f', 'j') // expect false
+    // );
   }
   {
     type Graph = { [key: string]: string[]; };
@@ -120,9 +120,60 @@ const graph_test_01: Graph = {
       return false;
     }
 
-    console.log(
-      hasPath(graph_test_01, 'f', 'k'), // expect true,
-      hasPath(graph_test_01, 'f', 'j') // expect false
-    );
+    // console.log(
+    //   hasPath(graph_test_01, 'f', 'k'), // expect true,
+    //   hasPath(graph_test_01, 'f', 'j') // expect false
+    // );
+  }
+  {
+    function hasPath(graph: Graph, src: string, dst: string): boolean {
+      const stack = [src];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (current === dst) return true;
+        stack.push(...graph[current]);
+      }
+
+      return false;
+    }
+
+    type Graph = { [key: string]: string[]; };
+  }
+  {
+    function hasPath(graph: Graph, src: string, dst: string): boolean {
+      const queue = [src];
+      while (queue.length > 0) {
+        const current = queue.shift();
+        if (current === dst) return true;
+        queue.push(...graph[current]);
+      }
+
+      return false;
+    }
+
+    type Graph = { [key: string]: string[]; };
+  }
+  {
+    function hasPath(graph: Graph, src: string, dst: string): boolean {
+      return pathCheck(graph, src, dst);
+    }
+
+    function pathCheck(graph: Graph, src: string, dst: string): boolean {
+      if (src === dst) return true;
+
+      for (let node of graph[src]) {
+        if (pathCheck(graph, node, dst) === true) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    type Graph = { [key: string]: string[]; };
+    // console.log(
+    //   hasPath(graph_test_01, 'f', 'k'), // expect true,
+    //   hasPath(graph_test_01, 'f', 'j') // expect false
+    // );
   }
 }

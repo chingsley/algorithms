@@ -296,7 +296,103 @@ interface Graph { [key: number]: number[]; };
       return size;
     }
 
-    test(connectedComponentCount);
+    // test(connectedComponentCount);
+  }
+  {
+    function connectedComponentCount(graph: Graph): number {
+      const visited: Set<number> = new Set();
+      let count = 0;
+      for (let key in graph) {
+        const node = Number(key);
+        if (visited.has(node)) continue;
+        countConnectedComponents(graph, node, visited);
+        count += 1;
+      }
+
+      return count;
+    }
+
+    function countConnectedComponents(graph: Graph, src: number, visited: Set<number>) {
+      const stack = [src];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (visited.has(current)) continue;
+        visited.add(current);
+        stack.push(...graph[current]);
+      }
+    }
+  }
+  {
+    function connectedComponentCount(graph: Graph): number {
+      const visited: Set<number> = new Set();
+      let count = 0;
+      for (let key in graph) {
+        const node = Number(key);
+        if (visited.has(node)) continue;
+        visitConnectedComponents(graph, node, visited);
+        count += 1;
+      }
+      return count;
+    }
+
+    function visitConnectedComponents(graph: Graph, node: number, visited: Set<number>): void {
+      const stack = [node];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (visited.has(current)) continue;
+        visited.add(current);
+        stack.push(...graph[current]);
+      }
+    }
+
+  }
+  {
+    function connectedComponentCount(graph: Graph): number {
+      const visited: Set<number> = new Set();
+      let count = 0;
+      for (let key in graph) {
+        const node = Number(key);
+        if (visited.has(node)) continue;
+        visitConnectedComponents(graph, node, visited);
+        count += 1;
+      }
+      return count;
+    }
+
+    function visitConnectedComponents(graph: Graph, node: number, visited: Set<number>): void {
+      if (visited.has(node)) return;
+      visited.add(node);
+
+      for (let nd of graph[node]) {
+        visitConnectedComponents(graph, nd, visited);
+      }
+    }
+    // test(connectedComponentCount);
+
+  }
+  {
+    function connectedComponentCount(graph: Graph): number {
+      const visited: Set<number> = new Set();
+      let count = 0;
+      for (let key in graph) {
+        const node = Number(key);
+        if (visited.has(node)) continue;
+        visitConnectedComponents(graph, node, visited);
+        count += 1;
+      }
+      return count;
+    }
+
+    function visitConnectedComponents(graph: Graph, node: number, visited: Set<number>): void {
+      visited.add(node);
+
+      for (let nd of graph[node]) {
+        if (visited.has(nd)) continue;
+        visitConnectedComponents(graph, nd, visited);
+      }
+    }
+    // test(connectedComponentCount);
+
   }
 }
 

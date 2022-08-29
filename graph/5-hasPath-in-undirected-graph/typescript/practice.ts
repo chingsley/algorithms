@@ -261,5 +261,78 @@ const edges: string[][] = [
       // );
     }
   }
+  {
+    // O(e) time | O(n) space
+    // e = no. of edges | n = no. of nodes
+    function hasPath(edgeList: string[][], src: string, dst: string): boolean {
+      const graph: Graph = buildGraph(edgeList);
+      const visited: Set<string> = new Set();
+
+      const queue = [src];
+      while (queue.length > 0) {
+        const current = queue.shift()!;
+        if (current === dst) return true;
+        visited.add(current);
+
+        for (let node of graph[current]) {
+          if (visited.has(node)) continue;
+          queue.push(node);
+        }
+      }
+
+      return false;
+    }
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
+  }
+  {
+    // O(e) time | O(n) space
+    // e = no. of edges | n = no. of nodes
+    function hasPath(edgeList: string[][], src: string, dst: string): boolean {
+      const graph: Graph = buildGraph(edgeList);
+      const visited: Set<string> = new Set();
+
+      const queue = [src];
+      while (queue.length > 0) {
+        const current = queue.shift()!;
+        if (visited.has(current)) continue;
+
+        if (current === dst) return true;
+        visited.add(current);
+
+        queue.push(...graph[current]);
+      }
+
+      return false;
+    }
+  }
+  {
+    function hasPath(edgeList: string[][], src: string, dst: string): boolean {
+      const visited: Set<string> = new Set();
+      const graph = buildGraph(edgeList);
+      return pathCheck(graph, src, dst, visited);
+    }
+
+    function pathCheck(graph: Graph, src: string, dst: string, visited: Set<string>): boolean {
+      if (src === dst) return true;
+
+      visited.add(src);
+
+      for (let node of graph[src]) {
+        if (visited.has(node)) continue;
+        if (pathCheck(graph, node, dst, visited) === true) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+    // console.log(
+    //   hasPath(edges, 'i', 'l'), // expect true,
+    //   hasPath(edges, 'k', 'o'), // expect false,
+    // );
+  }
 }
 

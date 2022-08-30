@@ -262,9 +262,9 @@ const arr: string[][] = [
     }
 
 
-    console.log(
-      countIslands(arr), // // expect 2
-    );
+    // console.log(
+    //   countIslands(arr), // // expect 2
+    // );
   }
   {
     function countIslands(arr: string[][]): number {
@@ -304,9 +304,9 @@ const arr: string[][] = [
       return true;
     }
 
-    console.log(
-      countIslands(arr), // // expect 2
-    );
+    // console.log(
+    //   countIslands(arr), // // expect 2
+    // );
   }
   {
     function countIslands(arr: string[][]): number {
@@ -347,6 +347,244 @@ const arr: string[][] = [
 
       return hasUnvisitedIsland; // NOTE THIS ***
     }
+
+    // console.log(
+    //   countIslands(arr), // // expect 2
+    // );
+  }
+  {
+    function countIslands(arr: string[][]): number {
+      const visited: Set<string> = new Set();
+      let count = 0;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          // const key = [i, j].join(',');
+          // if(visited.has(key)) continue;
+          // if(arr[i][j] === 'w') continue;
+          if (!isUnvisitedLand(arr, [i, j], visited)) continue;
+
+          traverseIsland(arr, [i, j], visited);
+          count += 1;
+        }
+      }
+
+      return count;
+    }
+
+    // O(n * m) time | O(n * m) space
+    // n = no. of rows | m = no. of columns
+    function traverseIsland(arr: string[][], pos: [number, number], visited: Set<string>) {
+      const [i, j] = pos;
+      if (!isUnvisitedLand(arr, [i, j], visited)) return;
+      visited.add(pos.join(','));
+      // const key = [i, j].join(',');
+      // if(visited.has(key)) return;
+      // if(arr[i][j] === 'w') return;
+
+      // if (i < 0 || i >= arr.length) return;
+      // if (j < 0 || j >= arr[i].length) return;
+
+      traverseIsland(arr, [i - 1, j], visited);
+      traverseIsland(arr, [i + 1, j], visited);
+      traverseIsland(arr, [i, j - 1], visited);
+      traverseIsland(arr, [i, j + 1], visited);
+    }
+
+    const isUnvisitedLand = (arr: string[][], pos: [number, number], visited: Set<string>) => {
+      const [i, j] = pos;
+      const key = [i, j].join(',');
+      if (visited.has(key)) return false;
+      if (i < 0 || i >= arr.length) return false;
+      if (j < 0 || j >= arr[i].length) return false;
+      if (arr[i][j] === 'w') return false;
+      return true;
+    };
+
+    // console.log(
+    //   countIslands(arr), // // expect 2
+    // );
+  }
+  {// Same solution as the above (but with comments removed)
+    // O(n * m) time | O(n * m) space
+    // n = no. of rows | m = no. of columns
+    function countIslands(arr: string[][]): number {
+      const visited: Set<string> = new Set();
+      let count = 0;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (!isUnvisitedLand(arr, [i, j], visited)) continue;
+
+          traverseIsland(arr, [i, j], visited);
+          count += 1;
+        }
+      }
+
+      return count;
+    }
+
+    function traverseIsland(arr: string[][], [i, j]: [number, number], visited: Set<string>) {
+      if (!isUnvisitedLand(arr, [i, j], visited)) return;
+      visited.add([i, j].join(','));
+
+      traverseIsland(arr, [i - 1, j], visited);
+      traverseIsland(arr, [i + 1, j], visited);
+      traverseIsland(arr, [i, j - 1], visited);
+      traverseIsland(arr, [i, j + 1], visited);
+    }
+
+    const isUnvisitedLand = (arr: string[][], [i, j]: [number, number], visited: Set<string>) => {
+      if (visited.has([i, j].join(','))) return false;
+      if (i < 0 || i >= arr.length) return false;
+      if (j < 0 || j >= arr[i].length) return false;
+      if (arr[i][j] === 'w') return false;
+
+      return true;
+    };
+
+    // console.log(
+    //   countIslands(arr), // // expect 2
+    // );
+  }
+  {// Same solution as the above (but change the name of the helper function from 'isUnvisitedLand' to 'unvisitedLand')
+    // O(n * m) time | O(n * m) space
+    // n = no. of rows | m = no. of columns
+    function countIslands(arr: string[][]): number {
+      const visited: Set<string> = new Set();
+      let count = 0;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (!unvisitedLand(arr, [i, j], visited)) continue;
+
+          traverseIsland(arr, [i, j], visited);
+          count += 1;
+        }
+      }
+
+      return count;
+    }
+
+    function traverseIsland(arr: string[][], [i, j]: [number, number], visited: Set<string>) {
+      if (!unvisitedLand(arr, [i, j], visited)) return;
+      visited.add([i, j].join(','));
+
+      traverseIsland(arr, [i - 1, j], visited);
+      traverseIsland(arr, [i + 1, j], visited);
+      traverseIsland(arr, [i, j - 1], visited);
+      traverseIsland(arr, [i, j + 1], visited);
+    }
+
+    const unvisitedLand = (arr: string[][], [i, j]: [number, number], visited: Set<string>) => {
+      if (visited.has([i, j].join(','))) return false;
+      if (i < 0 || i >= arr.length) return false;
+      if (j < 0 || j >= arr[i].length) return false;
+      if (arr[i][j] === 'w') return false;
+
+      return true;
+    };
+
+    console.log(
+      countIslands(arr), // // expect 2
+    );
+  }
+  {// ITERATION (WITH STACK)
+    // O(n * m) time | O(n * m) space
+    // n = no. of rows | m = no. of columns
+    function countIslands(arr: string[][]): number {
+      let count = 0;
+      const visited: Set<string> = new Set();
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (isVisitedLand([i, j], visited)) continue;
+          if (isWater(arr, [i, j])) continue;
+
+          traverseIsland(arr, [i, j], visited);
+          count += 1;
+        }
+      }
+
+      return count;
+    }
+
+    function traverseIsland(arr: string[][], [row, col]: [number, number], visited: Set<string>) {
+      const stack = [[row, col]];
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+
+        if (isOutOfBorder(arr, [i, j])) continue;
+        if (isWater(arr, [i, j])) continue;
+        if (isVisitedLand([i, j], visited)) continue;
+        visited.add([i, j].join(','));
+
+        stack.push([i - 1, j]);
+        stack.push([i + 1, j]);
+        stack.push([i, j - 1]);
+        stack.push([i, j + 1]);
+      }
+    }
+
+    const isVisitedLand = ([i, j]: [number, number], visited: Set<string>): boolean => {
+      return visited.has([i, j].join(','));
+    };
+
+    const isWater = (arr: string[][], [i, j]: [number, number]): boolean => {
+      return arr[i][j] === 'w';
+    };
+
+    const isOutOfBorder = (arr: string[][], [i, j]: [number, number]): boolean => {
+      if (i < 0 || i >= arr.length) return true;
+      if (j < 0 || j >= arr[i].length) return true;
+
+      return false;
+    };
+
+    // console.log(
+    //   countIslands(arr), // // expect 2
+    // );
+  }
+  {// ITERATION (WITH STACK)
+    // O(n * m) time | O(n * m) space
+    // n = no. of rows | m = no. of columns
+    function countIslands(arr: string[][]): number {
+      let count = 0;
+      const visited: Set<string> = new Set();
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (isUnvisitedLand(arr, [i, j], visited)) {
+            traverseIsland(arr, [i, j], visited);
+            count += 1;
+          }
+
+        }
+      }
+
+      return count;
+    }
+
+    function traverseIsland(arr: string[][], [row, col]: [number, number], visited: Set<string>) {
+      const stack = [[row, col]];
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+
+        if (isUnvisitedLand(arr, [i, j], visited)) {
+          visited.add([i, j].join(','));
+
+          stack.push([i - 1, j]);
+          stack.push([i + 1, j]);
+          stack.push([i, j - 1]);
+          stack.push([i, j + 1]);
+        }
+
+      }
+    }
+
+    const isUnvisitedLand = (arr: string[][], [i, j]: [number, number], visited: Set<string>): boolean => {
+      if (i < 0 || i >= arr.length) return false;
+      if (j < 0 || j >= arr[i].length) return false;
+      if (arr[i][j] === 'w') return false;
+      if (visited.has([i, j].join(','))) return false;
+
+      return true;
+    };
 
     console.log(
       countIslands(arr), // // expect 2

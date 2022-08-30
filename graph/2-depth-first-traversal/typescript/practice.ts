@@ -123,16 +123,6 @@ const graph = {
       return result;
     }
 
-
-    const graph = {
-      a: ['c', 'b'],
-      b: ['d'],
-      c: ['e'],
-      d: ['f'],
-      e: [],
-      f: []
-    };
-
     console.log(
       depthFirstPrint(graph, 'a') // expect [ 'a', 'b', 'd', 'f', 'c', 'e' ] or [ 'a', 'c', 'e', 'b', 'd', 'f' ]
     );
@@ -153,18 +143,47 @@ const graph = {
       }
     }
 
+    // console.log(
+    //   depthFirstPrint(graph, 'a') // expect [ 'a', 'b', 'd', 'f', 'c', 'e' ] or [ 'a', 'c', 'e', 'b', 'd', 'f' ]
+    // );
+  }
+  {
+    function depthFirstPrint(graph: Graph, source: string) {
+      const stack = [source];
+      const array: string[] = [];
 
-    const graph = {
-      a: ['c', 'b'],
-      b: ['d'],
-      c: ['e'],
-      d: ['f'],
-      e: [],
-      f: []
-    };
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        array.push(current);
+        stack.push(...graph[current]);
+      }
+
+      return array;
+    }
+    type Graph = { [key: string]: string[]; };
+
+    console.log(
+      depthFirstPrint(graph, 'a') // expect [ 'a', 'b', 'd', 'f', 'c', 'e' ] or [ 'a', 'c', 'e', 'b', 'd', 'f' ]
+    );
+  }
+  {
+    type Graph = { [key: string]: string[]; };
+    function depthFirstPrint(graph: Graph, source: string) {
+      const array: string[] = [];
+      dfsTraverse(graph, source, array);
+      return array;
+    }
+
+    function dfsTraverse(graph: Graph, src: string, array: string[]) {
+      array.push(src);
+      for (let vtx of graph[src]) {
+        dfsTraverse(graph, vtx, array);
+      }
+    }
 
     console.log(
       depthFirstPrint(graph, 'a') // expect [ 'a', 'b', 'd', 'f', 'c', 'e' ] or [ 'a', 'c', 'e', 'b', 'd', 'f' ]
     );
   }
 }
+

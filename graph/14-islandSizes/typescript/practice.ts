@@ -49,9 +49,9 @@ const arr: string[][] = [
     type Visited = Set<string>;
 
 
-    console.log(
-      islandSizes(arr), // // expect [ 5, 1 ]
-    );
+    // console.log(
+    //   islandSizes(arr), // // expect [ 5, 1 ]
+    // );
   }
 
   {// ITERATION
@@ -101,9 +101,9 @@ const arr: string[][] = [
 
     type Visited = Set<string>;
 
-    console.log(
-      islandSizes(arr), // // expect [ 5, 1 ]
-    );
+    // console.log(
+    //   islandSizes(arr), // // expect [ 5, 1 ]
+    // );
   }
   {
     {
@@ -139,9 +139,9 @@ const arr: string[][] = [
         return size;
       }
 
-      console.log(
-        islandSizes(arr), // // expect 1
-      );
+      // console.log(
+      //   islandSizes(arr), // // expect 1
+      // );
     }
     {
       function islandSizes(array: string[][]): number[] {
@@ -181,11 +181,101 @@ const arr: string[][] = [
         return size;
       }
 
-      console.log(
-        islandSizes(arr), // expect [ 5, 1 ]
-      );
+      // console.log(
+      //   islandSizes(arr), // expect [ 5, 1 ]
+      // );
     }
 
+  }
+  {
+    function islandSizes(array: string[][]): number[] {
+      let sizes: number[] = [];
+      const visited: Set<string> = new Set();
+      for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].length; j++) {
+          if (!unVisitedLand(arr, [i, j], visited)) continue;
+
+          const size = getIslandSize(arr, [i, j], visited);
+          sizes.push(size);
+        }
+      }
+
+      return sizes;
+    }
+
+    function getIslandSize(arr: string[][], [i, j]: [number, number], visited: Set<string>): number {
+      if (!unVisitedLand(arr, [i, j], visited)) return 0;
+      visited.add([i, j].join(','));
+
+      let size = 1;
+      size += getIslandSize(arr, [i - 1, j], visited);
+      size += getIslandSize(arr, [i + 1, j], visited);
+      size += getIslandSize(arr, [i, j - 1], visited);
+      size += getIslandSize(arr, [i, j + 1], visited);
+      return size;
+    }
+
+    const unVisitedLand = (arr: string[][], [i, j]: [number, number], visited: Set<string>): boolean => {
+      if (i < 0 || i >= arr.length) return false;
+      if (j < 0 || j >= arr[i].length) return false;
+      if (arr[i][j] === 'w') return false;
+      if (visited.has([i, j].join(','))) return false;
+
+      return true;
+    };
+    // console.log(
+    //   islandSizes(arr), // expect [ 5, 1 ]
+    // );
+  }
+  {
+    function islandSizes(array: string[][]): number[] {
+      const sizes: number[] = [];
+      const visited: Set<string> = new Set();
+      for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array[i].length; j++) {
+          if (!unVisitedLand(arr, [i, j], visited)) continue;
+
+          const size = getIslandSize(arr, [i, j], visited);
+          sizes.push(size);
+        }
+      }
+
+      return sizes;
+    }
+
+    function getIslandSize(arr: string[][], [row, col]: [number, number], visited: Set<string>): number {
+      let size = 0;
+      const stack = [[row, col]];
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+
+        if (!unVisitedLand(arr, [i, j], visited)) continue;
+        visited.add([i, j].join(','));
+
+        stack.push([i - 1, j]);
+        stack.push([i + 1, j]);
+        stack.push([i, j - 1]);
+        stack.push([i, j + 1]);
+        size += 1;
+      }
+
+      return size;
+    }
+
+
+
+    const unVisitedLand = (arr: string[][], [i, j]: [number, number], visited: Set<string>): boolean => {
+      if (i < 0 || i >= arr.length) return false;
+      if (j < 0 || j >= arr[i].length) return false;
+      if (arr[i][j] === 'w') return false;
+      if (visited.has([i, j].join(','))) return false;
+
+      return true;
+    };
+
+    console.log(
+      islandSizes(arr), // expect [ 5, 1 ]
+    );
   }
 }
 

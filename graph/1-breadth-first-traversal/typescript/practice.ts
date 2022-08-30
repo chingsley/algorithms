@@ -1,4 +1,4 @@
-const graph = {
+export const graph = {
   a: ['c', 'b'],
   b: ['d'],
   c: ['e'],
@@ -32,9 +32,9 @@ const graph = {
     // expect [ 'a', 'c', 'b', 'e', 'd', 'f' ] or [ 'a', 'b', 'c', 'd', 'e', 'f' ]
   }
   {
-    interface Graph { [key: string]: string; };
+    interface Graph { [key: string]: string[]; };
 
-    function breadFirstPrint(graph: Graph, src: string) {
+    function breadthFirstPrint(graph: Graph, src: string) {
       const arr: string[] = [];
       const queue: string[] = [src];
 
@@ -48,9 +48,30 @@ const graph = {
 
       return arr;
     }
+    // console.log(
+    //   breadthFirstPrint(graph, 'a') // expect [ 'a', 'c', 'b', 'e', 'd', 'f' ] or [ 'a', 'b', 'c', 'd', 'e', 'f' ]
+    // );
+  }
+  {
+    function breadthFirstPrint(graph: Graph, src: string) {
+      const queue = [src];
+      const array: string[] = [];
+
+      while (queue.length > 0) {
+        const current = queue.shift();
+        array.push(current);
+
+        queue.push(...graph[current]);
+      }
+
+      return array;
+    }
+    interface Graph { [key: string]: string[]; };
+
     console.log(
       breadthFirstPrint(graph, 'a') // expect [ 'a', 'c', 'b', 'e', 'd', 'f' ] or [ 'a', 'b', 'c', 'd', 'e', 'f' ]
     );
+
   }
 }
 

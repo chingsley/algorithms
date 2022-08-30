@@ -265,9 +265,9 @@ interface Visited { [key: number]: number; };
       return components;
     }
 
-    console.log(
-      connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
-    );
+    // console.log(
+    //   connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    // );
   }
   {
     function connectedComponents(graph: Graph): number[][] {
@@ -294,6 +294,96 @@ interface Visited { [key: number]: number; };
       }
 
       return components;
+    }
+    // console.log(
+    //   connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    // );
+  }
+  {
+    function connectedComponents(graph: Graph): number[][] {
+      const array: number[][] = [];
+      const visited: Set<number> = new Set();
+
+      for (let key in graph) {
+        if (visited.has(Number(key))) continue;
+        array.push(getConnectedComponents(graph, Number(key), visited));
+      }
+      return array;
+    }
+
+    function getConnectedComponents(graph: Graph, node: number, visited: Set<number>): number[] {
+      visited.add(node);
+
+      const result = [node];
+      for (let nd of graph[node]) {
+        if (visited.has(nd)) continue;
+        result.push(...getConnectedComponents(graph, nd, visited));
+      }
+
+      return result;
+    }
+    console.log(
+      connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    );
+  }
+  {
+    // O(e) time | O(n) space
+    // e = no. of edges | n = no. of nodes
+    function connectedComponents(graph: Graph): number[][] {
+      const array: number[][] = [];
+      const visited: Set<number> = new Set();
+
+      for (let key in graph) {
+        if (visited.has(Number(key))) continue;
+        const curr: number[] = [];
+        getConnectedComponents(graph, Number(key), visited, curr);
+        array.push(curr);
+      }
+      return array;
+    }
+
+    function getConnectedComponents(graph: Graph, node: number, visited: Set<number>, curr: number[]): void {
+      visited.add(node);
+
+      curr.push(node);
+      for (let nd of graph[node]) {
+        if (visited.has(nd)) continue;
+        getConnectedComponents(graph, nd, visited, curr);
+      };
+    }
+    console.log(
+      connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]
+    );
+  }
+  {
+    // O(e) time | O(n) space
+    // e = no. of edges | n = no. of nodes
+    function connectedComponents(graph: Graph): number[][] {
+      const array: number[][] = [];
+      const visited: Set<number> = new Set();
+
+      for (let key in graph) {
+        if (visited.has(Number(key))) continue;
+        const conn = getConnectedComponents(graph, Number(key), visited);
+        array.push(conn);
+      }
+      return array;
+    }
+
+    function getConnectedComponents(graph: Graph, node: number, visited: Set<number>): number[] {
+      const conn: number[] = [];
+
+      const stack = [node];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        conn.push(current);
+        stack.push(...graph[current]);
+      }
+
+      return conn;
     }
     console.log(
       connectedComponents(testGraph), // expect [ [3], [1, 2], [4, 5, 6, 7, 8]]

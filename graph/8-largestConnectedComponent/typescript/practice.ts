@@ -214,6 +214,106 @@ const testGraph: Graph = {
 
       return size;
     }
+    // console.log(
+    //   largestComponent(testGraph), // expect 5,
+    // );
+  }
+  {
+    // O(e) time | O(n) space;
+    // e = no. of edges
+    // n = no. of vertices
+    function largestComponent(graph: Graph): number {
+      let largestSize = 0;
+      const visited: Set<number> = new Set();
+
+      for (let key in graph) {
+        const node = Number(key);
+        if (visited.has(node)) continue;
+        const size = calcSize(graph, node, visited);
+        if (size > largestSize) largestSize = size;
+      }
+
+      return largestSize;
+    }
+
+    function calcSize(graph: Graph, node: number, visited: Set<number>) {
+      visited.add(node);
+
+      let size = 1;
+      for (let nd of graph[node]) {
+        if (visited.has(nd)) continue;
+        size += calcSize(graph, nd, visited);
+      }
+
+      return size;
+    }
+
+    // console.log(
+    //   largestComponent(testGraph), // expect 5,
+    // );
+  }
+  {
+    // O(e) time | O(n) space;
+    // e = no. of edges
+    // n = no. of vertices
+    function largestComponent(graph: Graph): number {
+      let largestSize = 0;
+      const visited: Set<number> = new Set();
+
+      for (let key in graph) {
+        const node = Number(key);
+        const size = calcSize(graph, node, visited);
+        if (size > largestSize) largestSize = size;
+      }
+
+      return largestSize;
+    }
+
+    function calcSize(graph: Graph, node: number, visited: Set<number>) {
+      if (visited.has(node)) return 0;
+      visited.add(node);
+
+      let size = 1;
+      for (let nd of graph[node]) {
+        size += calcSize(graph, nd, visited);
+      }
+
+      return size;
+    }
+
+    // console.log(
+    //   largestComponent(testGraph), // expect 5,
+    // );
+  }
+  {
+    function largestComponent(graph: Graph): number {
+      let largestSize = 0;
+      const visited: Set<number> = new Set();
+
+      for (let key in graph) {
+        const node = Number(key);
+        const size = calcSize(graph, node, visited);
+        if (size > largestSize) largestSize = size;
+      }
+
+      return largestSize;
+    }
+
+    function calcSize(graph: Graph, node: number, visited: Set<number>) {
+      const stack = [node];
+      let size = 0;
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        stack.push(...graph[current]);
+        size += 1;
+      }
+
+      return size;
+    }
+
     console.log(
       largestComponent(testGraph), // expect 5,
     );

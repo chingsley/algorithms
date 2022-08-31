@@ -108,6 +108,59 @@
 
       return passes > 0 ? passes - 1 : 0;
     }
+
+    {
+      // O(n * m) time | O(n * m) space;
+      // n = no. of columns
+      // m = no. of rows
+      function minimumPassesOfMatrix(matrix: number[][]) {
+        let positiveStack: number[][] = [];
+        const negativeStack: number[][] = [];
+
+        for (let i = 0; i < matrix.length; i++) {
+          for (let j = 0; j < matrix[i].length; j++) {
+            if (matrix[i][j] > 0) positiveStack.push([i, j]);
+            if (matrix[i][j] < 0) negativeStack.push([i, j]);
+          }
+        }
+
+        let passes = 0;
+        let stack = positiveStack;
+        positiveStack = [];
+        while (stack.length > 0) {
+          const [row, col] = stack.pop()!;
+
+          if (row - 1 >= 0 && matrix[row - 1][col] < 0) {
+            matrix[row - 1][col] *= -1;
+            positiveStack.push([row - 1, col]);
+          }
+          if (row + 1 < matrix.length && matrix[row + 1][col] < 0) {
+            matrix[row + 1][col] *= -1;
+            positiveStack.push([row + 1, col]);
+          }
+          if (col - 1 >= 0 && matrix[row][col - 1] < 0) {
+            matrix[row][col - 1] *= -1;
+            positiveStack.push([row, col - 1]);
+          }
+          if (col + 1 < matrix[row].length && matrix[row][col + 1] < 0) {
+            matrix[row][col + 1] *= -1;
+            positiveStack.push([row, col + 1]);
+          }
+
+          if (stack.length === 0) {
+            passes += 1;
+            stack = positiveStack;
+            positiveStack = [];
+          }
+        }
+
+        for (let [i, j] of negativeStack) {
+          if (matrix[i][j] < 0) return -1;
+        }
+
+        return passes - 1;
+      }
+    }
   }
 }
 

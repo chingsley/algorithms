@@ -302,6 +302,71 @@
     }
 
   }
+  {
+    // This is an input class. Do not edit.
+    class AncestralTree {
+      name: string;
+      ancestor: AncestralTree | null;
+
+      constructor(name: string) {
+        this.name = name;
+        this.ancestor = null;
+      }
+    }
+
+    // O(d) time | O(1) space
+    // d = depth of the tree
+    function getYoungestCommonAncestor(
+      topAncestor: AncestralTree,
+      descendantOne: AncestralTree,
+      descendantTwo: AncestralTree,
+    ) {
+      const d1 = getDepth(descendantOne);
+      const d2 = getDepth(descendantTwo);
+
+      if (d1 > d2) {
+        return backtrack(
+          descendantOne,
+          descendantTwo,
+          d1 - d2
+        );
+      } else {
+        return backtrack(
+          descendantTwo,
+          descendantOne,
+          d2 - d1
+        );
+      }
+    }
+
+    function backtrack(lower: AncestralTree, upper: AncestralTree, diff: number): AncestralTree {
+      while (diff > 0) {
+        lower = lower.ancestor!;
+        diff -= 1;
+      }
+
+      if (lower === upper) return lower;
+
+      while (lower.ancestor !== upper.ancestor) {
+        lower = lower.ancestor!;
+        upper = upper.ancestor!;
+      }
+
+      return lower.ancestor!;
+    }
+
+    function getDepth(node: AncestralTree): number {
+      let currentNode = node;
+      let depth = 0;
+      while (currentNode.ancestor !== null) {
+        currentNode = currentNode.ancestor;
+        depth += 1;
+      }
+
+      return depth;
+    }
+
+  }
 }
 
 export const ___ = '___';

@@ -48,6 +48,19 @@
         }
         return array;
       }
+
+      // O(e) time | O(n) space
+      // e = no. of edges | n = no. of nodes
+      breadthFirstSearch3(array: string[]) {
+        const queue = [this as Node];
+        while (queue.length > 0) {
+          const current = queue.shift()!;
+          array.push(current.name);
+          queue.push(...current.children);
+        }
+
+        return array;
+      }
     }
 
   }

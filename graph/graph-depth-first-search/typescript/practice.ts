@@ -31,6 +31,17 @@
         }
         return array;
       }
+      // O(n) time
+      // O(d) space, if we consider only space used by recursion
+      // O(n) space, if we consider also the size array
+      // n = no. of vertex or nodes in the tree
+      depthFirstSearch2(array: string[]) {
+        array.push(this.name);
+        for (let child of this.children) {
+          child.depthFirstSearch2(array);
+        }
+        return array;
+      }
     }
   }
 }

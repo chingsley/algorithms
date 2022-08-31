@@ -96,6 +96,30 @@
       }
     }
   }
+  {
+    // O(n) time | O(n) space
+    // n = size of array
+    function hasSingleCycle(array: number[]) {
+      const visited: Set<number> = new Set();
+      const startIdx = 0;
+      visited.add(startIdx);
+
+      let idx = startIdx;
+      while (true) {
+        let nextIdx = idx += array[idx];
+        while (nextIdx < 0) nextIdx += array.length;
+        while (nextIdx >= array.length) nextIdx -= array.length;
+
+        if (visited.has(nextIdx)) {
+          return nextIdx === startIdx && visited.size === array.length;
+        }
+
+        visited.add(nextIdx);
+        idx = nextIdx;
+      }
+    }
+
+  }
 }
 
 export const ___ = '___';

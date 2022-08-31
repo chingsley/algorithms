@@ -217,6 +217,58 @@
       return false;
     }
   }
+  {
+    // O(n^2) time | O(n) space;
+    // n = length of edges array;
+    function cycleInGraph(edges: number[][]) {
+      for (let node = 0; node < edges.length; node += 1) {
+        const visited: Set<number> = new Set();
+        if (edges[node][0] === undefined) continue;
+        const hasCycle = checkCycle(edges, edges[node][0], node, visited);
+        if (hasCycle) return true;
+      }
+
+      return false;
+    }
+
+    function checkCycle(edges: number[][], src: number, dst: number, visited: Set<number>): boolean {
+      if (src === dst) return true;
+      if (visited.has(src)) return false;
+      visited.add(src);
+      for (let nd of edges[src]) {
+        if (checkCycle(edges, nd, dst, visited) === true) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  }
+  {
+    function cycleInGraph(edges: number[][]) {
+      for (let node in edges) {// 'in' in array loops through indices. So node is index
+        const cycleFound = checkCycle(edges, Number(node));
+        if (cycleFound) return true;
+      }
+
+      return false;
+    }
+
+    function checkCycle(edges: number[][], src: number): boolean {
+      const visited: Set<number> = new Set();
+      const stack = [...edges[src]];
+      while (stack.length > 0) {
+        const current = stack.pop()!;
+        if (current === src) return true;
+
+        if (visited.has(current)) continue;
+        visited.add(current);
+        stack.push(...edges[current]);
+      }
+
+      return false;
+    }
+  }
 }
 
 export const __ = '___';

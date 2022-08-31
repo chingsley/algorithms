@@ -135,6 +135,91 @@
       return size;
     }
   }
+  {
+    // O(m * n) time | O(m * n) space
+    // m = no. of rows | n = no. of cols
+    function riverSizes(matrix: number[][]) {
+      const visited: Set<string> = new Set();
+      const sizes: number[] = [];
+
+      for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (matrix[i][j] === 0) continue;
+          if (visited.has([i, j].join(','))) continue;
+
+          const size = countRivers([i, j], matrix, visited);
+          sizes.push(size);
+        }
+      }
+
+      return sizes;
+    }
+
+    function countRivers([row, col]: [number, number], matrix: number[][], visited: Set<string>): number {
+      let size = 0;
+      const stack = [[row, col]];
+      while (stack.length > 0) {
+        const [i, j] = stack.pop()!;
+
+        if (i < 0 || i >= matrix.length) continue;
+        if (j < 0 || j >= matrix[i].length) continue;
+
+        if (matrix[i][j] === 0) continue;
+        if (visited.has([i, j].join(','))) continue;
+        visited.add([i, j].join(','));
+
+        stack.push([i - 1, j]);
+        stack.push([i + 1, j]);
+        stack.push([i, j - 1]);
+        stack.push([i, j + 1]);
+
+        size += 1;
+      }
+
+      return size;
+    }
+
+  }
+  {
+    // O(m * n) time | O(m * n) space
+    // m = no. of rows | n = no. of cols
+    function riverSizes(matrix: number[][]) {
+      const visited: Set<string> = new Set();
+      const sizes: number[] = [];
+
+      for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+          if (matrix[i][j] === 0) continue;
+          if (visited.has([i, j].join(','))) continue;
+
+          const size = countRivers([i, j], matrix, visited);
+          sizes.push(size);
+        }
+      }
+
+      return sizes;
+    }
+
+    function countRivers([i, j]: [number, number], matrix: number[][], visited: Set<string>): number {
+      if (i < 0 || i >= matrix.length) return 0;
+      if (j < 0 || j >= matrix[i].length) return 0;
+
+      if (matrix[i][j] === 0) return 0;
+
+      const key = [i, j].join(',');
+      if (visited.has(key)) return 0;
+      visited.add(key);
+
+      let size = 1;
+      size += countRivers([i - 1, j], matrix, visited);
+      size += countRivers([i + 1, j], matrix, visited);
+      size += countRivers([i, j - 1], matrix, visited);
+      size += countRivers([i, j + 1], matrix, visited);
+
+      return size;
+    }
+
+  }
 }
 
 export const ___ = '___';

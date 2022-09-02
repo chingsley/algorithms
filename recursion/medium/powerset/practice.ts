@@ -110,6 +110,26 @@ import { indent } from "../../../utils/index";
      The overall space becomes n * 2^n
     */
   }
+  {
+    /*
+    * O(2^n * n) time
+    * O(2^n * n) space
+    */
+    function powerset(array: number[]) {
+      if (array.length === 0) return [[]];
+
+      const [first, ...rest] = array;
+      const powersetOfRest = powerset(rest);
+      const result: number[][] = [];
+      for (let set of powersetOfRest) {
+        result.push(set);
+        result.push([first, ...set]);
+      }
+
+      return result;
+    }
+
+  }
 }
 
 export const __ = '__';

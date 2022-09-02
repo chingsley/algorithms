@@ -101,6 +101,26 @@
 
     type SpecialArray = Array<number | SpecialArray>;
   }
+
+  {
+    // O(n) time | O(d) space
+    // n = total no. of elements
+    // d = depth of the most nested array
+    function productSum(array: SpecialArray, weight = 1) {
+      let result = 0;
+      for (let value of array) {
+        if (Array.isArray(value)) {
+          result += weight * productSum(value, weight + 1);
+        } else {
+          result += weight * value;
+        }
+      }
+
+      return result;
+    }
+
+    type SpecialArray = Array<number | SpecialArray>;
+  }
 }
 
 export const ___ = '___';

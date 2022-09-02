@@ -149,6 +149,31 @@
       return f2;
     }
   }
+  {
+    // O(n) time (with memo) | O(n) space
+    // O(2^n) time (without memo) | O(n) space
+    function getNthFib(n: number, memo: Memo = { 1: 0, 2: 1 }): number {
+      if (n in memo) return memo[n];
+
+      memo[n] = getNthFib(n - 1, memo) + getNthFib(n - 2, memo);
+      return memo[n];
+    }
+
+    interface Memo { [key: number]: number; };
+  }
+  {
+    // O(n) time | O(1) space
+    function getNthFib(n: number): number {
+      let [f1, f2] = [0, 1];
+      if (n < 3) return [f1, f2][n - 1];
+
+      for (let i = 3; i <= n; i++) {
+        [f1, f2] = [f2, f1 + f2];
+      }
+
+      return f2;
+    }
+  }
 }
 
 export const ___ = '___';

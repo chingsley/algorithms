@@ -290,6 +290,25 @@ import { indent } from "../../../utils/index";
       }
     }
   }
+  {
+    const letters = dict;
+    function phoneNumberMnemonics(phoneNumber: string): string[] {
+      if (phoneNumber === "") return [""];
+
+      const firstDigit = phoneNumber[0];
+      const otherDigits = phoneNumber.slice(1);
+      const lettersOfFirstDigit = letters[firstDigit];
+      const mnemonicsOfOthers = phoneNumberMnemonics(otherDigits);
+      const result: string[] = [];
+      for (let mnemonic of mnemonicsOfOthers) {
+        for (let letter of lettersOfFirstDigit) {
+          result.push(letter + mnemonic);
+        }
+      }
+
+      return result;
+    }
+  }
 }
 
 export const __ = '__';

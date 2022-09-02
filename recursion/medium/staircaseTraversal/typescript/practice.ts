@@ -384,6 +384,59 @@
     }
 
   }
+  {/**
+      O(k^n) time (without Memo) | O(k * n) time (with memo)
+      O(n) space (with or without memo)
+   * @param height h
+   * @param maxSteps k
+   * @param memo Memo
+   * @returns number
+   */
+    function staircaseTraversal(height: number, maxSteps: number, memo: Memo = { 0: 1, 1: 1 }): number {
+      if (height < 0) return 0;
+      if (height in memo) return memo[height];
+
+      let result = 0;
+      for (let i = 1; i <= maxSteps; i++) {
+        result += staircaseTraversal(height - i, maxSteps, memo);
+      }
+
+      return result;
+    }
+
+    type Memo = { [key: number]: number; };
+  }
+  {
+    // O(k * n) time | O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(0);
+      [array[0], array[1]] = [1, 1];
+
+      for (let i = 2; i < array.length; i++) {
+        const currentHeight = i;
+        for (let j = 1; j <= maxSteps; j++) {
+          if (currentHeight - j < 0) break;
+          array[currentHeight] += array[currentHeight - j];
+        }
+      }
+
+      return array[height];
+    }
+  }
+  {
+    // O(n) time | O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+
+      let kSum = 1;
+      for (let i = 2; i < array.length; i++) {
+        kSum += array[i - 1] - (array[i - maxSteps - 1] || 0);
+        array[i] = kSum;
+      }
+
+      return array[height];
+    }
+  }
 }
 
 export const ___ = '___';

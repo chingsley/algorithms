@@ -186,6 +186,27 @@
       return isWest ? result : result.reverse();
     }
   }
+  {
+    enum Direction {
+      East = "EAST",
+      West = "WEST",
+    }
+
+    // O(n) time | O(n) space
+    function sunsetViews(buildings: number[], direction: Direction) {
+      if (buildings.length === 0) return [];
+      const startIdx = direction === Direction.West ? 0 : buildings.length - 1;
+      const step = direction === Direction.West ? 1 : -1;
+      const result = [startIdx];
+      for (let i = startIdx + step; (i >= 0 && i < buildings.length); i += step) {
+        if (buildings[i] > buildings[result[result.length - 1]]) {
+          result.push(i);
+        }
+      }
+
+      return direction === Direction.West ? result : result.reverse();
+    }
+  }
 }
 
 export const ___ = '___';

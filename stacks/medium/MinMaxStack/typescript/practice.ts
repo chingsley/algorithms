@@ -83,8 +83,9 @@
     }
 
   }
-  {// BUGGY!
+  {
     // Feel free to add new properties and methods to the class.
+    // all methods are O(1) time and O(1) space when considered independently
     class MinMaxStack {
       min: number[];
       max: number[];
@@ -107,8 +108,8 @@
 
       push(number: number) {
         this.stack.push(number);
-        if (!this.getMax() || number >= this.getMax()) this.max.push(number);
-        if (!this.getMin() || number <= this.getMin()) this.min.push(number);
+        if (this.getMax() === undefined || number >= this.getMax()) this.max.push(number);
+        if (this.getMin() === undefined || number <= this.getMin()) this.min.push(number);
       }
 
       getMin() {
@@ -119,6 +120,7 @@
         return this.max[this.max.length - 1];
       }
     }
+
 
   }
 }

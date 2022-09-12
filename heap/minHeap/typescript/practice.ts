@@ -1,0 +1,145 @@
+{
+  {
+    // Do not edit the class below except for the buildHeap,
+    // siftDown, siftUp, peek, remove, and insert methods.
+    // Feel free to add new properties and methods to the class.
+    class MinHeap {
+      heap: number[];
+
+      constructor(array: number[]) {
+        this.heap = this.buildHeap(array);
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      // space complexity is due to recursion
+      buildHeap(array: number[]) {
+        for (let i = array.length - 1; i >= 0; i--) {
+          this.siftDown(i, array);
+        }
+        return array;
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      // space complexity is due to recursion
+      siftDown(idx: number, heap: number[]) {
+        const i = idx;
+        const j = (2 * i) + 1;
+        const k = (2 * i) + 2;
+        const minIdx = this.getMinIdx([i, j, k], heap);
+        if (minIdx === i) return;
+        [heap[i], heap[minIdx]] = [heap[minIdx], heap[i]];
+        this.siftDown(minIdx, heap);
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      // space complexity is due to recursion
+      getMinIdx([i, j, k]: number[], heap: number[]): number {
+        let minIdx = i;
+        if (heap[j] && heap[j] < heap[minIdx]) minIdx = j;
+        if (heap[k] && heap[k] < heap[minIdx]) minIdx = k;
+        return minIdx;
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      // space complexity is due to recursion
+      siftUp(i: number, heap: number[]) {
+        const parentIdx = Math.floor((i - 1) / 2);
+        if (parentIdx < 0 || heap[parentIdx] <= heap[i]) return;
+        [heap[parentIdx], heap[i]] = [heap[i], heap[parentIdx]];
+        this.siftUp(parentIdx, heap);
+      }
+
+      // O(1) time | O(1) space
+      peek() {
+        return this.heap[0];
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      // space complexity is due to recursion
+      remove() {
+        const lastIdx = this.heap.length - 1;
+        [this.heap[0], this.heap[lastIdx]] = [this.heap[lastIdx], this.heap[0]];
+        const min = this.heap.pop();
+        this.siftDown(0, this.heap);
+        return min;
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      // space complexity is due to recursion
+      insert(value: number) {
+        this.heap.push(value);
+        this.siftUp(this.heap.length - 1, this.heap);
+      }
+    }
+  }
+  {
+    // Do not edit the class below except for the buildHeap,
+    // siftDown, siftUp, peek, remove, and insert methods.
+    // Feel free to add new properties and methods to the class.
+    class MinHeap {
+      heap: number[];
+
+      constructor(array: number[]) {
+        this.heap = this.buildHeap(array);
+      }
+
+      // O(n) time | O(1) space
+      buildHeap(array: number[]) {
+        for (let i = array.length - 1; i >= 0; i--) {
+          this.siftDown(i, array);
+        }
+        return array;
+      }
+
+      // O(log(n)) time | O(1) space
+      siftDown(i: number, array: number[]) {
+        const j = (2 * i) + 1;
+        const k = (2 * i) + 2;
+        const minIdx = this.getMinIdx([i, j, k], array);
+        if (minIdx === i) return;
+        [array[i], array[minIdx]] = [array[minIdx], array[i]];
+        this.siftDown(minIdx, array);
+      }
+
+      // O(log(n)) time | O(1) space
+      siftUp(i: number) {
+        const j = Math.floor((i - 1) / 2);
+        if (j < 0 || this.heap[j] < this.heap[i]) return;
+        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+        this.siftUp(j);
+      }
+
+      // O(1) time | O(1) space
+      peek() {
+        return this.heap[0];
+      }
+
+      // O(log(n)) time | O(1) space
+      remove() {
+        const [i, j] = [0, this.heap.length - 1];
+        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+        const num = this.heap.pop()!;
+        this.siftDown(0, this.heap);
+        return num;
+      }
+
+      // O(log(n)) time | O(1) space
+      insert(value: number) {
+        this.heap.push(value);
+        this.siftUp(this.heap.length - 1);
+      }
+
+      // O(1) time | O(1) space
+      getMinIdx([i, j, k]: number[], array: number[]): number {
+        let minIdx = i;
+        if (j < array.length && array[j] < array[minIdx]) minIdx = j;
+        if (k < array.length && array[k] < array[minIdx]) minIdx = k;
+        return minIdx;
+      }
+    }
+
+  }
+}
+
+
+export const __ = '__';

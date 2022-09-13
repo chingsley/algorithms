@@ -25,6 +25,7 @@ function merge(sortedLeft: number[], sortedRight: number[], inversion: Inversion
       i += 1;
     } else {
       inversion.count += sortedLeft.slice(i).length;
+      // inversion.count += sortedLeft.length - i; // this is better in terms of time complexity
       merged.push(sortedRight[j]);
       j += 1;
     }

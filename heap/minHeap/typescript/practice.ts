@@ -137,7 +137,65 @@
         return minIdx;
       }
     }
+  }
+  {
+    // Do not edit the class below except for the buildHeap,
+    // siftDown, siftUp, peek, remove, and insert methods.
+    // Feel free to add new properties and methods to the class.
+    class MinHeap {
+      heap: number[];
 
+      constructor(array: number[]) {
+        this.heap = this.buildHeap(array);
+      }
+
+      buildHeap(array: number[]) {
+        for (let i = array.length - 1; i >= 0; i--) {
+          this.siftDown(i, array);
+        }
+        return array;
+      }
+
+      siftDown(i: number, array: number[]) {
+        let [j, k] = [(2 * i) + 1, (2 * i) + 2];
+        const minIdx = this.getMinIdx([i, j, k], array);
+        if (minIdx === i) return;
+        [array[i], array[minIdx]] = [array[minIdx], array[i]];
+        this.siftDown(minIdx, array);
+      }
+
+      siftUp(i: number) {
+        const array = this.heap;
+        const j = Math.floor((i - 1) / 2);
+        if (j < 0 || array[j] <= array[i]) return;
+        [array[i], array[j]] = [array[j], array[i]];
+        this.siftUp(j);
+      }
+
+      getMinIdx([i, j, k]: number[], array: number[]): number {
+        let minIdx = i;
+        if (j < array.length && array[j] < array[minIdx]) minIdx = j;
+        if (k < array.length && array[k] < array[minIdx]) minIdx = k;
+        return minIdx;
+      }
+
+      peek() {
+        return this.heap[0];
+      }
+
+      remove() {
+        const endIdx = this.heap.length - 1;
+        [this.heap[0], this.heap[endIdx]] = [this.heap[endIdx], this.heap[0]];
+        const min = this.heap.pop()!;
+        this.siftDown(0, this.heap);
+        return min;
+      }
+
+      insert(value: number) {
+        this.heap.push(value);
+        this.siftUp(this.heap.length - 1);
+      }
+    }
   }
 }
 

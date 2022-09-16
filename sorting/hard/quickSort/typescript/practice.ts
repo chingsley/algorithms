@@ -133,6 +133,34 @@
       return [...quickSort(lessThanPivot), pivot, ...quickSort(greaterThanPivot)];
     }
   }
+  {
+    // worst case: O(n^2) time | O(log(n)) space
+    // best case: O(nlog(n)) time | O(log(n)) space
+    // (space complexity in both cases is due to recursion)
+    function quickSort(array: number[]): number[] {
+      quickSortInRange(0, array.length - 1, array);
+      return array;
+    }
+
+    function quickSortInRange(startIdx: number, endIdx: number, array: number[]) {
+      if (startIdx >= endIdx) return;
+
+      const pivot = array[endIdx];
+      let leftIdx = startIdx;
+      let rightIdx = endIdx - 1;
+      while (leftIdx <= rightIdx) {
+        if (array[leftIdx] > pivot && array[rightIdx] < pivot) {
+          [array[leftIdx], array[rightIdx]] = [array[rightIdx], array[leftIdx]];
+        }
+        if (array[leftIdx] <= pivot) leftIdx += 1;
+        if (array[rightIdx] >= pivot) rightIdx -= 1;
+      }
+      [array[leftIdx], array[endIdx]] = [array[endIdx], array[leftIdx]]; // recall: we chose endIdx as the pivot index
+
+      quickSortInRange(startIdx, leftIdx - 1, array);
+      quickSortInRange(leftIdx + 1, endIdx, array);
+    }
+  }
 }
 
 export const __ = '__';

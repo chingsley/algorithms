@@ -133,7 +133,7 @@
       return [...quickSort(lessThanPivot), pivot, ...quickSort(greaterThanPivot)];
     }
   }
-  {
+  {// PIVOT INDEX = END INDEX
     // worst case: O(n^2) time | O(log(n)) space
     // best case: O(nlog(n)) time | O(log(n)) space
     // (space complexity in both cases is due to recursion)
@@ -159,6 +159,34 @@
 
       quickSortInRange(startIdx, leftIdx - 1, array);
       quickSortInRange(leftIdx + 1, endIdx, array);
+    }
+  }
+  {// PIVOT INDEX = START INDEX
+    // worst case: O(n^2) time | O(log(n)) space
+    // best case: O(nlog(n)) time | O(log(n)) space
+    // (space complexity in both cases is due to recursion)
+    function quickSort(array: number[]): number[] {
+      quickSortInRange(0, array.length - 1, array);
+      return array;
+    }
+
+    function quickSortInRange(startIdx: number, endIdx: number, array: number[]) {
+      if (startIdx >= endIdx) return;
+
+      const pivot = array[startIdx];
+      let leftIdx = startIdx + 1;
+      let rightIdx = endIdx;
+      while (leftIdx <= rightIdx) {
+        if (array[leftIdx] > pivot && array[rightIdx] < pivot) {
+          [array[leftIdx], array[rightIdx]] = [array[rightIdx], array[leftIdx]];
+        }
+        if (array[leftIdx] <= pivot) leftIdx += 1;
+        if (array[rightIdx] >= pivot) rightIdx -= 1;
+      }
+      [array[rightIdx], array[startIdx]] = [array[startIdx], array[rightIdx]]; // recall: we chose startIdx as the pivot index
+
+      quickSortInRange(startIdx, rightIdx - 1, array);
+      quickSortInRange(rightIdx + 1, endIdx, array);
     }
   }
 }

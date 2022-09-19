@@ -130,6 +130,24 @@ import { indent } from "../../../utils/index";
     }
 
   }
+  {
+    // O(n * 2^n) time | O(n * 2^n) space
+    function powerset(array: number[]) {
+      const result: number[][] = [[]];
+      psetAt(0, array, result);
+      return result;
+    }
+
+    function psetAt(idx: number, array: number[], result: number[][]) {
+      if (idx >= array.length) return;
+
+      let resultLength = result.length;
+      for (let i = 0; i < resultLength; i++) {
+        result.push([...result[i], array[idx]]);
+      }
+      psetAt(idx + 1, array, result);
+    }
+  }
 }
 
 export const __ = '__';

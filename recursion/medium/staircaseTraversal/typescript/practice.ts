@@ -437,6 +437,56 @@
       return array[height];
     }
   }
+  {
+
+    // O(k^n) time | O(n) space (without memo)
+    // O(k * n) time | O(n) space (without memo)
+    function staircaseTraversal(height: number, maxSteps: number, memo: Memo = { 0: 1, 1: 1 }): number {
+      if (height < 0) return 0;
+      if (height in memo) return memo[height];
+
+      let ways = 0;
+      let i = maxSteps;
+      for (let i = 1; i <= maxSteps; i++) {
+        ways += staircaseTraversal(height - i, maxSteps, memo);
+      }
+
+      memo[height] = ways;
+      return memo[height];
+    }
+
+    interface Memo { [key: number]: number; };
+  }
+  {
+    // O(k * n) time | o(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+      for (let i = 2; i < array.length; i++) {
+        array[i] = 0;
+        for (let j = 1; j <= maxSteps; j++) {
+          if (i - j < 0) continue;
+          array[i] += array[i - j];
+        }
+      }
+
+      return array[height];
+    }
+
+  }
+  {
+    // O(n) time | O(n) space
+    function staircaseTraversal(height: number, maxSteps: number): number {
+      const array = new Array(height + 1).fill(1);
+
+      let currSum = 1;
+      for (let i = 2; i < array.length; i++) {
+        currSum += array[i - 1] - (array[i - maxSteps - 1] || 0);
+        array[i] = currSum;
+      }
+
+      return array[height];
+    }
+  }
 }
 
 export const ___ = '___';

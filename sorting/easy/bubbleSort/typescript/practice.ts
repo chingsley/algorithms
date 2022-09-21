@@ -46,6 +46,19 @@
       return array;
     }
   }
+  {
+    // O(n^2) time | O(1) space
+    function bubbleSort(array: number[]) {
+      for (let endIdx = array.length - 1; endIdx > 0; endIdx--) {
+        for (let i = 0; i < endIdx; i++) {
+          if (array[i] > array[i + 1]) {
+            [array[i], array[i + 1]] = [array[i + 1], array[i]];
+          }
+        }
+      }
+      return array;
+    }
+  }
 }
 
 export const __ = '__';

@@ -171,6 +171,38 @@
       return numStr;
     }
   }
+  {
+    // O(p(n + b)) time | o(n + b) space
+    function radixSort(array: number[]) {
+      const passes = Math.max(...array).toString().length;
+      for (let digitIdx = passes - 1; digitIdx >= 0; digitIdx--) {// p
+        const counts: number[][] = new Array(10).fill(0).map(() => []);
+        let sorts: number[] = [];
+
+        for (let num of array) { // n
+          const countIndex = Number(numToString(num, passes)[digitIdx]);
+          counts[countIndex].push(num);
+        }
+        for (let arr of counts) { // b
+          sorts.push(...arr);
+        }
+
+        array = sorts;
+        sorts = [];
+      }
+
+      return array;
+    }
+
+    function numToString(num: number, length: number) {
+      let numStr = num.toString();
+      while (numStr.length < length) {
+        numStr = "0" + numStr;
+      }
+
+      return numStr;
+    }
+  }
 }
 
 export const ___ = '___';

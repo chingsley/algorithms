@@ -189,6 +189,33 @@
       quickSortInRange(rightIdx + 1, endIdx, array);
     }
   }
+  {
+    // Worst case: O(n^2) time | O(1) space;
+    // best case: O(nlog(n)) time | O(1) space
+    function quickSort(array: number[]): number[] {
+      quickSortInRange(0, array.length - 1, array);
+      return array;
+    }
+
+    function quickSortInRange(start: number, end: number, array: number[]) {
+      if (start >= end) return;
+
+      let pivot = array[end];
+      let right = end - 1;
+      let left = start;
+      while (left <= right) {
+        if (array[left] > pivot && array[right] < pivot) {
+          [array[left], array[right]] = [array[right], array[left]];
+        }
+        if (array[left] <= pivot) left += 1;
+        if (array[right] >= pivot) right -= 1;
+      }
+
+      [array[left], array[end]] = [array[end], array[left]];
+      quickSortInRange(start, left - 1, array);
+      quickSortInRange(left + 1, end, array);
+    }
+  }
 }
 
 export const __ = '__';

@@ -159,6 +159,74 @@
       [array[i], array[j]] = [array[j], array[i]];
     }
   }
+  {
+    // O(nlog(n)) time | O(log(n)) space
+    function heapSort(array: number[]) {
+      buildMaxHeap(array);
+      for (let i = array.length - 1; i > 0; i--) {// n
+        [array[0], array[i]] = [array[i], array[0]];
+        siftDown([0, i], array); // log(n)
+      }
+
+      return array;
+    }
+
+    function buildMaxHeap(array: number[]) {
+      for (let i = array.length - 1; i >= 0; i--) {
+        siftDown([i, array.length], array);
+      }
+    }
+
+    function siftDown([start, end]: number[], array: number[]) {
+      const [child1, child2] = [(2 * start) + 1, (2 * start) + 2];
+      const maxIdx = getMaxIdx([start, child1, child2], end, array);
+      if (maxIdx === start) return;
+      [array[start], array[maxIdx]] = [array[maxIdx], array[start]];
+      siftDown([maxIdx, end], array);// causes the O(log(n)) space
+    }
+
+    function getMaxIdx([i, j, k]: number[], limit: number, array: number[]) {
+      let maxIdx = i;
+      if (j < limit && array[j] > array[maxIdx]) maxIdx = j;
+      if (k < limit && array[k] > array[maxIdx]) maxIdx = k;
+      return maxIdx;
+    }
+  }
+  {
+    // O(nlog(n)) time | O(1) space
+    function heapSort(array: number[]) {
+      buildMaxHeap(array);
+      for (let i = array.length - 1; i > 0; i--) {// n
+        [array[0], array[i]] = [array[i], array[0]];
+        siftDown([0, i], array); // log(n)
+      }
+
+      return array;
+    }
+
+    function buildMaxHeap(array: number[]) {
+      for (let i = array.length - 1; i >= 0; i--) {
+        siftDown([i, array.length], array);
+      }
+    }
+
+    function siftDown([start, end]: number[], array: number[]) {
+      while (true) {
+        const [child1, child2] = [(2 * start) + 1, (2 * start) + 2];
+        const maxIdx = getMaxIdx([start, child1, child2], end, array);
+        if (maxIdx === start) break;
+        [array[start], array[maxIdx]] = [array[maxIdx], array[start]];
+        start = maxIdx;
+      }
+    }
+
+    function getMaxIdx([i, j, k]: number[], limit: number, array: number[]) {
+      let maxIdx = i;
+      if (j < limit && array[j] > array[maxIdx]) maxIdx = j;
+      if (k < limit && array[k] > array[maxIdx]) maxIdx = k;
+      return maxIdx;
+    }
+  }
 }
 
 export const __ = '__';

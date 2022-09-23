@@ -50,9 +50,24 @@
       if (target < array[midIdx]) return searchInRange([startIdx, midIdx - 1], array, target);
       return searchInRange([midIdx + 1, endIdx], array, target);
     }
+  }
+  {
+    // O(log(n)) time | O(1) sapce
+    function binarySearch(array: number[], target: number): number {
+      let [leftIdx, rightIdx] = [0, array.length - 1];
+      while (leftIdx <= rightIdx) {
+        const midIdx = Math.floor((leftIdx + rightIdx) / 2);
+        if (target === array[midIdx]) {
+          return midIdx;
+        } else if (target < array[midIdx]) {
+          rightIdx = midIdx - 1;
+        } else {
+          leftIdx = midIdx + 1;
+        }
+      }
 
-
-
+      return -1;
+    }
   }
 }
 

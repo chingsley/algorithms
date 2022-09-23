@@ -26,6 +26,32 @@
     }
 
   }
+  {
+    // O(log(n)) time | O(1) space
+    function shiftedBinarySearch(array: number[], target: number) {
+      let [leftIdx, rightIdx] = [0, array.length - 1];
+      while (leftIdx <= rightIdx) {
+        const midIdx = Math.floor((leftIdx + rightIdx) / 2);
+        if (array[midIdx] === target) {
+          return midIdx;
+        } else if (array[leftIdx] < array[midIdx]) {
+          if (target >= array[leftIdx] && target < array[midIdx]) {
+            rightIdx = midIdx - 1;
+          } else {
+            leftIdx = midIdx + 1;
+          }
+        } else {
+          if (target > array[midIdx] && target <= array[rightIdx]) {
+            leftIdx = midIdx + 1;
+          } else {
+            rightIdx = midIdx - 1;
+          }
+        }
+      }
+
+      return -1;
+    }
+  }
 }
 
 export const __ = '__';

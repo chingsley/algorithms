@@ -65,6 +65,68 @@
     }
 
   }
+  {// BY RECURSION
+    // avg. case: O(n) time | O(n) space
+    // worst. case: O(n^2) time | O(1) space
+    function quickselect(array: number[], k: number) {
+      return quickselectInRange(0, array.length - 1, array, k);
+    }
+
+    function quickselectInRange(startIdx: number, endIdx: number, array: number[], k: number): number {
+      const pivotIdx = endIdx;
+      let leftIdx = startIdx;
+      let rightIdx = endIdx - 1;
+      while (leftIdx <= rightIdx) {
+        if (array[leftIdx] > array[pivotIdx] && array[rightIdx] < array[pivotIdx]) {
+          [array[leftIdx], array[rightIdx]] = [array[rightIdx], array[leftIdx]];
+        }
+        if (array[leftIdx] <= array[pivotIdx]) leftIdx += 1;
+        if (array[rightIdx] >= array[pivotIdx]) rightIdx -= 1;
+      }
+
+      [array[leftIdx], array[pivotIdx]] = [array[pivotIdx], array[leftIdx]];
+
+      if (leftIdx === k - 1) {
+        return array[leftIdx];
+      } else if (k - 1 < leftIdx) {
+        return quickselectInRange(startIdx, leftIdx - 1, array, k);
+      } else {
+        return quickselectInRange(leftIdx + 1, endIdx, array, k);
+      }
+    }
+  }
+  {// BY ITERATION
+    // avg. case: O(n) time | O(1) space
+    // worst. case: O(n^2) time | O(1) space
+    function quickselect(array: number[], k: number) {
+      return quickselectInRange(0, array.length - 1, array, k);
+    }
+
+    function quickselectInRange(startIdx: number, endIdx: number, array: number[], k: number): number {
+      while (true) {
+        const pivotIdx = endIdx;
+        let leftIdx = startIdx;
+        let rightIdx = endIdx - 1;
+        while (leftIdx <= rightIdx) {
+          if (array[leftIdx] > array[pivotIdx] && array[rightIdx] < array[pivotIdx]) {
+            [array[leftIdx], array[rightIdx]] = [array[rightIdx], array[leftIdx]];
+          }
+          if (array[leftIdx] <= array[pivotIdx]) leftIdx += 1;
+          if (array[rightIdx] >= array[pivotIdx]) rightIdx -= 1;
+        }
+
+        [array[leftIdx], array[pivotIdx]] = [array[pivotIdx], array[leftIdx]];
+
+        if (leftIdx === k - 1) {
+          return array[leftIdx];
+        } else if (k - 1 < leftIdx) {
+          endIdx = leftIdx - 1;
+        } else {
+          startIdx = leftIdx + 1;
+        }
+      }
+    }
+  }
 }
 
 export const __ = '__';

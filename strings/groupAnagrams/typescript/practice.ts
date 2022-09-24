@@ -41,6 +41,38 @@
       return Object.values(groups);
     }
   }
+  {
+    // O(w * nlog(n)) time | O(wn) space
+    // w = no. of words | n = length of the longest word
+    function groupAnagrams(words: string[]) {
+      const outputHash: { [key: string]: string[]; } = {};
+
+      words.forEach((word) => {
+        const sortedWord = word.split('').sort().join('');
+        if (sortedWord in outputHash) {
+          outputHash[sortedWord].push(word);
+        } else {
+          outputHash[sortedWord] = [word];
+        }
+      });
+      return Object.values(outputHash);
+    }
+  }
+  {
+
+    // O(w * nlog(n)) time | O(wn) space
+    // w = no. of words | n = length of the longest word
+    function groupAnagrams(words: string[]) {
+      const groups: { [key: string]: string[]; } = {};
+      for (let word of words) {
+        const sortedWd = word.split('').sort().join('');
+        if (!(sortedWd in groups)) groups[sortedWd] = [];
+        groups[sortedWd].push(word);
+      }
+
+      return Object.values(groups);
+    }
+  }
 }
 
 export const __ = '__';

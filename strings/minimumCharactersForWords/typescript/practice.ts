@@ -56,6 +56,39 @@
       return wordCharsFreq;
     }
   }
+  {
+    // O(wc) time | o(nd) time
+    // w = no. of words in "words" array
+    // c = length of longest-character word
+    // d = no. of distinct chars in "words" array
+    // n = no. of duplicates of the most occurred chars
+    function minimumCharactersForWords(words: string[]): string[] {
+      const chBank: { [key: string]: number; } = {};
+      for (let word of words) {// O(w) time
+        updateChBank(word, chBank); // O(c) time
+      }
+
+      const result: string[] = [];
+      for (let ch in chBank) {// O(d) time
+        while (chBank[ch]-- > 0) result.push(ch); // O(n) time
+      }
+
+      return result;
+    }
+
+    function updateChBank(word: string, chBank: { [key: string]: number; }) {
+      let wordChars: { [key: string]: number; } = {};
+      for (let ch of word) {
+        if (!(ch in wordChars)) wordChars[ch] = 0;
+        wordChars[ch] += 1;
+      }
+
+      for (let key in wordChars) {
+        if (!(key in chBank)) chBank[key] = 0;
+        chBank[key] = Math.max(chBank[key], wordChars[key]);
+      }
+    }
+  }
 }
 
 export const ___ = '___';

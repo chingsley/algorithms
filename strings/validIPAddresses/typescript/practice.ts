@@ -136,6 +136,40 @@
       return String(numUnit).length === unit.length;
     }
   }
+  {
+    // O(1) time | O(1) space
+    function validIPAddresses(string: string) {
+      const result: string[] = [];
+      for (let i = 0; i < 3; i++) {
+        const part1 = string.slice(0, i + 1);
+        if (!isValidByte(part1)) continue;
+
+        for (let j = i + 1; j < i + 4; j++) {
+          const part2 = string.slice(i + 1, j + 1);
+          if (!isValidByte(part2)) continue;
+
+          for (let k = j + 1; k < j + 4; k++) {
+            const part3 = string.slice(j + 1, k + 1);
+            if (!isValidByte(part3)) continue;
+
+            const part4 = string.slice(k + 1);
+            if (!isValidByte(part4)) continue;
+
+            result.push([part1, part2, part3, part4].join('.'));
+          }
+        }
+      }
+
+      return result;
+    }
+
+    function isValidByte(str: string) {
+      const strToInt = parseFloat(str);
+      if (isNaN(strToInt)) return false;
+      if (strToInt > 255) return false;
+      return str.length === strToInt.toString().length;
+    }
+  }
 }
 
 export const ___ = '___';

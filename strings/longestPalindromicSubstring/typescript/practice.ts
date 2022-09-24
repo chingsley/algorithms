@@ -107,10 +107,75 @@
       return string.slice(start, end + 1);
     }
   }
-}
+  {
+    type Range = [number, number];
 
-console.log(
-  longestPalindromicSubstring("abcdefgfedcba")
-);
+    function longestPalindromicSubstring(string: String): String {
+      let [startIdx, endIdx]: Range = [0, 0];
+
+      for (let i = 0; i < string.length - 1; i++) {
+        if (i - 1 >= 0 && string[i - 1] === string[i + 1]) {
+          let [start, end] = getSize(i - 1, i + 1, string);
+          [startIdx, endIdx] = end - start > endIdx - startIdx ? [start, end] : [startIdx, endIdx];
+        }
+        if (string[i] === string[i + 1]) {
+          let [start, end] = getSize(i, i + 1, string);
+          [startIdx, endIdx] = end - start > endIdx - startIdx ? [start, end] : [startIdx, endIdx];
+        }
+        // console.log([startIdx, endIdx]);
+      }
+
+      return string.slice(startIdx, endIdx + 1);
+    }
+
+
+    function getSize(i: number, j: number, string: String): Range {
+      while (i - 1 >= 0 && j + 1 < string.length && string[i - 1] === string[j + 1]) {
+        i -= 1;
+        j += 1;
+      }
+
+      return [i, j];
+    }
+  }
+  {
+    type Range = [number, number];
+
+    // O(n^2) time | O(n) space
+    // n = no. of chars in the string
+    // space complexity is due to the result: string.slice(startIdx, endIdx + 1)
+    function longestPalindromicSubstring(string: String): String {
+      let [startIdx, endIdx]: Range = [0, 0];
+
+      for (let i = 0; i < string.length - 1; i++) {
+        let [start, end] = getSize(i, i - 1, i + 1, string);
+        [startIdx, endIdx] = end - start > endIdx - startIdx ? [start, end] : [startIdx, endIdx];
+        [start, end] = getSize(i, i, i + 1, string);
+        [startIdx, endIdx] = end - start > endIdx - startIdx ? [start, end] : [startIdx, endIdx];
+      }
+
+      return string.slice(startIdx, endIdx + 1);
+    }
+
+
+    function getSize(current: number, left: number, right: number, string: String): Range {
+      let [start, end] = [current, current];
+      while (left >= 0 && right < string.length && string[left] === string[right]) {
+        [start, end] = [left, right];
+        [left, right] = [left - 1, right + 1];
+      }
+
+      return [start, end];
+    }
+
+    // console.log(
+    //   longestPalindromicSubstring("abcdefgfedcba")
+    // );
+    // console.log(
+    //   longestPalindromicSubstring("abaxyzzyxf")
+    // );
+  }
+
+}
 
 export const ___ = '___';

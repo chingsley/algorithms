@@ -87,6 +87,22 @@
       [array[i], array[j]] = [array[j], array[i]];
     }
   }
+  {
+    // O(n) time | O(1) space
+    function moveElementToEnd(array: number[], toMove: number) {
+      let right = array.length - 1;
+      let i = 0;
+      while (i <= right) {
+        if (array[i] === toMove) {
+          [array[i], array[right]] = [array[right], array[i]];
+        }
+        if (array[i] !== toMove) i += 1;
+        if (array[right] === toMove) right -= 1;
+      }
+
+      return array;
+    }
+  }
 }
 
 

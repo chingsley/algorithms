@@ -2,6 +2,43 @@
   {
     // O(nlog(n)) time, O(n) space
     function mergeOverlappingIntervals(array: number[][]) {
+      array.sort((a, b) => a[0] - b[0]);
+      const result: number[][] = [array[0]];
+
+      for (let i = 1; i < array.length; i++) {
+        const [u, v] = result[result.length - 1];
+        const [w, x] = array[i];
+        if (v >= w) {
+          result[result.length - 1] = [u, Math.max(v, x)];
+        } else {
+          result.push(array[i]);
+        }
+      }
+
+      return result;
+    }
+  }
+  {
+    // O(nlog(n)) time, O(n) space
+    function mergeOverlappingIntervals(array: number[][]) {
+      array.sort((a, b) => a[0] - b[0]);
+      const result: number[][] = [array[0]];
+      for (let i = 1; i < array.length; i++) {
+        const [prevLower, prevUpper] = result[result.length - 1];
+        const [currentLower, currentUpper] = array[i];
+        if (prevUpper >= currentLower) {
+          result[result.length - 1] = [prevLower, Math.max(prevUpper, currentUpper)];
+        } else {
+          result.push(array[i]);
+        }
+      }
+      return result;
+    }
+
+  }
+  {
+    // O(nlog(n)) time, O(n) space
+    function mergeOverlappingIntervals(array: number[][]) {
       array.sort(([a], [b]) => a - b);
       const result: number[][] = [array[0]];
 
@@ -37,6 +74,25 @@
 
       return result;
     }
+  }
+  {
+    // O(nlog(n)) time | O(n) space
+    function mergeOverlappingIntervals(array: number[][]) {
+      array.sort((a, b) => a[0] - b[0]);
+      let result: number[][] = [array[0]];
+      for (let i = 1; i < array.length; i++) {
+        const [a1, b1] = result[result.length - 1];
+        const [a2, b2] = array[i];
+        if (b1 >= a2) {
+          result[result.length - 1] = [a1, Math.max(b1, b2)];
+        } else {
+          result.push(array[i]);
+        }
+      }
+
+      return result;
+    }
+
   }
 }
 

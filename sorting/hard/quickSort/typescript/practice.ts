@@ -216,6 +216,32 @@
       quickSortInRange(left + 1, end, array);
     }
   }
+  {
+    // worst case: O(n^2) time | O(log(n)) space
+    // best/avg. case: O(nlog(n)) time | O(log(n)) space
+    function quickSort(array: number[]): number[] {
+      quickSortInRange([0, array.length - 1], array);
+      return array;
+    }
+
+    function quickSortInRange([startIdx, endIdx]: number[], array: number[]) {
+      if (startIdx >= endIdx) return;
+
+      const pivot = array[endIdx];
+      let [leftIdx, rightIdx] = [startIdx, endIdx - 1];
+      while (leftIdx <= rightIdx) {
+        if (array[leftIdx] > pivot && array[rightIdx] < pivot) {
+          [array[leftIdx], array[rightIdx]] = [array[rightIdx], array[leftIdx]];
+        }
+        if (array[leftIdx] <= pivot) leftIdx += 1;
+        if (array[rightIdx] >= pivot) rightIdx -= 1;
+      }
+
+      [array[leftIdx], array[endIdx]] = [array[endIdx], array[leftIdx]];
+      quickSortInRange([startIdx, leftIdx - 1], array);
+      quickSortInRange([leftIdx + 1, endIdx], array);
+    }
+  }
 }
 
 export const __ = '__';

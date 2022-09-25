@@ -138,6 +138,52 @@
       return merged;
     }
   }
+  {
+    class Inversion {
+      count: number;
+
+      constructor() {
+        this.count = 0;
+      }
+    }
+
+    // O(nlog(n)) time | O(nlog(n)) space
+    function countInversions(array: number[]) {
+      const inversion = new Inversion();
+      mergeSort(array, inversion);
+      return inversion.count;
+    }
+
+    function mergeSort(array: number[], inversion: Inversion): number[] {
+      if (array.length <= 1) return array;
+
+      const midIdx = Math.floor(array.length / 2);
+      const [left, right] = [array.slice(0, midIdx), array.slice(midIdx)];
+      const sortedLeft = mergeSort(left, inversion);
+      const sortedRight = mergeSort(right, inversion);
+      return merge(sortedLeft, sortedRight, inversion);
+    }
+
+    function merge(sortedLeft: number[], sortedRight: number[], inversion: Inversion): number[] {
+      const merged: number[] = [];
+      let [i, j] = [0, 0];
+      while (i < sortedLeft.length && j < sortedRight.length) {
+        if (sortedLeft[i] <= sortedRight[j]) {
+          merged.push(sortedLeft[i]);
+          i += 1;
+        } else {
+          inversion.count += sortedLeft.length - i;
+          merged.push(sortedRight[j]);
+          j += 1;
+        }
+      }
+      merged.push(...sortedLeft.slice(i));
+      merged.push(...sortedRight.slice(j));
+
+      return merged;
+    }
+
+  }
 }
 
 export const __ = '__';

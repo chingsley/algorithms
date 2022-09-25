@@ -73,6 +73,23 @@
       return array;
     }
   }
+  {
+    // O(n^2) time | O(1) space
+    function insertionSort(array: number[]) {
+      for (let i = 1; i < array.length; i++) {
+        insertInSortedArray(i, array);
+      }
+      return array;
+    }
+
+    function insertInSortedArray(i: number, array: number[]) {
+      while (i - 1 >= 0 && array[i] < array[i - 1]) {
+        [array[i], array[i - 1]] = [array[i - 1], array[i]];
+        i -= 1;
+      }
+    }
+
+  }
 }
 
 export const __ = '__';

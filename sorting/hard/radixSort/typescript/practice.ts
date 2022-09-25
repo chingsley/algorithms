@@ -203,6 +203,35 @@
       return numStr;
     }
   }
+  {
+    // O(p(n + b)) time | O(n + b) space
+    // p = no. of passes
+    // n = length of array
+    // b = base of operation (10)
+    function radixSort(array: number[]) {
+      const passes = Math.max(...array).toString().length;
+      let sorted: number[] = [];
+      for (let digitIdx = passes - 1; digitIdx >= 0; digitIdx--) {
+        const counts: number[][] = new Array(10).fill(0).map(() => []);
+        for (let num of array) {
+          const idx = Number(numToStr(num, passes)[digitIdx]);
+          counts[idx].push(num);
+        }
+        for (let arr of counts) sorted.push(...arr);
+
+        array = sorted;
+        sorted = [];
+      }
+
+      return array;
+    }
+
+    function numToStr(num: number, size: number): string {
+      let numStr = num.toString();
+      while (numStr.length < size) numStr = "0" + numStr;
+      return numStr;
+    }
+  }
 }
 
 export const ___ = '___';

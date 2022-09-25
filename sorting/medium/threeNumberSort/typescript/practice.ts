@@ -138,6 +138,50 @@
       [array[a], array[b]] = [array[b], array[a]];
     }
   }
+  {
+    // O(n) time | O(1) space
+    function threeNumberSort(array: number[], order: number[]) {
+      let [current, left, right] = [0, 0, array.length - 1];
+      while (current <= right) {
+        if (array[current] === order[0]) {
+          [array[current], array[left]] = [array[left], array[current]];
+          current += 1;
+          left += 1;
+        } else if (array[current] === order[2]) {
+          [array[current], array[right]] = [array[right], array[current]];
+          right -= 1;
+        } else {
+          current += 1;
+        }
+      }
+
+      return array;
+    }
+
+  }
+  {
+    // O(n) time | O(1) space
+    function threeNumberSort(array: number[], order: number[]) {
+      let left = 0;
+      for (let i = 0; i < array.length; i++) {
+        if (array[i] === order[0]) {
+          [array[i], array[left]] = [array[left], array[i]];
+        }
+        if (array[left] === order[0]) left += 1;
+      }
+
+      let right = array.length - 1;
+      for (let i = array.length - 1; i >= 0; i--) {
+        if (array[i] === order[2]) {
+          [array[i], array[right]] = [array[right], array[i]];
+        }
+        if (array[right] === order[2]) right -= 1;
+      }
+
+      return array;
+    }
+
+  }
 }
 
 export const __ = '__';

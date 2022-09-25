@@ -227,6 +227,41 @@
       return maxIdx;
     }
   }
+  {
+    // O(nlog(n)) time | O(1) space
+    function heapSort(array: number[]) {
+      buildMaxHeap(array);
+      for (let endIdx = array.length - 1; endIdx > 0; endIdx--) {
+        [array[0], array[endIdx]] = [array[endIdx], array[0]];
+        siftDown(0, endIdx, array);
+      }
+
+      return array;
+    }
+
+    function buildMaxHeap(array: number[]) {
+      for (let i = array.length - 1; i >= 0; i--) {
+        siftDown(i, array.length, array);
+      }
+    }
+
+    function siftDown(i: number, endIdx: number, array: number[]) {
+      while (true) {
+        const [j, k] = [(2 * i) + 1, (2 * i) + 2];
+        const maxIdx = getMaxIdx([i, j, k], endIdx, array);
+        if (maxIdx === i) break;
+        [array[i], array[maxIdx]] = [array[maxIdx], array[i]];
+        i = maxIdx;
+      }
+    }
+
+    function getMaxIdx([i, j, k]: number[], endIdx: number, array: number[]): number {
+      let maxIdx = i;
+      if (j < endIdx && array[j] > array[maxIdx]) maxIdx = j;
+      if (k < endIdx && array[k] > array[maxIdx]) maxIdx = k;
+      return maxIdx;
+    }
+  }
 }
 
 export const __ = '__';

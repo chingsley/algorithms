@@ -3,6 +3,26 @@ import * as _ from './solution1'; // this is just to silence typescript duplicat
   {
     // O(n) time | O(n) space
     function arrayOfProducts(array: number[]) {
+      const left: number[] = new Array(array.length).fill(1);
+      const right: number[] = new Array(array.length).fill(1);
+
+      for (let i = 1; i < array.length; i++) {
+        left[i] = left[i - 1] * array[i - 1];
+      }
+
+      const result: number[] = new Array(array.length).fill(1);
+      result[result.length - 1] = left[left.length - 1];
+      for (let i = array.length - 2; i >= 0; i--) {
+        right[i] = right[i + 1] * array[i + 1];
+        result[i] = right[i] * left[i];
+      }
+
+      return result;
+    }
+  }
+  {
+    // O(n) time | O(n) space
+    function arrayOfProducts(array: number[]) {
       const lefts = new Array(array.length).fill(1);
       const rights = new Array(array.length).fill(1);
       const result: number[] = [];
@@ -117,5 +137,35 @@ import * as _ from './solution1'; // this is just to silence typescript duplicat
 
       return result;
     }
+  }
+  {
+    // O(n) time | O(n) space
+    function arrayOfProducts(array: number[]) {
+      const left = new Array(array.length).fill(1);
+      const right = new Array(array.length).fill(1);
+
+      for (let i = 1; i < array.length; i++) {
+        left[i] = array[i - 1] * left[i - 1];
+      }
+
+      const result = new Array(array.length).fill(1);
+      result[result.length - 1] = left[left.length - 1];
+      for (let i = array.length - 2; i >= 0; i--) {
+        right[i] = array[i + 1] * right[i + 1];
+        result[i] = left[i] * right[i];
+      }
+
+      return result;
+    }
+    /*
+    left
+    [1, 5, 5, 20];
+    5, 1, 4, 2;
+
+
+    right
+    [8, 8, 2, 1];
+    5, 1, 4, 2;
+    */
   }
 }

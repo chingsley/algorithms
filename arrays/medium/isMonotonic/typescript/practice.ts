@@ -45,4 +45,28 @@ import * as _ from './solution1';
       return !(decreasing && increasing);
     }
   }
+  {
+    // O(n) time | O(1) space
+    function isMonotonic(array: number[]) {
+      let increasing = false;
+      let decreasing = false;
+      for (let i = 0; i < array.length - 1; i++) {
+        if (array[i + 1] > array[i]) increasing = true;
+        if (array[i + 1] < array[i]) decreasing = true;
+      }
+
+      return !(increasing && decreasing);
+    }
+
+    /*
+    Monotonic
+    increasing: false && decreasing: false
+    increasing: true && decreasing: false
+    increasing: false && decreasin: true
+    
+    
+    Not monotic: 
+    increasing: true && decreasing: true
+    */
+  }
 }

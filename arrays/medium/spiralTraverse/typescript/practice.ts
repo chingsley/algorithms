@@ -116,6 +116,40 @@
       return res;
     }
   }
+  {
+    // O(m * n) time | O(m * n) space
+    // m = no. of rows | n = no. of colums
+    function spiralTraverse(array: number[][]) {
+      const result: number[] = [];
+
+      let [startRow, endRow] = [0, array.length - 1];
+      let [startCol, endCol] = [0, array[0].length - 1];
+
+      while (startRow <= endRow && startCol <= endCol) {
+        for (let col = startCol; col <= endCol; col++) {
+          result.push(array[startRow][col]);
+        }
+        for (let row = startRow + 1; row <= endRow; row++) {
+          result.push(array[row][endCol]);
+        }
+        if (startRow !== endRow) {
+          for (let col = endCol - 1; col >= startCol; col--) {
+            result.push(array[endRow][col]);
+          }
+        }
+        if (startCol !== endCol) {
+          for (let row = endRow - 1; row > startRow; row--) {
+            result.push(array[row][startCol]);
+          }
+        }
+
+        [startRow, endRow] = [startRow += 1, endRow -= 1];
+        [startCol, endCol] = [startCol += 1, endCol -= 1];
+      }
+
+      return result;
+    }
+  }
 }
 
 export const __ = '__';

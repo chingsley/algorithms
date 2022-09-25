@@ -104,7 +104,69 @@ import * as _ from './solution1';
       return [j, k];
     }
   }
+  {
+    // O(n) time | O(1) space
+    function longestPeak(array: number[]) {
+      let longest = 0;
+      let i = 1;
+      while (i < array.length - 1) {
+        if (isPeak(i, array)) {
+          const [peakSize, endIdx] = getPeakSizeAt(i, array);
+          if (peakSize > longest) longest = peakSize;
+          i = endIdx + 1;
+        } else {
+          i += 1;
+        }
 
+      }
 
+      return longest;
+    }
 
+    function isPeak(i: number, array: number[]): boolean {
+      const [left, curr, right] = [array[i - 1], array[i], array[i + 1]];
+      return left < curr && right < curr;
+    }
+
+    function getPeakSizeAt(i: number, array: number[]): [number, number] {
+      let [leftIdx, rightIdx] = [i - 1, i + 1];
+      while (leftIdx - 1 >= 0 && array[leftIdx - 1] < array[leftIdx]) {
+        leftIdx -= 1;
+      }
+      while (rightIdx + 1 < array.length && array[rightIdx + 1] < array[rightIdx]) {
+        rightIdx += 1;
+      }
+
+      return [rightIdx - leftIdx + 1, rightIdx];
+    }
+  }
+  {
+    // O(n) time | O(1) space
+    function longestPeak(array: number[]) {
+      let longest = 0;
+      let i = 1;
+      while (i < array.length - 1) {
+        const [peakSize, endIdx] = getPeakSizeAt(i, array);
+        if (peakSize > longest) longest = peakSize;
+        i = endIdx + 1;
+      }
+
+      return longest;
+    }
+
+    function getPeakSizeAt(i: number, array: number[]): [number, number] {
+      let [leftIdx, rightIdx] = [i - 1, i + 1];
+      if (array[leftIdx] >= array[i]) return [0, i];
+      if (array[rightIdx] >= array[i]) return [0, i];
+
+      while (leftIdx - 1 >= 0 && array[leftIdx - 1] < array[leftIdx]) {
+        leftIdx -= 1;
+      }
+      while (rightIdx + 1 < array.length && array[rightIdx + 1] < array[rightIdx]) {
+        rightIdx += 1;
+      }
+
+      return [rightIdx - leftIdx + 1, rightIdx];
+    }
+  }
 }

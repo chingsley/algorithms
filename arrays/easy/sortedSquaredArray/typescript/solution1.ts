@@ -1,4 +1,5 @@
 /**
+ * BRUTE-FORCE SOLUTION (worse time complexity)
  * Time: O(nlog(n))
  * Space: O(n)
  * See sloution 2 for better solution
@@ -12,4 +13,4 @@ export function sortedSquaredArray(array: number[]) {
 
 console.log(
   sortedSquaredArray([-9, 1, 2, 3, 5, 6, 8])
-)
+);

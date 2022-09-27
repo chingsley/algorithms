@@ -80,6 +80,29 @@
       return [-1, -1];
     }
   }
+  {
+
+    type Range = [number, number];
+
+    // O(m + n) time | O(1) space
+    // m = no. of rows | n = no. of colums
+    function searchInSortedMatrix(matrix: number[][], target: number): Range {
+      let [row, col] = [0, matrix[0].length - 1];
+
+      while (row < matrix.length && col >= 0) {
+        const value = matrix[row][col];
+        if (value === target) {
+          return [row, col];
+        } else if (target < value) {
+          col -= 1;
+        } else {
+          row += 1;
+        }
+      }
+
+      return [-1, -1];
+    }
+  }
 }
 
 export const __ = '__';

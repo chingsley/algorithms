@@ -87,6 +87,49 @@
       return -1;
     }
   }
+  {
+    type Range = [number, number];
+    enum Position {
+      Start = "START",
+      End = "END"
+    }
+
+    // O(log(n)) time | O(1) space
+    function searchForRange(array: number[], target: number): Range {
+      const startIdx = getIndex(Position.Start, array, target);
+      const endIdx = getIndex(Position.End, array, target);
+      return [startIdx, endIdx];
+    }
+
+
+    function getIndex(pos: Position, array: number[], target: number) {
+      let [leftIdx, rightIdx] = [0, array.length - 1];
+      while (leftIdx <= rightIdx) {
+        const midIdx = Math.floor((leftIdx + rightIdx) / 2);
+        if (target < array[midIdx]) {
+          rightIdx = midIdx - 1;
+        } else if (target > array[midIdx]) {
+          leftIdx = midIdx + 1;
+        } else {
+          if (pos === Position.Start) {
+            if (midIdx === 0 || array[midIdx - 1] !== target) {
+              return midIdx;
+            } else {
+              rightIdx = midIdx - 1;
+            }
+          } else {
+            if (midIdx === array.length - 1 || array[midIdx + 1] !== target) {
+              return midIdx;
+            } else {
+              leftIdx = midIdx + 1;
+            }
+          }
+        }
+      }
+
+      return -1;
+    }
+  }
 }
 
 export const __ = '__';

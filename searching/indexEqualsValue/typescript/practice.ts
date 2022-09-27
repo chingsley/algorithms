@@ -62,6 +62,27 @@
       return -1;
     }
   }
+  {
+    // O(log(n)) time | O(1) space
+    function indexEqualsValue(array: number[]) {
+      let [i, j] = [0, array.length - 1];
+      while (i <= j) {
+        const midIdx = Math.floor((i + j) / 2);
+        if (array[midIdx] === midIdx) {
+          if (midIdx === 0) return midIdx;
+          if (array[midIdx - 1] < midIdx - 1) return midIdx;
+          j = midIdx - 1;
+        } else if (array[midIdx] < midIdx) {
+          i = midIdx + 1;
+        } else {
+          j = midIdx - 1;
+        }
+      }
+
+      return -1;
+    }
+
+  }
 }
 
 

@@ -232,6 +232,37 @@
       return numStr;
     }
   }
+  {
+    // O(p(n + b)) time | O(n + b) space;
+    // p = no. of passes = length of the max number in array
+    // n = length of array;
+    // b = base of operatin (base 10 here)
+    function radixSort(array: number[]) {
+      const numOfPasses = Math.max(...array).toString().length;
+      for (let digitIdx = numOfPasses - 1; digitIdx >= 0; digitIdx--) {
+        const counts: number[][] = new Array(10).fill(0).map(() => []);
+        const sortedAtIdx: number[] = [];
+
+        for (let num of array) {
+          const idx = Number(numToStr(num, numOfPasses)[digitIdx]);
+          counts[idx].push(num);
+        }
+        for (let subArr of counts) sortedAtIdx.push(...subArr);
+
+        array = sortedAtIdx;
+      }
+
+      return array;
+    }
+
+    function numToStr(num: number, numOfPasses: number): string {
+      let strNum = num.toString();
+      while (strNum.length < numOfPasses) {
+        strNum = "0" + strNum;
+      }
+      return strNum;
+    }
+  }
 }
 
 export const ___ = '___';

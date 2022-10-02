@@ -262,6 +262,77 @@
       return maxIdx;
     }
   }
+  {
+    // O(nlog(n)) time | O(nlog(n)) space
+    // space complexity is due to the use of recursion in 'siftDown'
+    function heapSort(array: number[]) {
+      buildMaxHeap(array);
+      for (let i = array.length - 1; i > 0; i--) {
+        [array[0], array[i]] = [array[i], array[0]];
+        siftDown(0, i, array);
+      }
+      return array;
+    }
+
+    function buildMaxHeap(array: number[]) {
+      for (let i = array.length - 1; i >= 0; i--) {
+        siftDown(i, array.length, array);
+      }
+    }
+
+    function siftDown(startIdx: number, stopIdx: number, array: number[]) {
+      const [childOneIdx, childTwoIdx] = [(2 * startIdx) + 1, (2 * startIdx) + 2];
+      const maxIdx = getMaxIdx([startIdx, childOneIdx, childTwoIdx], stopIdx, array);
+      if (maxIdx === startIdx) return;
+      [array[maxIdx], array[startIdx]] = [array[startIdx], array[maxIdx]];
+      siftDown(maxIdx, stopIdx, array);
+    }
+
+    function getMaxIdx([i, j, k]: number[], stopIdx: number, array: number[]) {
+      let maxIdx = i;
+      if (j < stopIdx && array[j] > array[maxIdx]) maxIdx = j;
+      if (k < stopIdx && array[k] > array[maxIdx]) maxIdx = k;
+      return maxIdx;
+    }
+
+    // [8, 5, 2, 9, 5, 6, 3]
+  }
+  {
+    // O(nlog(n)) time | O(1) space
+    function heapSort(array: number[]) {
+      buildMaxHeap(array);
+      for (let i = array.length - 1; i > 0; i--) {
+        [array[0], array[i]] = [array[i], array[0]];
+        siftDown(0, i, array);
+      }
+      return array;
+    }
+
+    function buildMaxHeap(array: number[]) {
+      for (let i = array.length - 1; i >= 0; i--) {
+        siftDown(i, array.length, array);
+      }
+    }
+
+    function siftDown(startIdx: number, stopIdx: number, array: number[]) {
+      while (true) {
+        const [childOneIdx, childTwoIdx] = [(2 * startIdx) + 1, (2 * startIdx) + 2];
+        const maxIdx = getMaxIdx([startIdx, childOneIdx, childTwoIdx], stopIdx, array);
+        if (maxIdx === startIdx) break;
+        [array[maxIdx], array[startIdx]] = [array[startIdx], array[maxIdx]];
+        startIdx = maxIdx;
+      }
+    }
+
+    function getMaxIdx([i, j, k]: number[], stopIdx: number, array: number[]) {
+      let maxIdx = i;
+      if (j < stopIdx && array[j] > array[maxIdx]) maxIdx = j;
+      if (k < stopIdx && array[k] > array[maxIdx]) maxIdx = k;
+      return maxIdx;
+    }
+
+    // [8, 5, 2, 9, 5, 6, 3]
+  }
 }
 
 export const __ = '__';

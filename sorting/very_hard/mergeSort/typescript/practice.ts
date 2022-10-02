@@ -134,6 +134,40 @@
       return merged;
     }
   }
+  {
+    // O(nlog(n)) time | O(nlog(n)) space
+    function mergeSort(array: number[]): number[] {
+      if (array.length <= 1) return array;
+
+      const [left, right] = split(array);
+      const sortedLeft = mergeSort(left);
+      const sortedRight = mergeSort(right);
+      return merge(sortedLeft, sortedRight);
+    }
+
+    function split(array: number[]): number[][] {
+      const mid = Math.floor(array.length / 2);
+      return [array.slice(0, mid), array.slice(mid)];
+    }
+
+    function merge(sortedLeft: number[], sortedRight: number[]): number[] {
+      const merged: number[] = [];
+      let [i, j] = [0, 0];
+      while (i < sortedLeft.length && j < sortedRight.length) {
+        if (sortedLeft[i] <= sortedRight[j]) {
+          merged.push(sortedLeft[i]);
+          i += 1;
+        } else {
+          merged.push(sortedRight[j]);
+          j += 1;
+        }
+      }
+      merged.push(...sortedLeft.slice(i));
+      merged.push(...sortedRight.slice(j));
+
+      return merged;
+    }
+  }
 }
 
 export const __ = '__';

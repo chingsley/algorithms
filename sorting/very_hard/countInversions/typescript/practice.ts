@@ -184,6 +184,54 @@
     }
 
   }
+  {
+    interface Inversion { count: number; };
+
+    // O(nlog(n)) time | O(nlog(n)) space
+    function countInversions(array: number[]) {
+      const inversion: Inversion = { count: 0 };
+      mergeSort(array, inversion);
+      return inversion.count;
+    }
+
+
+    // O(nlog(n)) time | O(nlog(n)) space
+    function mergeSort(array: number[], inversion: Inversion): number[] {
+      if (array.length <= 1) return array;
+
+      const [left, right] = split(array);
+      const sortedLeft = mergeSort(left, inversion);
+      const sortedRight = mergeSort(right, inversion);
+      return merge(sortedLeft, sortedRight, inversion);
+    }
+
+    function split(array: number[]): number[][] {
+      const mid = Math.floor(array.length / 2);
+      return [array.slice(0, mid), array.slice(mid)];
+    }
+
+    function merge(sortedLeft: number[], sortedRight: number[], inversion: Inversion): number[] {
+      const merged: number[] = [];
+      let [i, j] = [0, 0];
+      while (i < sortedLeft.length && j < sortedRight.length) {
+        if (sortedLeft[i] <= sortedRight[j]) {
+          merged.push(sortedLeft[i]);
+          i += 1;
+        } else {
+          inversion.count += sortedLeft.length - i;
+          merged.push(sortedRight[j]);
+          j += 1;
+        }
+      }
+      merged.push(...sortedLeft.slice(i));
+      merged.push(...sortedRight.slice(j));
+
+      return merged;
+    }
+
+    // [4, 5, 6], [1, 2, 3]
+
+  }
 }
 
 export const __ = '__';

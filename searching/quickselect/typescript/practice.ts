@@ -193,6 +193,70 @@
       }
     }
   }
+  {
+    // O(n) time | O(n) space
+    function quickselect(array: number[], k: number) {
+      return quickselectInRange([0, array.length - 1], array, k);
+    }
+
+    function quickselectInRange([startIdx, endIdx]: number[], array: number[], k: number): number {
+      if (startIdx > endIdx) {
+        throw new Error('Execution should not reach here');
+      }
+
+      let pivot = array[endIdx];
+      let leftIdx = startIdx;
+      let rightIdx = endIdx - 1;
+      while (leftIdx <= rightIdx) {
+        if (array[leftIdx] > pivot && array[rightIdx] < pivot) {
+          [array[leftIdx], array[rightIdx]] = [array[rightIdx], array[leftIdx]];
+        }
+        if (array[leftIdx] <= pivot) leftIdx += 1;
+        if (array[rightIdx] >= pivot) rightIdx -= 1;
+      }
+
+      [array[leftIdx], array[endIdx]] = [array[endIdx], array[leftIdx]];
+      if (leftIdx === k - 1) {
+        return array[leftIdx];
+      } else if (k - 1 < leftIdx) {
+        return quickselectInRange([startIdx, leftIdx - 1], array, k);
+      } else {
+        return quickselectInRange([leftIdx + 1, endIdx], array, k);
+      }
+    }
+
+
+  }
+  {
+    // O(n) time | O(1) space
+    function quickselect(array: number[], k: number) {
+      return quickSelectInRange([0, array.length - 1], array, k - 1);
+    }
+
+    function quickSelectInRange([startIdx, endIdx]: number[], array: number[], kIdx: number): number {
+      while (true) {
+        const pivot = array[endIdx];
+        let leftIdx = startIdx;
+        let rightIdx = endIdx - 1;
+        while (leftIdx <= rightIdx) {
+          if (array[leftIdx] > pivot && array[rightIdx] < pivot) {
+            [array[leftIdx], array[rightIdx]] = [array[rightIdx], array[leftIdx]];
+          }
+          if (array[leftIdx] <= pivot) leftIdx += 1;
+          if (array[rightIdx] >= pivot) rightIdx -= 1;
+        }
+
+        [array[leftIdx], array[endIdx]] = [array[endIdx], array[leftIdx]];
+        if (leftIdx === kIdx) return array[leftIdx];
+
+        if (kIdx < leftIdx) {
+          endIdx = leftIdx - 1;
+        } else {
+          startIdx = leftIdx + 1;
+        }
+      }
+    }
+  }
 }
 
 export const __ = '__';

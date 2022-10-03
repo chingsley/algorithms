@@ -130,6 +130,49 @@
       return -1;
     }
   }
+  {
+    type Range = [number, number];
+    enum Direction { Left = 'LEFT', Right = 'RIGHT' };
+
+    // O(log(n)) time | O(1) space
+    function searchForRange(array: number[], target: number): Range {
+      const left = searchForEnd(Direction.Left, array, target);
+      const right = searchForEnd(Direction.Right, array, target);
+      return [left, right];
+    }
+
+    function searchForEnd(direction: Direction, array: number[], target: number): number {
+      let [leftIdx, rightIdx] = [0, array.length - 1];
+      while (leftIdx <= rightIdx) {
+        const midIdx = Math.floor((leftIdx + rightIdx) / 2);
+        if (target < array[midIdx]) {
+          rightIdx = midIdx - 1;
+        } else if (target > array[midIdx]) {
+          leftIdx = midIdx + 1;
+        } else {
+          if (direction === Direction.Left) {
+            if (midIdx === 0) {
+              return midIdx;
+            } else if (array[midIdx - 1] < target) {
+              return midIdx;
+            } else {
+              rightIdx = midIdx - 1;
+            }
+          } else {
+            if (midIdx === array.length - 1) {
+              return midIdx;
+            } else if (array[midIdx + 1] > target) {
+              return midIdx;
+            } else {
+              leftIdx = midIdx + 1;
+            }
+          }
+        }
+      }
+
+      return -1;
+    }
+  }
 }
 
 export const __ = '__';

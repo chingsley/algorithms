@@ -81,7 +81,61 @@
 
       return -1;
     }
+  }
+  {
+    // O(log(n)) time | O(log(n)) space
+    function indexEqualsValue(array: number[]) {
+      return bSearch(0, array.length - 1, array);
+    }
 
+    function bSearch(startIdx: number, endIdx: number, array: number[]): number {
+      if (startIdx > endIdx) return -1;
+
+      const midIdx = Math.floor((startIdx + endIdx) / 2);
+      if (array[midIdx] === midIdx && midIdx === 0) return midIdx;
+      if (array[midIdx] === midIdx && array[midIdx - 1] < midIdx - 1) return midIdx;
+      if (array[midIdx - 1] >= midIdx - 1) return bSearch(startIdx, midIdx - 1, array);
+      return bSearch(midIdx + 1, endIdx, array);
+    }
+  }
+  {
+    // O(log(n)) time | O(log(n)) space
+    function indexEqualsValue(array: number[]) {
+      return bSearch(0, array.length - 1, array);
+    }
+
+    function bSearch(startIdx: number, endIdx: number, array: number[]): number {
+      if (startIdx > endIdx) return -1;
+
+      const midIdx = Math.floor((startIdx + endIdx) / 2);
+      if (array[midIdx] === midIdx && midIdx === 0) return midIdx;
+      if (array[midIdx] === midIdx && array[midIdx - 1] < midIdx - 1) return midIdx;
+      if (array[midIdx] < midIdx) {
+        return bSearch(midIdx + 1, endIdx, array);
+      } else {
+        return bSearch(startIdx, midIdx - 1, array);
+      }
+    }
+  }
+  {
+    // O(log(n)) time | O(1) space
+    function indexEqualsValue(array: number[]) {
+      let [leftIdx, rightIdx] = [0, array.length - 1];
+      while (leftIdx <= rightIdx) {
+        const midIdx = Math.floor((leftIdx + rightIdx) / 2);
+        if (array[midIdx] === midIdx && midIdx === 0) {
+          return midIdx;
+        } else if (array[midIdx] === midIdx && array[midIdx - 1] < midIdx - 1) {
+          return midIdx;
+        } else if (array[midIdx] < midIdx) {
+          leftIdx = midIdx + 1;
+        } else {
+          rightIdx = midIdx - 1;
+        }
+      }
+
+      return -1;
+    }
   }
 }
 

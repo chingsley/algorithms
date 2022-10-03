@@ -62,6 +62,24 @@
     }
 
   }
+  {
+    // O(n) time | O(1) space
+    function findThreeLargestNumbers(array: number[]) {
+      const result = new Array(3).fill(-Infinity);
+      for (let num of array) {
+        if (num > result[0]) {
+          result[0] = num;
+          for (let i = 0; i < result.length - 1; i++) {
+            if (result[i] > result[i + 1]) {
+              [result[i], result[i + 1]] = [result[i + 1], result[i]];
+            }
+          }
+        }
+      }
+
+      return result;
+    }
+  }
 }
 
 export const __ = '__';

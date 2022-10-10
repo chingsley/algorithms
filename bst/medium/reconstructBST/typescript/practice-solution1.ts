@@ -114,5 +114,38 @@ import { BST } from './solution1';
       }
     }
   }
+  {
+    class BST {
+      value: number;
+      left: BST | null;
+      right: BST | null;
+      constructor(value: number, left: BST | null, right: BST | null) {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+      }
+    }
+
+    // O(n^2) time | O(n) space
+    function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+      return reconstructFromRange([0, preOrderTraversalValues.length - 1], preOrderTraversalValues);
+    }
+
+    function reconstructFromRange([startIdx, endIdx]: number[], array: number[]): BST | null {
+      if (startIdx > endIdx) return null;
+
+      let rightStartIdx = endIdx + 1;
+      for (let i = startIdx + 1; i <= endIdx; i++) {
+        if (array[i] >= array[startIdx]) {
+          rightStartIdx = i;
+          break;
+        };
+      }
+
+      const left = reconstructFromRange([startIdx + 1, rightStartIdx - 1], array);
+      const right = reconstructFromRange([rightStartIdx, endIdx], array);
+      return new BST(array[startIdx], left, right);
+    }
+  }
 }
 

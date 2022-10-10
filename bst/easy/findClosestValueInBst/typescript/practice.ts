@@ -134,6 +134,26 @@ import { BST } from './solution1';
         return findClosest(tree.right, target, closest);
       }
     }
+  }
+  {
+    // Avg. case: O(log(n)) time | O(1) space
+    // Worst case: O(n) time | O(1) space
+    function findClosestValueInBst(tree: BST, target: number): number {
+      let node: BST | null = tree;
+      let closest = Infinity;
+      while (node !== null) {
+        if (node.value === target) {
+          return node.value;
+        }
+        closest = Math.abs(node.value - target) < Math.abs(closest - target) ? node.value : closest;
+        if (target < node.value) {
+          node = node.left;
+        } else {
+          node = node.right;
+        }
+      }
 
+      return closest;
+    }
   }
 }

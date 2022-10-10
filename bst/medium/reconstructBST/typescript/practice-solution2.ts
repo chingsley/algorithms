@@ -96,4 +96,26 @@ import { BST } from './solution2';
       return new BST(val, left, right);
     }
   }
+  {
+    interface TreeInfo { idx: number; };
+
+    // O(n) time | O(n) space
+    // n = length of the preOrderTraversalValues array
+    function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+      const treeInfo: TreeInfo = { idx: 0 };
+      return reconstruct([-Infinity, Infinity], treeInfo, preOrderTraversalValues);
+    }
+
+    function reconstruct([lowerBound, upperBound]: number[], treeInfo: TreeInfo, array: number[]): BST | null {
+      if (treeInfo.idx > array.length - 1) return null;
+
+      const value = array[treeInfo.idx];
+      if (value >= upperBound || value < lowerBound) return null;
+
+      treeInfo.idx += 1;
+      const left = reconstruct([lowerBound, value], treeInfo, array);
+      const right = reconstruct([value, upperBound], treeInfo, array);
+      return new BST(value, left, right);
+    }
+  }
 }

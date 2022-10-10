@@ -124,4 +124,30 @@ export class BST {
         0  1  2  3   4   5   6   7   8;
     */
   }
+  {
+    class BST {
+      value: number;
+      left: BST | null;
+      right: BST | null;
+      constructor(value: number) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+      }
+    }
+
+    function minHeightBst(array: number[]) {
+      return reconstructFromRange([0, array.length - 1], array);
+    }
+
+    function reconstructFromRange([leftIdx, rightIdx]: number[], array: number[]): BST | null {
+      if (leftIdx > rightIdx) return null;
+
+      const midIdx = Math.floor((leftIdx + rightIdx) / 2);
+      const root = new BST(array[midIdx]);
+      root.left = reconstructFromRange([leftIdx, midIdx - 1], array);
+      root.right = reconstructFromRange([midIdx + 1, rightIdx], array);
+      return root;
+    }
+  }
 }

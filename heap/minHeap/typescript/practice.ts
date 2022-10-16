@@ -390,6 +390,134 @@
       }
     }
   }
+  {
+    class MinHeap {
+      heap: number[];
+
+      constructor(array: number[]) {
+        this.heap = this.buildHeap(array);
+      }
+
+      // o(n) time | O(log(n)) space
+      buildHeap(array: number[]) {
+        for (let i = array.length - 1; i >= 0; i--) {
+          this.siftDown(i, array);
+        }
+        return array;
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      siftDown(i: number, array: number[]) {
+        const [j, k] = [(2 * i) + 1, (2 * i) + 2];
+        const minIdx = this.getMinIdx([i, j, k], array);
+        if (minIdx === i) return;
+        [array[minIdx], array[i]] = [array[i], array[minIdx]];
+        this.siftDown(minIdx, array);
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      siftUp(i: number) {
+        const j = Math.floor((i - 1) / 2);
+        if (j < 0 || this.heap[j] < this.heap[i]) return;
+        [this.heap[j], this.heap[i]] = [this.heap[i], this.heap[j]];
+        this.siftUp(j);
+      }
+
+      // O(1) time | O(1) space
+      peek() {
+        return this.heap[0];
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      remove() {
+        const endIdx = this.heap.length - 1;
+        [this.heap[0], this.heap[endIdx]] = [this.heap[endIdx], this.heap[0]];
+        const minValue = this.heap.pop();
+        this.siftDown(0, this.heap);
+        return minValue;
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      insert(value: number) {
+        this.heap.push(value);
+        this.siftUp(this.heap.length - 1);
+      }
+
+      // O(1) time | O(1) space
+      getMinIdx([i, j, k]: number[], array: number[]): number {
+        let minIdx = i;
+        if (j < array.length && array[j] < array[minIdx]) minIdx = j;
+        if (k < array.length && array[k] < array[minIdx]) minIdx = k;
+        return minIdx;
+      }
+    }
+  }
+  {
+    class MinHeap {
+      heap: number[];
+
+      constructor(array: number[]) {
+        this.heap = this.buildHeap(array);
+      }
+
+      // o(n) time | O(1) space
+      buildHeap(array: number[]) {
+        for (let i = array.length - 1; i >= 0; i--) {
+          this.siftDown(i, array);
+        }
+        return array;
+      }
+
+      // O(log(n)) time | O(1) space
+      siftDown(i: number, array: number[]) {
+        while (true) {
+          const [j, k] = [(2 * i) + 1, (2 * i) + 2];
+          const minIdx = this.getMinIdx([i, j, k], array);
+          if (minIdx === i) break;
+          [array[minIdx], array[i]] = [array[i], array[minIdx]];
+          i = minIdx;
+        }
+      }
+
+      // O(log(n)) time | O(1) space
+      siftUp(i: number) {
+        while (true) {
+          const j = Math.floor((i - 1) / 2);
+          if (j < 0 || this.heap[j] < this.heap[i]) break;
+          [this.heap[j], this.heap[i]] = [this.heap[i], this.heap[j]];
+          i = j;
+        }
+      }
+
+      // O(1) time | O(1) space
+      peek() {
+        return this.heap[0];
+      }
+
+      // O(log(n)) time | O(1) space
+      remove() {
+        const endIdx = this.heap.length - 1;
+        [this.heap[0], this.heap[endIdx]] = [this.heap[endIdx], this.heap[0]];
+        const minValue = this.heap.pop();
+        this.siftDown(0, this.heap);
+        return minValue;
+      }
+
+      // O(log(n)) time | O(1) space
+      insert(value: number) {
+        this.heap.push(value);
+        this.siftUp(this.heap.length - 1);
+      }
+
+      // O(1) time | O(1) space
+      getMinIdx([i, j, k]: number[], array: number[]): number {
+        let minIdx = i;
+        if (j < array.length && array[j] < array[minIdx]) minIdx = j;
+        if (k < array.length && array[k] < array[minIdx]) minIdx = k;
+        return minIdx;
+      }
+    }
+  }
 }
 
 

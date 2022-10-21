@@ -45,6 +45,44 @@
       }
     }
   }
+  {
+    // O(h) time | O(1) space
+    // h = height of the tree
+    function validateThreeNodes(nodeOne: BST, nodeTwo: BST, nodeThree: BST) {
+      let ancestor: BST | null = null;
+      let descendant: BST | null = null;
+
+      ancestor = checkAncestor(nodeOne, nodeTwo);
+      if (ancestor !== null) {
+        descendant = nodeThree;
+      } else {
+        ancestor = checkAncestor(nodeThree, nodeTwo);
+        if (ancestor !== null) descendant = nodeOne;
+      }
+
+      if (descendant === null) return false;
+
+      ancestor = checkAncestor(nodeTwo, descendant);
+      if (ancestor === null) return false;
+
+      return true;
+    }
+
+
+    function checkAncestor(ancestor: BST, descendant: BST) {
+      let currNode: BST | null = ancestor;
+      while (currNode !== null) {
+        if (currNode.value === descendant.value) return ancestor;
+        if (descendant.value < currNode.value) {
+          currNode = currNode.left;
+        } else {
+          currNode = currNode.right;
+        }
+      }
+
+      return null;
+    }
+  }
 }
 
 export const __ = '__';

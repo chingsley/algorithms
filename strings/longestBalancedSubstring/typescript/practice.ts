@@ -24,4 +24,52 @@
     }
 
   }
+  {
+    // O(n) time | O(n) space
+    function longestBalancedSubstring(string: string) {
+      const idxStack = [- 1];
+      let max = 0;
+      for (let i = 0; i < string.length; i++) {
+        if (string[i] === '(') {
+          idxStack.push(i);
+        } else {
+          idxStack.pop();
+          if (idxStack[idxStack.length - 1] === undefined) {
+            idxStack.push(i);
+          } else {
+            max = Math.max(max, i - idxStack[idxStack.length - 1]);
+          }
+        }
+      }
+      return max;
+    }
+  }
+  {
+    // O(n) time | O(1) space
+    function longestBalancedSubstring(string: string) {
+      const maxRightToLeft = countCh(false, string);
+      const maxLeftToRight = countCh(true, string);
+      return Math.max(maxLeftToRight, maxRightToLeft);
+    }
+
+    function countCh(leftToRight: boolean, string: string): number {
+      const startIdx = leftToRight ? 0 : string.length - 1;
+      const step = leftToRight ? 1 : -1;
+      const [opens, closes] = leftToRight ? ['(', ')'] : [')', '('];
+      let [opensCount, closesCount] = [0, 0];
+      let max = 0;
+
+      for (let i = startIdx; i < string.length && i >= 0; i += step) {
+        if (string[i] === opens) opensCount += 1;
+        if (string[i] === closes) closesCount += 1;
+
+        if (opensCount === closesCount) max = Math.max(max, opensCount * 2);
+        if (closesCount > opensCount) [opensCount, closesCount] = [0, 0];
+      }
+
+      return max;
+    }
+  }
 }
+
+export const __ = '__';

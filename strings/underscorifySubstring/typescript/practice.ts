@@ -56,4 +56,122 @@
       underscorifySubstring(string, substring)
     );
   }
+  {
+    // O(n + m) time | O(n) space
+    // n = length of string | m = length os substring
+    function underscorifySubstring(string: string, substring: string) {
+      const underscorePostions = getUnderscorePositions(string, substring);
+      const mergedPositions = mergeUnderscorePositions(underscorePostions);
+      return insertUnderscores(string, mergedPositions);
+    }
+
+    function getUnderscorePositions(string: string, substring: string): number[][] {
+      const pos: number[][] = [];
+      let i = 0;
+      while (i < string.length) {
+        const start = string.indexOf(substring, i);
+        if (start < 0) break;
+
+        pos.push([start, start + substring.length]);
+        i = start + 1;
+      }
+
+      return pos;
+    }
+
+    function mergeUnderscorePositions(pos: number[][]): number[][] {
+      const merged: number[][] = [pos[0]];
+      for (let i = 1; i < pos.length; i++) {
+        const [a, b] = merged[merged.length - 1];
+        const [c, d] = pos[i];
+
+        if (c <= b) {
+          merged[merged.length - 1] = [a, d];
+        } else {
+          merged.push([c, d]);
+        }
+      }
+
+      return merged;
+    }
+
+    function insertUnderscores(string: string, pos: number[][]): string {
+      const res: string[] = [];
+      const posSet = new Set(pos.reduce((acc, arr) => acc.concat(arr), []));
+      for (let i = 0; i <= string.length; i++) {
+        if (posSet.has(i)) res.push('_');
+        if (i < string.length) res.push(string[i]);
+      }
+
+      return res.join('');
+    }
+  }
+  {
+    // O(n + m) time | O(n) space
+    // n = length of string | m = length os substring
+    function underscorifySubstring(string: string, substring: string) {
+      const underscorePostions = getUnderscorePositions(string, substring);
+      const mergedPositions = mergeUnderscorePositions(underscorePostions);
+      return insertUnderscores(string, mergedPositions);
+    }
+
+    function getUnderscorePositions(string: string, substring: string): number[][] {
+      const pos: number[][] = [];
+      let i = 0;
+      while (i < string.length) {
+        const start = string.indexOf(substring, i);
+        if (start < 0) break;
+
+        pos.push([start, start + substring.length]);
+        i = start + 1;
+      }
+
+      return pos;
+    }
+
+    function mergeUnderscorePositions(pos: number[][]): number[][] {
+      if (pos.length === 0) return [];
+
+      const merged: number[][] = [pos[0]];
+      for (let i = 1; i < pos.length; i++) {
+        const [a, b] = merged[merged.length - 1];
+        const [c, d] = pos[i];
+
+        if (c <= b) {
+          merged[merged.length - 1] = [a, d];
+        } else {
+          merged.push([c, d]);
+        }
+      }
+
+      return merged;
+    }
+
+    function insertUnderscores(string: string, pos: number[][]): string {
+      if (pos.length === 0) return string;
+
+      const res: string[] = [];
+      let [row, col] = [0, 0];
+      // console.log(pos);
+      for (let i = 0; i <= string.length; i++) {
+        // console.log([row, col])
+        if (row < pos.length && i === pos[row][col]) {
+          res.push('_');
+          if (col === 0) {
+            col += 1;
+          } else {// i.e if col === 1
+            [row, col] = [row + 1, 0]; // go to next row; and reset col to 0
+          }
+
+        }
+        if (i < string.length) res.push(string[i]);
+      }
+
+      return res.join('');
+    }
+
+
+  }
 }
+
+export const __ = '__';

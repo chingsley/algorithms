@@ -284,6 +284,58 @@
       }
     }
   }
+  {
+    // O(b + s) time | O(s) space;
+    // b = length of big string;
+    // s = length of small string
+    function smallestSubstringContaining(bigString: string, smallString: string) {
+      const tHash = chCounter(smallString);
+      const uHash = chCounter(smallString, true);
+      let k = Object.keys(tHash).length;
+      let u = 0;
+      let min = [0, Infinity];
+      let [i, j] = [0, 0];
+      while (u < k && i < bigString.length) {
+        let ch = bigString[i];
+        if (ch in uHash) {
+          uHash[ch] += 1;
+          if (uHash[ch] === tHash[ch]) u += 1;
+        }
+        while (u === k) {
+          ch = bigString[j];
+          updateMinRange(min, [j, i]);
+          if (ch in uHash) uHash[ch] -= 1;
+          if (uHash[ch] < tHash[ch]) u -= 1;
+          j += 1;
+        }
+
+        i += 1;
+      }
+
+      if (min[1] === Infinity) return '';
+      return bigString.slice(min[0], min[1] + 1);
+    }
+
+    function chCounter(string: string, setDefaultCountToZero?: boolean) {
+      const chCounts: { [key: string]: number; } = {};
+      for (let ch of string) {
+        if (setDefaultCountToZero) {
+          chCounts[ch] = 0;
+        } else {
+          chCounts[ch] = (chCounts[ch] || 0) + 1;
+        }
+      }
+
+      return chCounts;
+    }
+
+    function updateMinRange(currMin: number[], newMin: number[]): void {
+      if (newMin[1] - newMin[0] < currMin[1] - currMin[0]) {
+        [currMin[0], currMin[1]] = [newMin[0], newMin[1]];
+      }
+    }
+
+  }
 }
 
 export const __ = '__';

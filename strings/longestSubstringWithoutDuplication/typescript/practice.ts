@@ -62,7 +62,25 @@
       if (d - c > b - a) [currentLongest[0], currentLongest[1]] = [c, d];
     }
   }
+  {
+    // O(n) time | O(u) space
+    // n - length of string | u = no. of unique characters in the string
+    function longestSubstringWithoutDuplication(string: string) {
+      const seen: { [key: string]: number; } = {};
+      let max: number[] = [0, 0];
+      let startIdx = 0;
+      for (let currIdx = 0; currIdx < string.length; currIdx++) {
+        const ch = string[currIdx];
+        if (ch in seen) {
+          startIdx = Math.max(startIdx, seen[ch] + 1);
+        }
+        max = currIdx - startIdx > max[1] - max[0] ? [startIdx, currIdx] : max;
+        seen[ch] = currIdx;
+      }
 
+      return string.slice(max[0], max[1] + 1);
+    }
+  }
 }
 
 export const __ = '__';

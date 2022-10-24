@@ -221,6 +221,59 @@
     }
 
   }
+  {
+    // O(s^2 + p) time | O(s + p) space
+    // s = length of string | p = length of pattern
+    function patternMatcher(pattern: string, string: string) {
+      const patternArr = pattern.split('');
+      const patternCount = countPattern(patternArr);
+      const [X, Y] = Array.from(new Set(patternArr));
+
+      if (Y) {
+        const firstYIndex = pattern.indexOf(Y);
+        // max xSize is at min ySize ie. ySize = 1:
+        const maxXSize = (string.length - (patternCount[Y] * 1)) / patternCount[X];
+        console.log({ maxXSize });
+        for (let xSize = 1; xSize <= maxXSize; xSize++) {// O(s) time, b/c maxXSize is bounded by s (string.length )
+          const ySize = (string.length - (patternCount[X] * xSize)) / patternCount[Y];
+          // if(ySize < 0) continue;
+          if (ySize % 1 !== 0) continue;
+
+          const xString = string.slice(0, xSize);
+          const yOffset = firstYIndex * xSize;
+          const yString = string.slice(yOffset, ySize + yOffset);
+          const stringFromPattern = getStringFromPattern(patternArr, { [X]: xString, [Y]: yString });
+          if (stringFromPattern === string) {
+            return X === 'x' ? [xString, yString] : [yString, xString];
+          }
+        }
+      } else {
+        const xSize = string.length / patternArr.length;
+        if (xSize % 1 !== 0) return [];
+
+        const xString = string.slice(0, xSize);
+        const stringFromPattern = getStringFromPattern(patternArr, { [X]: xString });
+        if (stringFromPattern === string) {
+          return X === 'x' ? [xString, ''] : ['', xString];
+        }
+      }
+
+      return [];
+    }
+
+    function getStringFromPattern(patternArr: string[], pHash: { [key: string]: string; }): string {
+      const resultArr: string[] = patternArr.map(p => pHash[p]);
+      return resultArr.join('');
+    }
+
+    function countPattern(patternArr: string[]): { [key: string]: number; } {
+      const counts: { [key: string]: number; } = {};
+      for (let ch of patternArr) {
+        counts[ch] = (counts[ch] || 0) + 1;
+      }
+      return counts;
+    }
+  }
 }
 
 export const __ = '__';

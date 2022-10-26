@@ -70,6 +70,54 @@
       return max;
     }
   }
+  {
+    // O(n) time | O(n) space
+    // n = length of string
+    function longestBalancedSubstring(string: string) {
+      const idxStack = [-1];
+      let max = 0;
+      for (let i = 0; i < string.length; i++) {
+        if (string[i] === '(') {
+          idxStack.push(i);
+        } else {
+          idxStack.pop();
+          if (idxStack.length > 0) {
+            max = Math.max(max, i - idxStack[idxStack.length - 1]);
+          } else {
+            idxStack.push(i);
+          }
+        }
+      }
+      return max;
+    }
+
+  }
+  {
+    // O(n) time | O(1) space
+    function longestBalancedSubstring(string: string) {
+      const leftToRightMax = findMax(string, true);
+      const rightToLeftMax = findMax(string, false);
+      return Math.max(leftToRightMax, rightToLeftMax);
+    }
+
+    function findMax(string: string, leftToRight: boolean): number {
+      const startIdx = leftToRight ? 0 : string.length - 1;
+      const step = leftToRight ? 1 : -1;
+      const openCh = leftToRight ? '(' : ')';
+      let max = 0;
+      let [open, close] = [0, 0];
+      for (let i = startIdx; i >= 0 && i < string.length; i += step) {
+        if (string[i] === openCh) open += 1;
+        if (string[i] !== openCh) close += 1;
+
+        if (open === close) max = Math.max(max, open * 2);
+        if (close > open) [close, open] = [0, 0];
+      }
+
+      return max;
+    }
+
+  }
 }
 
 export const __ = '__';

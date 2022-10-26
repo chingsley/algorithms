@@ -169,7 +169,109 @@
 
       return res.join('');
     }
+  }
+  {
+    // Avg. Case: O(s + b) time | O(s) space
+    // s = length of the string | b = length of substring
+    function underscorifySubstring(string: string, substring: string) {
+      const positions = getUnderscorePositions(string, substring);
+      const mergedPos = mergeOverlappingPositions(positions);
+      return insertUnderscores(string, mergedPos);
+    }
 
+    function getUnderscorePositions(string: string, substring: string) { // O(s) time | O(s) space
+      const positions: number[][] = [];
+      let i = 0;
+      while (i < string.length) {
+        i = string.indexOf(substring, i);
+        if (i < 0) break;
+        positions.push([i, i + substring.length]);
+        i += 1;
+      }
+      return positions;
+    }
+
+    function mergeOverlappingPositions(pos: number[][]) {// O(s) time | O(s) space
+      if (pos.length < 1) return [];
+
+      const merged: number[][] = [[...pos[0]]];
+      for (let i = 1; i < pos.length; i++) {
+        const [a, b] = merged[merged.length - 1];
+        const [c, d] = pos[i];
+        if (c <= b) {
+          merged[merged.length - 1] = [a, d];
+        } else {
+          merged.push([c, d]);
+        }
+      }
+
+      return merged;
+    }
+
+    function insertUnderscores(string: string, mergedPos: number[][]) { // O(s) time | O(s) space
+      if (mergedPos.length < 1) return string;
+
+      const posSet = new Set(mergedPos.reduce((acc, arr) => acc.concat(arr)));
+      const resArr: string[] = [];
+      for (let i = 0; i <= string.length; i++) {
+        if (posSet.has(i)) resArr.push('_');
+        if (i < string.length) resArr.push(string[i]);
+      }
+      return resArr.join('');
+    }
+  }
+  {
+    // Avg. Case: O(s + b) time (see algoexpert video work-through for explanations) | O(s) space
+    // s = length of the string | b = length of substring
+    function underscorifySubstring(string: string, substring: string) {
+      const positions = getUnderscorePositions(string, substring);
+      const mergedPos = mergeOverlappingPositions(positions);
+      return insertUnderscores(string, mergedPos);
+    }
+
+    function getUnderscorePositions(string: string, substring: string) { // O(s) time | O(s) space
+      const positions: number[][] = [];
+      let i = 0;
+      while (i < string.length) {
+        i = string.indexOf(substring, i); // O(s + b) time
+        if (i < 0) break;
+        positions.push([i, i + substring.length]);
+        i += 1;
+      }
+      return positions;
+    }
+
+    function mergeOverlappingPositions(pos: number[][]) {// O(s) time | O(s) space
+      const merged: number[][] = [pos[0] || []];
+      for (let i = 1; i < pos.length; i++) {
+        const [a, b] = merged[merged.length - 1];
+        const [c, d] = pos[i];
+        if (c <= b) {
+          merged[merged.length - 1] = [a, d];
+        } else {
+          merged.push([c, d]);
+        }
+      }
+
+      return merged;
+    }
+
+    function insertUnderscores(string: string, mergedPos: number[][]) { // O(s) time | O(s) space  
+      const resArr: string[] = [];
+      let [row, col] = [0, 0];
+      for (let i = 0; i <= string.length; i++) {
+        if (row < mergedPos.length && i === mergedPos[row][col]) {
+          resArr.push('_');
+          if (col === 0) {
+            col += 1;
+          } else {
+            [row, col] = [row + 1, 0];
+          }
+        }
+        if (i < string.length) resArr.push(string[i]);
+      }
+      return resArr.join('');
+    }
 
   }
 }

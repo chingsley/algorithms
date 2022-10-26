@@ -334,6 +334,54 @@
         [currMin[0], currMin[1]] = [newMin[0], newMin[1]];
       }
     }
+  }
+  {
+    // O(b + s) time | O(s) space
+    // b = length of big string | s = length os big string
+    function smallestSubstringContaining(bigString: string, smallString: string) {
+      const ssCount = countChars(smallString, false);
+      const ssCountCurr = countChars(smallString, true);
+
+      let currMin = [0, Infinity];
+      let [K, U] = [Object.keys(ssCount).length, 0];
+      let [l, r] = [0, 0];
+      while (r < bigString.length && U < K) {
+        let ch = bigString[r];
+        if (ch in ssCountCurr) {
+          ssCountCurr[ch] += 1;
+          if (ssCountCurr[ch] === ssCount[ch]) U += 1;
+        }
+
+        while (U === K) {
+          updatedMin(currMin, [l, r]);
+          ch = bigString[l];
+          if (ch in ssCountCurr) ssCountCurr[ch] -= 1;
+          if (ssCountCurr[ch] < ssCount[ch]) U -= 1;
+          l += 1;
+        }
+
+        r += 1;
+      }
+
+      return currMin[1] < Infinity ? bigString.slice(currMin[0], currMin[1] + 1) : '';
+    }
+
+    function countChars(str: string, setDefualt: boolean) {
+      const counts: { [key: string]: number; } = {};
+      for (let ch of str) {
+        if (setDefualt) {
+          counts[ch] = 0;
+        } else {
+          counts[ch] = (counts[ch] || 0) + 1;
+        }
+      }
+      return counts;
+    }
+
+    function updatedMin(currMin: number[], [l, r]: number[]) {
+      const [x, y] = currMin;
+      if (r - l < y - x) [currMin[0], currMin[1]] = [l, r];
+    }
 
   }
 }

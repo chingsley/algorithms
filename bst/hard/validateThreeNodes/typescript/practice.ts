@@ -83,6 +83,63 @@
       return null;
     }
   }
+  {
+    // O(d) time | O(1) space
+    // d = depth or height of the tree
+    function validateThreeNodes(nodeOne: BST, nodeTwo: BST, nodeThree: BST) {
+      if (parentToChild(nodeOne, nodeTwo)) {
+        return parentToChild(nodeTwo, nodeThree);
+      }
+      if (parentToChild(nodeThree, nodeTwo)) {
+        return parentToChild(nodeTwo, nodeOne);
+      }
+
+      return false;
+    }
+
+    function parentToChild(parent: BST, child: BST): boolean {
+      let currNode: BST | null = parent;
+      while (currNode !== null) {
+        if (currNode.value === child.value) return true;
+
+        if (child.value < currNode.value) {
+          currNode = currNode.left;
+        } else {
+          currNode = currNode.right;
+        }
+      }
+
+      return false;
+    }
+  }
+  {
+    // O(h) time | O(1) space
+    // h = height of the tree
+    function validateThreeNodes(nodeOne: BST, nodeTwo: BST, nodeThree: BST) {
+      if (parentToChild(nodeOne, nodeTwo)) {
+        return parentToChild(nodeTwo, nodeThree);
+      }
+      if (parentToChild(nodeThree, nodeTwo)) {
+        return parentToChild(nodeTwo, nodeOne);
+      }
+
+      return false;
+    }
+
+    function parentToChild(parent: BST, child: BST): boolean {
+      let currNode: BST | null = parent;
+      while (currNode !== null) {
+        if (child.value === currNode.value) return true;
+
+        if (child.value < currNode.value) {
+          currNode = currNode.left;
+        } else {
+          currNode = currNode.right;
+        }
+      }
+      return false;
+    }
+  }
 }
 
 export const __ = '__';

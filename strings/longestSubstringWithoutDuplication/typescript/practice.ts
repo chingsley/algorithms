@@ -97,6 +97,24 @@
       return string.slice(...max);
     }
   }
+  {
+    // O(n) time | O(u) space;
+    // n = length of string | u = no. of uniqu chars in string
+    function longestSubstringWithoutDuplication(string: string) {
+      const seen: { [key: string]: number; } = {};
+      let max = [0, 0];
+      let startIdx = 0;
+      for (let endIdx = 0; endIdx < string.length; endIdx++) {
+        const ch = string[endIdx];
+        if (ch in seen) startIdx = Math.max(startIdx, seen[ch] + 1);
+        max = endIdx - startIdx > max[1] - max[0] ? [startIdx, endIdx] : max;
+        seen[ch] = endIdx;
+      }
+      return string.slice(max[0], max[1] + 1);
+    }
+
+
+  }
 }
 
 export const __ = '__';

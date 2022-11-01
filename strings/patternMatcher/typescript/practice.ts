@@ -274,6 +274,51 @@
       return counts;
     }
   }
+  {
+    // O(n^2 + m) time | O(n + m) space
+    function patternMatcher(pattern: string, string: string) {
+      const patternArr = pattern.split('');
+      const ptnCount = countChars(patternArr);
+      const [X, Y] = Array.from(new Set(patternArr));
+      if (Y) {
+        const firstIdxOfY = patternArr.indexOf(Y);
+        const minYSize = 1;
+        const maxXSize = (string.length - (ptnCount[Y] * minYSize)) / ptnCount[X];
+        for (let xSize = 1; xSize <= maxXSize; xSize++) {
+          const xString = string.slice(0, xSize);
+
+          const ySize = (string.length - (xSize * ptnCount[X])) / ptnCount[Y];
+          if (xSize === 2) console.log({ xString, ySize });
+          if (ySize % 1 !== 0) continue;
+
+          const yOffset = xSize * firstIdxOfY;
+          const yString = string.slice(yOffset, ySize + yOffset);
+
+          const strFromPattern = patternArr.map(p => p === X ? xString : yString).join('');
+          if (strFromPattern === string) {
+            return X === 'x' ? [xString, yString] : [yString, xString];
+          }
+        }
+      } else {
+        const xSize = string.length / patternArr.length;
+        if (xSize % 1 !== 0) return [];
+
+        const xString = string.slice(0, xSize);
+        const strFromPattern = patternArr.map(p => xString).join('');
+        if (strFromPattern === string) {
+          return X === 'x' ? [xString, ''] : ['', xString];
+        }
+      }
+      return [];
+    }
+
+    function countChars(arr: string[]) {
+      const counts: { [key: string]: number; } = {};
+      for (let ch of arr) counts[ch] = (counts[ch] || 0) + 1;
+      return counts;
+    }
+
+  }
 }
 
 export const __ = '__';

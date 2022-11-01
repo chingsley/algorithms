@@ -118,6 +118,55 @@
     }
 
   }
+  {
+    // O(n) time | O(n) space
+    // n = length of string
+    function longestBalancedSubstring(string: string) {
+      const idxStack = [-1];
+      let max = 0;
+      for (let i = 0; i < string.length; i++) {
+        const ch = string[i];
+        if (ch === '(') {
+          idxStack.push(i);
+        } else {
+          idxStack.pop();
+          if (idxStack.length > 0) {
+            max = Math.max(max, i - idxStack[idxStack.length - 1]);
+          } else {
+            idxStack.push(i);
+          }
+        }
+      }
+      return max;
+    }
+  }
+  {
+    // O(n) time | O(1) space
+    // n = length of string
+    function longestBalancedSubstring(string: string) {
+      const leftToRightCount = countBalanced(string, true);
+      const rightToLeftCount = countBalanced(string, false);
+      return Math.max(leftToRightCount, rightToLeftCount);
+    }
+
+    function countBalanced(string: string, leftToRight: boolean) {
+      const startIdx = leftToRight ? 0 : string.length - 1;
+      const step = leftToRight ? 1 : -1;
+      const openCh = leftToRight ? '(' : ')';
+
+      let max = 0;
+      let [opens, closes] = [0, 0];
+      for (let i = startIdx; i >= 0 && i < string.length; i += step) {
+        string[i] === openCh ? opens += 1 : closes += 1;
+        if (opens === closes) max = Math.max(max, opens * 2);
+        if (closes > opens) [opens, closes] = [0, 0];
+      }
+
+      return max;
+    }
+
+
+  }
 }
 
 export const __ = '__';

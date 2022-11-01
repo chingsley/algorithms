@@ -384,6 +384,51 @@
     }
 
   }
+
+  {
+    // O(b + s) time | O(b + s) space
+    function smallestSubstringContaining(bigString: string, smallString: string) {
+      const targetSubStrCounts = countStr(smallString, false);
+      const currentSubStrCounts = countStr(smallString, true);
+      let [K, U] = [Object.keys(targetSubStrCounts).length, 0];
+      let min = [0, Infinity];
+
+      let [lead, lag] = [0, 0];
+      while (U < K && lead < bigString.length) {
+        let ch = bigString[lead];
+        if (ch in targetSubStrCounts) {
+          currentSubStrCounts[ch] += 1;
+          if (currentSubStrCounts[ch] === targetSubStrCounts[ch]) U += 1;
+        }
+
+        while (U === K) {
+          min = lead - lag < min[1] - min[0] ? [lag, lead] : min;
+          ch = bigString[lag];
+          if (ch in targetSubStrCounts) {
+            currentSubStrCounts[ch] -= 1;
+            if (currentSubStrCounts[ch] < targetSubStrCounts[ch]) U -= 1;
+          }
+          lag += 1;
+        }
+
+        lead += 1;
+      }
+
+      if (min[1] === Infinity) return '';
+      return bigString.slice(min[0], min[1] + 1);
+    }
+
+
+    function countStr(str: string, defaultToZero: boolean) { // O(s) time | O(u) space (s = small string | u = no. of unique chars in small string)
+      const counts: { [key: string]: number; } = {};
+      for (let ch of str) {
+        counts[ch] = defaultToZero ? 0 : (counts[ch] || 0) + 1;
+      }
+      return counts;
+    }
+
+
+  }
 }
 
 export const __ = '__';

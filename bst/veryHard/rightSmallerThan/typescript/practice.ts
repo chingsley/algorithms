@@ -193,11 +193,8 @@
     }
   }
   {
-    // export function rightSmallerThan(array: number[]) {
-    //   // Write your code here.
-    //   return [-1];
-    // }
-
+    // avg. case: O(nlog(n)) time | O(n) space
+    // worst case: O(n^2) time | O(n) space
     function rightSmallerThan(array: number[]) {
       const result = new Array(array.length).fill(0);
 

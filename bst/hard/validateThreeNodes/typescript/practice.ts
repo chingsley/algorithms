@@ -140,6 +140,24 @@
       return false;
     }
   }
+  {
+    // O(d) time | O(1) space
+    function validateThreeNodes(nodeOne: BST, nodeTwo: BST, nodeThree: BST) {
+      if (parentToChild(nodeOne, nodeTwo)) return parentToChild(nodeTwo, nodeThree);
+      if (parentToChild(nodeThree, nodeTwo)) return parentToChild(nodeTwo, nodeOne);
+      return false;
+    }
+
+    function parentToChild(parent: BST, child: BST): boolean {
+      let currNode: BST | null = parent;
+      while (currNode !== null) {
+        if (child.value === currNode.value) return true;
+        currNode = child.value < currNode.value ? currNode.left : currNode.right;
+      }
+
+      return false;
+    }
+  }
 }
 
 export const __ = '__';

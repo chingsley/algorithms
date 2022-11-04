@@ -164,8 +164,29 @@
 
       return max;
     }
+  }
+  {
+    // O(n) time | O(1) space
+    function longestBalancedSubstring(string: string) {
+      const leftToRightCount = count(string, true);
+      const rightToLeftCount = count(string, false);
+      return Math.max(leftToRightCount, rightToLeftCount);
+    }
 
+    function count(string: string, leftToRight: boolean): number {
+      const startIdx = leftToRight ? 0 : string.length - 1;
+      const step = leftToRight ? 1 : -1;
+      const openCh = leftToRight ? '(' : ')';
+      let [opens, closes] = [0, 0];
+      let max = 0;
+      for (let i = startIdx; i >= 0 && i < string.length; i += step) {
+        string[i] === openCh ? opens += 1 : closes += 1;
+        if (opens === closes) max = Math.max(max, opens + closes);
+        if (closes > opens) [opens, closes] = [0, 0];
+      }
 
+      return max;
+    }
   }
 }
 

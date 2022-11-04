@@ -378,6 +378,114 @@
       return res.join('');
     }
   }
+  {
+    // O(n + m) time | O(n) space
+    // n = length of string | m = length of the substring
+    function underscorifySubstring(string: string, substring: string) {
+      const pos = findUnderscorePositions(string, substring);
+      const mergedPos = mergeOverlappingPositions(pos);
+      return insertUnderscores(string, mergedPos);
+    }
+
+    function findUnderscorePositions(string: string, substring: string) {
+      const pos: number[][] = [];
+      let i = 0;
+      while (i < string.length) {
+        i = string.indexOf(substring, i);
+        if (i < 0) break;
+
+        pos.push([i, i + substring.length]);
+        i += 1;
+      }
+      return pos;
+    }
+
+    function mergeOverlappingPositions(pos: number[][]) {
+      const merged: number[][] = [];
+      for (let i = 0; i < pos.length; i++) {
+        if (merged.length < 1) {
+          merged.push(pos[i]);
+          continue;
+        }
+
+        const [a, b] = merged[merged.length - 1];
+        const [c, d] = pos[i];
+        if (c <= b) {
+          merged[merged.length - 1] = [a, d];
+        } else {
+          merged.push([c, d]);
+        }
+      }
+      return merged;
+    }
+
+    function insertUnderscores(string: string, mergedPos: number[][]) {
+      const flattenedPos = mergedPos.reduce((acc, arr) => acc.concat(arr), []);
+      const postnSet = new Set(flattenedPos);
+      const result: string[] = [];
+      for (let i = 0; i <= string.length; i++) {
+        if (postnSet.has(i)) result.push('_');
+        if (i < string.length) result.push(string[i]);
+      }
+
+      return result.join('');
+    }
+  }
+  {
+    // O(n + m) time | O(n) space
+    // n = length of string | m = length of the substring
+    function underscorifySubstring(string: string, substring: string) {
+      const pos = findUnderscorePositions(string, substring);
+      const mergedPos = mergeOverlappingPositions(pos);
+      return insertUnderscores(string, mergedPos);
+    }
+
+    function findUnderscorePositions(string: string, substring: string) {
+      const pos: number[][] = [];
+      let i = 0;
+      while (i < string.length) {
+        i = string.indexOf(substring, i);
+        if (i < 0) break;
+
+        pos.push([i, i + substring.length]);
+        i += 1;
+      }
+      return pos;
+    }
+
+    function mergeOverlappingPositions(pos: number[][]) {
+      const merged: number[][] = [];
+      for (let i = 0; i < pos.length; i++) {
+        if (merged.length < 1) {
+          merged.push(pos[i]);
+          continue;
+        }
+
+        const [a, b] = merged[merged.length - 1];
+        const [c, d] = pos[i];
+        if (c <= b) {
+          merged[merged.length - 1] = [a, d];
+        } else {
+          merged.push([c, d]);
+        }
+      }
+      return merged;
+    }
+
+    function insertUnderscores(string: string, mergedPos: number[][]) {
+      const result: string[] = [];
+      let [row, col] = [0, 0];
+      for (let i = 0; i <= string.length; i++) {
+        if (row < mergedPos.length && i === mergedPos[row][col]) {
+          result.push('_');
+          col === 0 ? col += 1 : [row, col] = [row + 1, 0];
+        }
+        if (i < string.length) result.push(string[i]);
+      }
+
+      return result.join('');
+    }
+  }
 }
 
 export const __ = '__';

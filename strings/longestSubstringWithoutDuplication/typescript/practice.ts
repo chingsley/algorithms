@@ -128,8 +128,24 @@
       }
       return string.slice(max[0], max[1] + 1);
     }
+  }
+  {
+    // O(n) time | O(u) space
+    // n = length of string | u = no. of unique chars in string
+    function longestSubstringWithoutDuplication(string: string) {
+      let max = [0, 0];
+      const seen: { [key: string]: number; } = {};
+      let startIdx = 0;
+      for (let i = 0; i < string.length; i++) {
+        if (string[i] in seen) {
+          startIdx = Math.max(startIdx, seen[string[i]] + 1);
+        }
+        max = i - startIdx > max[1] - max[0] ? [startIdx, i] : max;
+        seen[string[i]] = i;
+      }
 
-
+      return string.slice(max[0], max[1] + 1);
+    }
   }
 }
 

@@ -188,6 +188,53 @@
       return max;
     }
   }
+  {
+    // O(n) time | O(n) space
+    function longestBalancedSubstring(string: string) {
+      const idxStack = [-1];
+      let max = 0;
+      for (let i = 0; i < string.length; i++) {
+        if (string[i] === '(') {
+          idxStack.push(i);
+        } else {
+          idxStack.pop();
+          if (idxStack.length === 0) {
+            idxStack.push(i);
+            continue;
+          }
+          max = Math.max(max, i - idxStack[idxStack.length - 1]);
+        }
+      }
+
+      return max;
+    }
+  }
+  {
+    // O(n) time | O(1) space
+    function longestBalancedSubstring(string: string) {
+      const leftToRightCount = countChars(string, true);
+      const rightToLeftCount = countChars(string, false);
+      return Math.max(leftToRightCount, rightToLeftCount);
+    }
+
+    function countChars(string: string, leftToRight: boolean) {
+      const startIdx = leftToRight ? 0 : string.length - 1;
+      const step = leftToRight ? 1 : -1;
+      const openCh = leftToRight ? '(' : ')';
+
+      let max = 0;
+      let [opens, closes] = [0, 0];
+      for (let i = startIdx; i < string.length && i >= 0; i += step) {
+        string[i] === openCh ? opens += 1 : closes += 1;
+        if (opens === closes) max = Math.max(max, opens + closes);
+        if (closes > opens) [opens, closes] = [0, 0];
+      }
+
+      return max;
+    }
+
+
+  }
 }
 
 export const __ = '__';

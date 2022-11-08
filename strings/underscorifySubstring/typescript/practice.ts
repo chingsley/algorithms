@@ -486,6 +486,73 @@
       return result.join('');
     }
   }
+  {
+    // O(n + m) time | O(n) space
+    // n = length of string | m = length of substring
+    function underscorifySubstring(string: string, substring: string) {
+      const positions = getUnderscorePositions(string, substring);
+      const mergedPositions = mergeOverlappingIntervals(positions);
+      return insertUnderscores(string, mergedPositions);
+    }
+
+    function getUnderscorePositions(string: string, substring: string) {
+      const pos: number[][] = [];
+      let i = 0;
+      while (i < string.length) {
+        i = string.indexOf(substring, i);
+        if (i < 0) break;
+
+        pos.push([i, i + substring.length]);
+        i += 1;
+      }
+
+      return pos;
+    }
+
+
+    function mergeOverlappingIntervals(pos: number[][]) {
+      if (pos.length === 0) return [];
+
+      const mergedPos: number[][] = [pos[0]];
+      for (let i = 1; i < pos.length; i++) {
+        const [a, b] = mergedPos[mergedPos.length - 1];
+        const [c, d] = pos[i];
+        if (c <= b) {
+          mergedPos[mergedPos.length - 1] = [a, d];
+        } else {
+          mergedPos.push([c, d]);
+        }
+      }
+      return mergedPos;
+    }
+
+
+    function insertUnderscores(string: string, mergedPos: number[][]) {
+      let resArr: string[] = [];
+      const setPos = new Set(mergedPos.reduce((acc, pos) => acc.concat(pos), []));
+      for (let i = 0; i <= string.length; i++) {
+        if (setPos.has(i)) resArr.push('_');
+        if (i < string.length) resArr.push(string[i]);
+      }
+
+      return resArr.join('');
+    }
+
+    function insertUnderscores2(string: string, mergedPos: number[][]) {
+      let resArr: string[] = [];
+      let [row, col] = [0, 0];
+      for (let i = 0; i <= string.length; i++) {
+        if (row < mergedPos.length && i === mergedPos[row][col]) {
+          resArr.push('_');
+          col === 0 ? col += 1 : [row, col] = [row + 1, 0];
+        }
+        if (i < string.length) resArr.push(string[i]);
+      }
+
+      return resArr.join('');
+    }
+
+  }
 }
 
 export const __ = '__';

@@ -463,6 +463,45 @@
       return counts;
     }
   }
+  {
+    // O(b + s) time | O(b + s) space;
+    // b = length of big string | s = length of small string
+    function smallestSubstringContaining(bigString: string, smallString: string) {
+      const smallStrChCounts = countChars(smallString, false);
+      const currSmallStrChCounts = countChars(smallString, true);
+      const K = Object.keys(smallStrChCounts).length;
+      let U = 0;
+      let min = [0, Infinity];
+      let [lag, lead] = [0, 0];
+      while (lead < bigString.length && U < K) {
+        let ch = bigString[lead];
+        if (ch in smallStrChCounts) {
+          currSmallStrChCounts[ch] += 1;
+          if (currSmallStrChCounts[ch] === smallStrChCounts[ch]) U += 1;
+        }
+        while (U === K) {
+          min = lead - lag < min[1] - min[0] ? [lag, lead] : min;
+
+          ch = bigString[lag];
+          if (ch in smallStrChCounts) {
+            currSmallStrChCounts[ch] -= 1;
+            if (currSmallStrChCounts[ch] < smallStrChCounts[ch]) U -= 1;
+          }
+          lag += 1;
+        }
+
+        lead += 1;
+      }
+      return min[1] < Infinity ? bigString.slice(min[0], min[1] + 1) : '';
+    }
+
+    function countChars(str: string, setDefault: boolean) {
+      const counts: { [key: string]: number; } = {};
+      for (let ch of str) counts[ch] = setDefault ? 0 : (counts[ch] || 0) + 1;
+      return counts;
+    }
+
+  }
 }
 
 export const __ = '__';

@@ -73,6 +73,31 @@
       return Object.values(groups);
     }
   }
+  {
+    function groupAnagrams(words: string[]) {
+      const groups: { [key: string]: string[]; } = {};
+
+      for (let word of words) {
+        const sortedWd = word.split('').sort().join();
+        if (!(sortedWd in groups)) groups[sortedWd] = [];
+        groups[sortedWd].push(word);
+      }
+
+      return Object.values(groups);
+    }
+  }
+  {
+    // O(w * clog(c)) time | O(wc) space
+    // w = length of the words list | c = lenght of the longest-character word in the words list
+    function groupAnagrams(words: string[]) {
+      const wordGroup: { [key: string]: string[]; } = {};
+      for (let word of words) {
+        const sw = word.split('').sort().join('');
+        wordGroup[sw] ? wordGroup[sw].push(word) : wordGroup[sw] = [word];
+      }
+      return Object.values(wordGroup);
+    }
+  }
 }
 
 export const __ = '__';

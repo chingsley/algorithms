@@ -89,6 +89,69 @@
       }
     }
   }
+  {
+    /*
+* Time: O(w * c) 
+* w = no. of words, c = no. of characters in the longest word
+*
+* Space: O(u * n)
+* u = the no. of unique characters across all the words
+* n = the frequency of occurrence of the most occurred character
+*/
+    function minimumCharactersForWords(words: string[]): string[] {
+      const charsBank: { [key: string]: number; } = {};
+      for (let word of words) {
+        const wordCharFreq = getRequiredChars(word);
+        updateCharsBank(wordCharFreq, charsBank);
+      }
+
+      const res: string[] = [];
+      for (const ch in charsBank) {
+        while (charsBank[ch]-- > 0) res.push(ch);
+      }
+      return res;
+    }
+
+    function getRequiredChars(word: string): { [key: string]: number; } {
+      const chFreq: { [key: string]: number; } = {};
+      for (let ch of word) {
+        ch in chFreq ? chFreq[ch] += 1 : chFreq[ch] = 1;
+      }
+      return chFreq;
+    }
+
+    function updateCharsBank(wordCharFreq: { [key: string]: number; }, charsBank: { [key: string]: number; }) {
+      for (let ch in wordCharFreq) {
+        if (ch in charsBank) {
+          charsBank[ch] = Math.max(wordCharFreq[ch], charsBank[ch]);
+        } else {
+          charsBank[ch] = wordCharFreq[ch];
+        }
+      }
+    }
+  }
+  {
+    // O(wc) time | O(u) space
+    // w = no. of words in words array
+    // c = no. of chars in the longest word
+    // u = no. of unique chars accross all words
+    function minimumCharactersForWords(words: string[]) {
+      const charsCount: { [key: string]: number; } = {};
+      for (let word of words) updateCharsCount(charsCount, word);
+
+      const result: string[] = [];
+      for (let ch in charsCount) while (charsCount[ch]-- > 0) result.push(ch);
+      return result;
+    }
+
+    function updateCharsCount(charsCount: { [key: string]: number; }, word: string) {
+      const wordCh: { [key: string]: number; } = {};
+      for (let ch of word) {
+        wordCh[ch] = (wordCh[ch] || 0) + 1;
+        charsCount[ch] = Math.max(charsCount[ch] || 0, wordCh[ch]);
+      }
+    }
+  }
 }
 
 export const ___ = '___';

@@ -36,7 +36,17 @@
 
       return -1;
     }
-
+  }
+  {
+    // O(n) time | O(1) space; (n = length of the string)
+    // O(1) space b/c only lowercase alphabets (26 counts) are involved.
+    // therefore, the chCounts will contain a maximum of 26 key-value pairs
+    function firstNonRepeatingCharacter(string: string) {
+      const chCounts: { [key: string]: number; } = {};
+      for (const ch of string) chCounts[ch] = (chCounts[ch] || 0) + 1;
+      for (let i = 0; i < string.length; i++) if (chCounts[string[i]] === 1) return i;
+      return -1;
+    }
   }
 }
 

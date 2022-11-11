@@ -72,6 +72,46 @@
       return true;
     }
   }
+  {
+    // O(c + d) time | O(u1 + u2) space
+    // u1 = no. of unique letters of the 'characters'
+    // u2 = no. of unique letters of the 'document'
+    function generateDocument(characters: string, document: string): boolean {
+      const chCounts = countChars(characters);
+      const docCounts = countChars(document);
+
+      for (let ch in docCounts) {
+        if (!(ch in chCounts)) return false;
+        if (chCounts[ch] < docCounts[ch]) return false;
+      }
+
+      return true;
+    }
+
+    function countChars(string: string) {
+      const counts: { [key: string]: number; } = {};
+      for (let ch of string) counts[ch] = (counts[ch] || 0) + 1;
+      return counts;
+    }
+  }
+  {
+    // O(c + d) time | O(u) space;
+    // c = length of characters | d = length of document
+    // u = no. of unique chars in 'characters'
+    function generateDocument(characters: string, document: string): boolean {
+      const chCounts: { [key: string]: number; } = {};
+      for (let ch of characters) chCounts[ch] = (chCounts[ch] || 0) + 1;
+
+      for (let ch of document) {
+        if (!chCounts[ch]) return false;
+        chCounts[ch] -= 1;
+      }
+
+      return true;
+    }
+
+
+  }
 }
 
 export const ___ = '___';

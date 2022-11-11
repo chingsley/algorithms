@@ -170,6 +170,43 @@
       return str.length === strToInt.toString().length;
     }
   }
+
+  {
+    // O(1) time | O(1) space
+    function validIPAddresses(string: string) {
+      const result: string[] = [];
+      for (let i = 1; i < 4; i++) {
+        const currIP: string[] = [];
+
+        currIP[0] = string.slice(0, i);
+        if (!validByte(currIP[0])) continue;
+
+        for (let j = i + 1; j < i + 4; j++) {
+          currIP[1] = string.slice(i, j);
+          if (!validByte(currIP[1])) continue;
+
+          for (let k = j + 1; k < j + 4; k++) {
+            currIP[2] = string.slice(j, k);
+            if (!validByte(currIP[2])) continue;
+
+            currIP[3] = string.slice(k);
+            if (!validByte(currIP[3])) continue;
+
+            result.push(currIP.join('.'));
+          }
+        }
+      }
+
+      return result;
+    }
+
+
+    function validByte(string: string) {
+      if (string.length < 1) return false;
+      if (Number(string) > 255) return false;
+      return Number(string).toString().length === string.length;
+    }
+  }
 }
 
 export const ___ = '___';

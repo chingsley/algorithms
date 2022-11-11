@@ -73,6 +73,18 @@
       }
       return outputArr.join('');
     }
+  }
+  {
+    // O(n) time | O(n) space; (n = length of the string)
+    function caesarCipherEncryptor(string: string, key: number) {
+      const alphabets = 'abcdefghijklmnopqrstuvwxyz';
+      const encrypted: string[] = [];
+      for (let ch of string) {
+        const i = (ch.charCodeAt(0) - 'a'.charCodeAt(0)) + key;
+        encrypted.push(alphabets[i % 26]);
+      }
+      return encrypted.join('');
+    }
 
   }
 }

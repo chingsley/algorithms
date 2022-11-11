@@ -123,7 +123,42 @@
       output.push(strToReverse.slice(0, wordEndIdx));
       return output.join('');
     }
-
+  }
+  {
+    // O(n) time | O(n) space
+    // n = length of strToReverse
+    function reverseWordsInString(strToReverse: string): string {
+      let i = strToReverse.length - 1;
+      let wordEndIdx = strToReverse.length;
+      const resArr: string[] = [];
+      while (i >= 0) {
+        if (strToReverse[i] === ' ') {
+          if (strToReverse[i + 1] !== ' ') resArr.push(strToReverse.slice(i + 1, wordEndIdx));
+          resArr.push(' ');
+          wordEndIdx = i;
+        }
+        i -= 1;
+      }
+      resArr.push(strToReverse.slice(0, wordEndIdx));
+      return resArr.join('');
+    }
+  }
+  {
+    // O(n) time | O(n) space
+    // n = length of strToReverse
+    function reverseWordsInString(strToReverse: string): string {
+      let wordEndIdx = strToReverse.length;
+      const strArr: string[] = [];
+      for (let i = strToReverse.length - 1; i >= 0; i--) {
+        if (strToReverse[i] === ' ') {
+          strArr.push(strToReverse.slice(i + 1, wordEndIdx));
+          strArr.push(' ');
+          wordEndIdx = i;
+        }
+      }
+      strArr.push(strToReverse.slice(0, wordEndIdx));
+      return strArr.join('');
+    }
   }
 }
 

@@ -93,6 +93,27 @@
 
       return outputArr.join('');
     }
+  }
+  {
+    // O(n) time | O(n) space;
+    // n = length of the string
+    function runLengthEncoding(string: string) {
+      const result: string[] = [];
+      let i = 0;
+      while (i < string.length) {
+        const [nextIdx, count] = countOccurrence(i, string);
+        result.push(`${count}${string[i]}`);
+        i = nextIdx;
+      }
+      return result.join('');
+    }
+
+    function countOccurrence(i: number, string: string): [number, number] {
+      let count = 0;
+      let ch = string[i];
+      while (string[i] === ch && count < 9) [i, count] = [i + 1, count + 1];
+      return [i, count];
+    }
 
   }
 }

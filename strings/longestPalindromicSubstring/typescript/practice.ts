@@ -175,6 +175,46 @@
     //   longestPalindromicSubstring("abaxyzzyxf")
     // );
   }
+  {
+    // O(n^2) time | O(n) space
+    // n = length of the string
+    function longestPalindromicSubstring(string: string): string {
+      let max = [0, 0];
+
+      for (let i = 0; i < string.length - 1; i++) { // O(n) time | O(1) space
+        const even = getPalindromeRange(i, i + 1, string);
+        const odd = getPalindromeRange(i - 1, i + 1, string);
+        if (even[1] - even[0] > max[1] - max[0]) max = even;
+        if (odd[1] - odd[0] > max[1] - max[0]) max = odd;
+      }
+
+      return string.slice(max[0], max[1] + 1); // O(n) time | O(n) space
+    }
+
+    function getPalindromeRange(leftIdx: number, rightIdx: number, string: string) {
+      let [startIdx, endIdx] = [0, 0];
+      while (string[leftIdx] && string[leftIdx] === string[rightIdx]) {
+        [startIdx, endIdx] = [leftIdx, rightIdx];
+        [leftIdx, rightIdx] = [leftIdx - 1, rightIdx + 1];
+      }
+
+      return [startIdx, endIdx];
+    }
+
+
+    function getPalindromeRange2(leftIdx: number, rightIdx: number, string: string): number[] {
+      let [startIdx, endIdx] = [0, 0];
+      while (string[leftIdx] && string[leftIdx] === string[rightIdx]) [leftIdx, rightIdx] = [leftIdx - 1, rightIdx + 1];
+      return [leftIdx + 1, rightIdx - 1];
+    }
+
+    /*
+
+        j m a d a m i
+
+        m a a m   
+    */
+  }
 
 }
 

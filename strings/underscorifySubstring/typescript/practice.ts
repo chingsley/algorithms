@@ -551,7 +551,71 @@
 
       return resArr.join('');
     }
+  }
+  {
+    // O(n + m) time | O(n) space
+    // n = length of the string | m = length of the substring
+    function underscorifySubstring(string: string, substring: string) {
+      const positions = getUnderscorePositions(string, substring);
+      const mergedPos = mergeOverlappingIntervals(positions);
+      // console.log({ positions, mergedPos })
+      return insertUnderscores(string, mergedPos);
+    }
 
+    function getUnderscorePositions(string: string, substring: string) {
+      const positions: number[][] = [];
+      let i = 0;
+      while (i < string.length) {
+        i = string.indexOf(substring, i);
+        if (i < 0) break;
+
+        positions.push([i, i + substring.length]);
+        i += 1;
+      }
+
+      return positions;
+    }
+
+    function mergeOverlappingIntervals(positions: number[][]) {
+      const mergedPos: number[][] = [];
+      if (positions.length < 1) return mergedPos;
+
+      mergedPos.push(positions[0]);
+      for (let i = 1; i < positions.length; i++) {
+        const [a, b] = mergedPos[mergedPos.length - 1];
+        const [c, d] = positions[i];
+        c <= b ? mergedPos[mergedPos.length - 1] = [a, d] : mergedPos.push([c, d]);
+      }
+
+      return mergedPos;
+    }
+
+    function insertUnderscores(string: string, mergedPos: number[][]) {
+      if (mergedPos.length < 1) return string;
+
+      const set = new Set(mergedPos.reduce((acc, arr) => acc.concat(arr)));
+      const result: string[] = [];
+      for (let i = 0; i <= string.length; i++) {
+        if (set.has(i)) result.push('_');
+        if (i < string.length) result.push(string[i]);
+      }
+      return result.join('');
+    }
+
+    function insertUnderscores2(string: string, mergedPos: number[][]) {
+      if (mergedPos.length < 1) return string;
+
+      let [row, col] = [0, 0];
+      const result: string[] = [];
+      for (let i = 0; i <= string.length; i++) {
+        if (row < mergedPos.length && i === mergedPos[row][col]) {
+          result.push('_');
+          col === 0 ? col += 1 : [row, col] = [row + 1, 0];
+        }
+        if (i < string.length) result.push(string[i]);
+      }
+      return result.join('');
+    }
   }
 }
 

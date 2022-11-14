@@ -398,6 +398,45 @@
       for (let ch of string) counts[ch] = (counts[ch] || 0) + 1;
       return counts;
     }
+  }
+  {
+    // O(n^2 + p) time | O(n + p) space
+    // n = length of the string, p = length of the pattern
+    function patternMatcher(pattern: string, string: string) {
+      const patternArr = pattern.split('');
+      const ptnCounts = countChars(patternArr);
+      const [X, Y] = Array.from(new Set(patternArr));
+      if (Y) {
+        const firstIdxOfY = patternArr.indexOf(Y);
+        const minYSize = 1;
+        const maxXSize = (string.length - (ptnCounts[Y] * minYSize)) / (ptnCounts[X]);
+        for (let xSize = 1; xSize <= maxXSize; xSize++) {
+          const ySize = (string.length - (ptnCounts[X] * xSize)) / (ptnCounts[Y]);
+          if (ySize % 1 !== 0) continue;
+
+          const xString = string.slice(0, xSize);
+          const yOffset = firstIdxOfY * xSize;
+          const yString = string.slice(yOffset, ySize + yOffset);
+          const str = patternArr.map(p => p === X ? xString : yString).join('');
+          if (str === string) return X === 'x' ? [xString, yString] : [yString, xString];
+        }
+      } else {
+        const xSize = string.length / ptnCounts[X];
+        if (xSize % 1 !== 0) return [];
+
+        const xString = string.slice(0, xSize);
+        const str = patternArr.map(p => xString).join('');
+        if (str === string) return X === 'x' ? [xString, ''] : ['', xString];
+      }
+
+      return [];
+    }
+
+    function countChars(array: string[]) {
+      const counts: { [key: string]: number; } = {};
+      for (let ch of array) counts[ch] = (counts[ch] || 0) + 1;
+      return counts;
+    }
 
   }
 }

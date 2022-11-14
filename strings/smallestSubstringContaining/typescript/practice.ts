@@ -500,7 +500,52 @@
       for (let ch of str) counts[ch] = setDefault ? 0 : (counts[ch] || 0) + 1;
       return counts;
     }
+  }
+  {
+    // O(b + s) time | O(b + s) space
+    // b = length of the bigString | s = length of the small string
+    function smallestSubstringContaining(bigString: string, smallString: string) {
+      const smallStringCounts = countChars(smallString, false);
+      const targetStringCounts = countChars(smallString, true);
 
+      let min = [0, Infinity];
+      let [U, K] = [0, Object.keys(smallStringCounts).length];
+      let [lag, lead] = [0, 0];
+      while (U < K && lead < bigString.length) {
+        let ch = bigString[lead];
+        if (ch in targetStringCounts) {
+          targetStringCounts[ch] += 1;
+          if (targetStringCounts[ch] === smallStringCounts[ch]) U += 1;
+        }
+        while (U === K) {
+          if (lead - lag < min[1] - min[0]) min = [lag, lead];
+
+          ch = bigString[lag];
+          if (ch in targetStringCounts) {
+            targetStringCounts[ch] -= 1;
+            if (targetStringCounts[ch] < smallStringCounts[ch]) U -= 1;
+          }
+
+          lag += 1;
+        }
+
+        lead += 1;
+      }
+
+      return min[1] < Infinity ? bigString.slice(min[0], min[1] + 1) : '';
+    }
+
+    function countChars(string: string, setDefaul: boolean) {
+      const counts: { [key: string]: number; } = {};
+      for (let ch of string) {
+        if (setDefaul) {
+          counts[ch] = 0;
+        } else {
+          counts[ch] = (counts[ch] || 0) + 1;
+        }
+      }
+      return counts;
+    }
   }
 }
 

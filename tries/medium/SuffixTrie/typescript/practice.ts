@@ -87,4 +87,46 @@
       }
     }
   }
+  {
+    interface TrieNode {
+      [key: string]: TrieNode | boolean;
+    }
+
+    // Do not edit the class below except for the
+    // populateSuffixTrieFrom and contains methods.
+    // Feel free to add new properties and methods
+    // to the class.
+    class SuffixTrie {
+      root: TrieNode;
+      endSymbol: string;
+
+      constructor(string: string) {
+        this.root = {};
+        this.endSymbol = '*';
+        this.populateSuffixTrieFrom(string);
+      }
+
+      // O(n^2) time | O(n^2) space
+      populateSuffixTrieFrom(string: string) {
+        for (let i = 0; i < string.length; i++) {
+          let currRoot = this.root;
+          for (let j = i; j < string.length; j++) {
+            if (!(string[j] in currRoot)) currRoot[string[j]] = {};
+            currRoot = currRoot[string[j]] as TrieNode;
+          }
+          currRoot[this.endSymbol] = true;
+        }
+      }
+
+      // O(n) time | O(1) space
+      contains(string: string) {
+        let currRoot = this.root as TrieNode;
+        for (let ch of string) {
+          if (!(ch in currRoot)) return false;
+          currRoot = currRoot[ch] as TrieNode;
+        }
+        return this.endSymbol in currRoot;
+      }
+    }
+  }
 }

@@ -207,6 +207,53 @@
       return direction === Direction.West ? result : result.reverse();
     }
   }
+  {
+    enum Direction {
+      East = 'EAST',
+      West = 'WEST',
+    }
+
+    // O(n) time | O(n) space
+    function sunsetViews(buildings: number[], direction: Direction) {
+      if (buildings.length === 0) return [];
+
+      let [startIdx, step, result] = [0, 1, [0]];
+      if (direction === Direction.East) {
+        [startIdx, step, result] = [buildings.length - 1, -1, [buildings.length - 1]];
+      }
+      for (let i = startIdx + step; i >= 0 && i < buildings.length; i += step) {
+        if (buildings[i] > buildings[result[result.length - 1]]) result.push(i);
+      }
+
+      return direction === Direction.West ? result : result.reverse();
+    }
+  }
+  {
+    enum Direction {
+      East = 'EAST',
+      West = 'WEST',
+    }
+
+    // O(n) time | O(n) space
+    function sunsetViews(buildings: number[], direction: Direction) {
+      if (buildings.length === 0) return [];
+
+      if (direction === Direction.West) {
+        return sunsetViewsHelper(buildings, 0, 1);
+      } else {
+        return sunsetViewsHelper(buildings, buildings.length - 1, -1).reverse();
+      }
+    }
+
+    function sunsetViewsHelper(buildings: number[], startIdx: number, step: number) {
+      const result = [startIdx];
+      for (let i = startIdx + step; i >= 0 && i < buildings.length; i += step) {
+        if (buildings[i] > buildings[result[result.length - 1]]) result.push(i);
+      }
+
+      return result;
+    }
+  }
 }
 
 export const ___ = '___';

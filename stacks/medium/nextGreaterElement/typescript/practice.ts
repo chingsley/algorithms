@@ -117,6 +117,21 @@
 
       return result;
     }
+  }
+  {
+    // O(n) time | O(n) space; (n = length of array)
+    function nextGreaterElement(array: number[]) {
+      const idxStack = [0];
+      const result = new Array(array.length).fill(-1);
+      for (let i = 1; i < 2 * array.length; i++) {
+        const currIdx = i % array.length;
+        while (idxStack.length > 0 && array[currIdx] > array[idxStack[idxStack.length - 1]]) {
+          result[idxStack.pop()!] = array[currIdx];
+        }
+        idxStack.push(currIdx);
+      }
+      return result;
+    }
 
   }
 }

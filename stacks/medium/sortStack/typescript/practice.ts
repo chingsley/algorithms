@@ -111,6 +111,27 @@
       return;
     }
   }
+  {
+    // O(n^2) time | O(n) space
+    function sortStack(stack: number[]) {
+      if (stack.length === 0) return stack;
+
+      const top = stack.pop()!;
+      sortStack(stack);
+      insertInSortedStack(top, stack);
+      return stack;
+    }
+
+    function insertInSortedStack(value: number, stack: number[]) {
+      if (stack.length === 0) return stack.push(value);
+      if (value > stack[stack.length - 1]) return stack.push(value);
+
+      const top = stack.pop()!;
+      insertInSortedStack(value, stack);
+      return stack.push(top);
+    }
+
+  }
 }
 
 export const ___ = '___';

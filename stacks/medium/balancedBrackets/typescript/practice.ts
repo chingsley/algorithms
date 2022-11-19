@@ -124,6 +124,24 @@
 
       return stack.length === 0;
     }
+  }
+  {
+    // O(n) time | O(n) space
+    function balancedBrackets(string: string) {
+      const opens: { [key: string]: string; } = { '(': ')', '[': ']', '{': '}' };
+      const closes: { [key: string]: string; } = { ')': '(', ']': '[', '}': '{' };
+      const stack: string[] = [];
+      for (let ch of string) {
+        if (ch in opens) {
+          stack.push(ch);
+        } else if (ch in closes) {
+          if (stack.length === 0) return false;
+          // if(opens[stack.pop()!] !== ch) return false;
+          if (stack.pop() !== closes[ch]) return false;
+        }
+      }
+      return stack.length === 0;
+    }
 
   }
 }

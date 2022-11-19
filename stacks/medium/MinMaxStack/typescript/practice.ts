@@ -120,17 +120,43 @@
         return this.max[this.max.length - 1];
       }
     }
+  }
+  {
+    // All methods when considered independently run in
+    // O(1) time | O(1) space
+    class MinMaxStack {
+      stack: number[];
+      min: number[];
+      max: number[];
+      constructor() {
+        this.stack = [];
+        this.min = [];
+        this.max = [];
+      }
+      peek() {
+        return this.stack[this.stack.length - 1];
+      }
 
+      pop() {
+        const value = this.stack.pop();
+        if (value === this.getMin()) this.min.pop();
+        if (value === this.getMax()) this.max.pop();
+        return value;
+      }
 
+      push(number: number) {
+        this.stack.push(number);
+        if (this.getMin() === null || number <= this.getMin()!) this.min.push(number);
+        if (this.getMax() === null || number >= this.getMax()!) this.max.push(number);
+      }
+
+      getMin() {
+        return this.min.length > 0 ? this.min[this.min.length - 1] : null;
+      }
+
+      getMax() {
+        return this.max.length > 0 ? this.max[this.max.length - 1] : null;
+      }
+    }
   }
 }
-
-// Write your code here.
-// Write your code here.
-// Write your code here.
-// Write your code here.
-// Write your code here.
-// Write your code here.
-// Write your code here.
-// Write your code here.
-// Write your code here.

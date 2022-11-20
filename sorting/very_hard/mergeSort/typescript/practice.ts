@@ -168,6 +168,37 @@
       return merged;
     }
   }
+  {
+    // O(nlog(n)) time | O(n) space
+    function mergeSort(array: number[]): number[] {
+      if (array.length <= 1) return array;
+
+      const midIdx = Math.floor(array.length / 2);
+      const [left, right] = [array.slice(0, midIdx), array.slice(midIdx)];
+      const sortedLeft = mergeSort(left);
+      const sortedRight = mergeSort(right);
+      return merge(sortedLeft, sortedRight);
+    }
+
+    function merge(sortedLeft: number[], sortedRight: number[]) {
+      const merged = [];
+      let [leftIdx, rightIdx] = [0, 0];
+      while (leftIdx < sortedLeft.length && rightIdx < sortedRight.length) {
+        if (sortedLeft[leftIdx] < sortedRight[rightIdx]) {
+          merged.push(sortedLeft[leftIdx]);
+          leftIdx += 1;
+        } else {
+          merged.push(sortedRight[rightIdx]);
+          rightIdx += 1;
+        }
+      }
+      merged.push(...sortedLeft.slice(leftIdx));
+      merged.push(...sortedRight.slice(rightIdx));
+
+      return merged;
+    }
+
+  }
 }
 
 export const __ = '__';

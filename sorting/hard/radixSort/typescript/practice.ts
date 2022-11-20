@@ -263,6 +263,27 @@
       return strNum;
     }
   }
+  {
+    // O(p(b + n)) time | O(b + n) space
+    // p = length of the largest number of the array (no. of digits in the largest number)
+    // b = base of operation (for base 10, b = 10);
+    // n = length of the input array
+    function radixSort(array: number[]) {
+      const numOfPasses = Math.max(...array).toString().length;
+      for (let passIdx = numOfPasses - 1; passIdx >= 0; passIdx--) {
+        const counts: number[][] = new Array(10).fill(0).map(() => []);
+        for (let num of array) counts[Number(pad(num, numOfPasses)[passIdx])].push(num);
+        array = counts.reduce((acc, arr) => acc.concat(arr));
+      }
+      return array;
+    }
+
+    function pad(num: number, length: number) {
+      let str = num.toString();
+      while (str.length < length) str = '0' + str;
+      return str;
+    }
+  }
 }
 
 export const ___ = '___';

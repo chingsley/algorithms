@@ -333,6 +333,47 @@
 
     // [8, 5, 2, 9, 5, 6, 3]
   }
+  {
+    // O(n + nlog(n)) time | O(1) space
+    // O(n * (1 + log(n))) time | O(1) space
+    // O(nlog(n)) time | O(1) space
+    function heapSort(array: number[]) {
+      buildMaxHeap(array); // O(n) time | O(1) space
+      for (let i = array.length - 1; i > 0; i--) { // O(nlog(n)) time | O(1) space
+        [array[0], array[i]] = [array[i], array[0]];
+        siftDown(0, array, i);
+      }
+      return array;
+    }
+
+    // O(n) time | O(1) space
+    function buildMaxHeap(array: number[]) {
+      for (let i = array.length - 1; i >= 0; i--) {
+        siftDown(i, array, array.length);
+      }
+    }
+
+    // O(log(n)) time | O(1) space
+    function siftDown(currIdx: number, array: number[], stopIdx: number) {
+      while (true) {
+        const [childOneIdx, childTwoIdx] = [
+          (2 * currIdx) + 1,
+          (2 * currIdx) + 2,
+        ];
+        const maxIdx = getMaxIdx([currIdx, childOneIdx, childTwoIdx], array, stopIdx);
+        if (maxIdx === currIdx) break;
+        [array[maxIdx], array[currIdx]] = [array[currIdx], array[maxIdx]];
+        currIdx = maxIdx;
+      }
+    }
+
+    function getMaxIdx([i, j, k]: number[], array: number[], stopIdx: number) {
+      let maxIdx = i;
+      if (j < stopIdx && array[j] > array[maxIdx]) maxIdx = j;
+      if (k < stopIdx && array[k] > array[maxIdx]) maxIdx = k;
+      return maxIdx;
+    }
+  }
 }
 
 export const __ = '__';

@@ -232,6 +232,50 @@
     // [4, 5, 6], [1, 2, 3]
 
   }
+  {
+    // O(nlog(n)) time | O(nlog(n)) space
+    function countInversions(array: number[]) {
+      const inversions: Inversions = { count: 0 };
+      mergeSort(array, inversions);
+      return inversions.count;
+    }
+
+    interface Inversions {
+      count: number;
+    }
+
+    function mergeSort(array: number[], inversions: Inversions): number[] {
+      if (array.length <= 1) return array;
+
+      const midIdx = Math.floor(array.length / 2);
+      const [left, right] = [array.slice(0, midIdx), array.slice(midIdx)];
+      const sortedLeft = mergeSort(left, inversions);
+      const sortedRight = mergeSort(right, inversions);
+      return merge(sortedLeft, sortedRight, inversions);
+    }
+
+    function merge(sortedLeft: number[], sortedRight: number[], inversions: Inversions) {
+      const merged = [];
+      let [leftIdx, rightIdx] = [0, 0];
+      while (leftIdx < sortedLeft.length && rightIdx < sortedRight.length) {
+        if (sortedLeft[leftIdx] <= sortedRight[rightIdx]) {
+          merged.push(sortedLeft[leftIdx]);
+          leftIdx += 1;
+        } else {
+          inversions.count += sortedLeft.slice(leftIdx).length;
+          merged.push(sortedRight[rightIdx]);
+          rightIdx += 1;
+        }
+      }
+      merged.push(...sortedLeft.slice(leftIdx));
+      merged.push(...sortedRight.slice(rightIdx));
+
+      return merged;
+    }
+
+    // [4, 5, 10], [1, 7, 8]
+
+  }
 }
 
 export const __ = '__';

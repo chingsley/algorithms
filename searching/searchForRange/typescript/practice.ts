@@ -169,9 +169,49 @@
           }
         }
       }
+      return -1;
+    }
+  }
+  {
+    type Range = [number, number];
+
+    enum Bound {
+      Start = 'START',
+      End = 'END'
+    }
+
+    // O(log(n)) time | O(1) space
+    function searchForRange(array: number[], target: number): Range {
+      const startIdx = searchBoundIdx(array, target, Bound.Start);
+      const endIdx = searchBoundIdx(array, target, Bound.End);
+      return [startIdx, endIdx];
+    }
+
+    function searchBoundIdx(array: number[], target: number, type: Bound) {
+      let [startIdx, endIdx] = [0, array.length - 1];
+      while (startIdx <= endIdx) {
+        const midIdx = Math.floor((startIdx + endIdx) / 2);
+        if (array[midIdx] > target) {
+          endIdx = midIdx - 1;
+        } else if (array[midIdx] < target) {
+          startIdx = midIdx + 1;
+        } else {
+          if (type === Bound.Start) {
+            if (midIdx === 0) return midIdx;
+            if (array[midIdx - 1] !== target) return midIdx;
+            endIdx = midIdx - 1;
+          } else {
+            if (midIdx === array.length - 1) return midIdx;
+            if (array[midIdx + 1] !== target) return midIdx;
+            startIdx = midIdx + 1;
+          }
+        }
+      }
 
       return -1;
     }
+
+
   }
 }
 

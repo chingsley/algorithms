@@ -124,8 +124,21 @@
 
       return [-1, -1];
     }
+  }
+  {
+    type Range = [number, number];
 
+    // O(n + m) time | O(1) space
+    // n = no. of columns | m = no. of rows
+    function searchInSortedMatrix(matrix: number[][], target: number): Range {
+      let [row, col] = [0, matrix[0].length - 1];
+      while (row < matrix.length && col >= 0) {
+        if (matrix[row][col] === target) return [row, col];
+        target < matrix[row][col] ? col -= 1 : row += 1;
+      }
 
+      return [-1, -1];
+    }
   }
 }
 

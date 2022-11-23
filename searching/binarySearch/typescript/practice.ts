@@ -114,6 +114,19 @@
 
       return -1;
     }
+  }
+  {
+    // O(log(n)) time | O(1) space
+    function binarySearch(array: number[], target: number) {
+      let [startIdx, endIdx] = [0, array.length - 1];
+      while (startIdx <= endIdx) {
+        const midIdx = Math.floor((startIdx + endIdx) / 2);
+        if (array[midIdx] === target) return midIdx;
+
+        target < array[midIdx] ? endIdx = midIdx - 1 : startIdx = midIdx + 1;
+      }
+      return -1;
+    }
 
   }
 }

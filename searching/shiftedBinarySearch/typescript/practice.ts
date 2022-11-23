@@ -106,6 +106,33 @@
     }
 
   }
+  {
+    // O(log(n)) time | O(1) space
+    function shiftedBinarySearch(array: number[], target: number) {
+      let [startIdx, endIdx] = [0, array.length - 1];
+      while (startIdx <= endIdx) {
+        const midIdx = Math.floor((startIdx + endIdx) / 2);
+        if (array[midIdx] === target) return midIdx;
+
+        if (array[startIdx] < array[midIdx]) {
+          if (target >= array[startIdx] && target < array[midIdx]) {
+            endIdx = midIdx - 1;
+          } else {
+            startIdx = midIdx + 1;
+          }
+        } else {
+          if (target > array[midIdx] && target <= array[endIdx]) {
+            startIdx = midIdx + 1;
+          } else {
+            endIdx = midIdx - 1;
+          }
+        }
+      }
+
+      return -1;
+    }
+
+  }
 }
 
 export const __ = '__';

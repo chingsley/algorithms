@@ -137,6 +137,25 @@
       return -1;
     }
   }
+  {
+    // O(log(n)) time | O(1) space
+    function indexEqualsValue(array: number[]) {
+      let [startIdx, endIdx] = [0, array.length - 1];
+      while (startIdx <= endIdx) {
+        const midIdx = Math.floor((startIdx + endIdx) / 2);
+        if (array[midIdx] > midIdx) {
+          endIdx = midIdx - 1;
+        } else if (array[midIdx] < midIdx) {
+          startIdx = midIdx + 1;
+        } else {
+          if (midIdx === 0) return midIdx;
+          if (array[midIdx - 1] < midIdx - 1) return midIdx;
+          endIdx = midIdx - 1;
+        }
+      }
+      return -1;
+    }
+  }
 }
 
 

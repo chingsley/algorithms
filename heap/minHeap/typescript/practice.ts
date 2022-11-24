@@ -518,6 +518,144 @@
       }
     }
   }
+  {
+    // with recursive implementation of 'siftDown' and 'siftUp'
+    class MinHeap {
+      heap: number[];
+
+      constructor(array: number[]) {
+        this.heap = this.buildHeap(array);
+      }
+
+      // O(n) time | O(log(n)) space
+      buildHeap(array: number[]) {
+        for (let i = array.length - 1; i >= 0; i--) {
+          this.siftDown(i, array);
+        }
+        return array;
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      siftDown(currIdx: number, array: number[]) {
+        const [childOneIdx, childTwoIdx] = [
+          (2 * currIdx) + 1,
+          (2 * currIdx) + 2
+        ];
+        const minIdx = this.getMinIdx([currIdx, childOneIdx, childTwoIdx], array);
+        if (minIdx === currIdx) return;
+        [array[minIdx], array[currIdx]] = [array[currIdx], array[minIdx]];
+        this.siftDown(minIdx, array);
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      siftUp(i: number, array: number[]) {
+        const parentIdx = Math.floor((i - 1) / 2);
+        if (parentIdx < 0) return;
+        if (array[parentIdx] > array[i]) {
+          [array[parentIdx], array[i]] = [array[i], array[parentIdx]];
+        }
+        this.siftUp(parentIdx, array);
+      }
+
+      // O(1) time | O(1) space
+      peek() {
+        return this.heap[0];
+      }
+
+      // O(log(n)) time | O(log(n)) space
+      remove() {
+        const endIdx = this.heap.length - 1;
+        [this.heap[0], this.heap[endIdx]] = [this.heap[endIdx], this.heap[0]];
+        const value = this.heap.pop();
+        this.siftDown(0, this.heap);
+        return value;
+      }
+
+      insert(value: number) {
+        this.heap.push(value);
+        this.siftUp(this.heap.length - 1, this.heap);
+      }
+
+      // O(1) time | O(1) space
+      getMinIdx([i, j, k]: number[], array: number[]) {
+        let minIdx = i;
+        if (j < array.length && array[j] < array[minIdx]) minIdx = j;
+        if (k < array.length && array[k] < array[minIdx]) minIdx = k;
+        return minIdx;
+      }
+    }
+  }
+  {// with iterative implementation of 'siftDown' and 'siftUp'
+    class MinHeap {
+      heap: number[];
+
+      constructor(array: number[]) {
+        this.heap = this.buildHeap(array);
+      }
+
+      // O(n) time | O(1) space
+      buildHeap(array: number[]) {
+        for (let i = array.length - 1; i >= 0; i--) {
+          this.siftDown(i, array);
+        }
+        return array;
+      }
+
+      // O(log(n)) time | O(1) space
+      siftDown(currIdx: number, array: number[]) {
+        while (true) {
+          const [childOneIdx, childTwoIdx] = [
+            (2 * currIdx) + 1,
+            (2 * currIdx) + 2
+          ];
+          const minIdx = this.getMinIdx([currIdx, childOneIdx, childTwoIdx], array);
+          if (minIdx === currIdx) break;
+
+          [array[minIdx], array[currIdx]] = [array[currIdx], array[minIdx]];
+          currIdx = minIdx;
+        }
+      }
+
+      // O(log(n)) time | O(1) space
+      siftUp(i: number, array: number[]) {
+        while (true) {
+          const parentIdx = Math.floor((i - 1) / 2);
+          if (parentIdx < 0) break;
+          if (array[parentIdx] <= array[i]) break;
+
+          [array[parentIdx], array[i]] = [array[i], array[parentIdx]];
+          i = parentIdx;
+        }
+      }
+
+      // O(1) time | O(1) space
+      peek() {
+        return this.heap[0];
+      }
+
+      // O(log(n)) time | O(1) space
+      remove() {
+        const endIdx = this.heap.length - 1;
+        [this.heap[0], this.heap[endIdx]] = [this.heap[endIdx], this.heap[0]];
+        const value = this.heap.pop();
+        this.siftDown(0, this.heap);
+        return value;
+      }
+
+      insert(value: number) {
+        this.heap.push(value);
+        this.siftUp(this.heap.length - 1, this.heap);
+      }
+
+      // O(1) time | O(1) space
+      getMinIdx([i, j, k]: number[], array: number[]) {
+        let minIdx = i;
+        if (j < array.length && array[j] < array[minIdx]) minIdx = j;
+        if (k < array.length && array[k] < array[minIdx]) minIdx = k;
+        return minIdx;
+      }
+    }
+  }
 }
 
 

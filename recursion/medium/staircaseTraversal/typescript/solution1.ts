@@ -1,20 +1,11 @@
-/**
- * O(n) time | O(n) space
- * n = height of the staircase
- */
- export function staircaseTraversal(height: number, maxSteps: number): number {
-  let currentNumberOfWays: number = 0;
-  const waysToTop: number[] = [1]
+// O(k^n) time | O(n) space; (n = height, k = maxSteps)
+export function staircaseTraversal(height: number, maxSteps: number) {
+  if (height < 0) return 0;
+  if (height <= 1) return 1;
 
-  for(let currentHeight = 1; currentHeight < height + 1; currentHeight++) {
-    const startWindow: number = currentHeight - maxSteps - 1;
-    const endWindow: number = currentHeight - 1;
-    if(startWindow >= 0) {
-      currentNumberOfWays -= waysToTop[startWindow]
-    }
-    currentNumberOfWays += waysToTop[endWindow];
-    waysToTop.push(currentNumberOfWays)
+  let numOfWays = 0;
+  for (let j = 1; j <= maxSteps; j++) {
+    numOfWays += staircaseTraversal(height - j, maxSteps);
   }
-
-  return waysToTop[height]
+  return numOfWays;
 }

@@ -148,6 +148,26 @@ import { indent } from "../../../utils/index";
       psetAt(idx + 1, array, result);
     }
   }
+  {
+    // O(n * 2^n) time | O(n * 2^n) space
+    function powerset(array: number[]): number[][] {
+      return powersetHelper([...array]);
+    }
+
+    function powersetHelper(array: number[]): number[][] {
+      if (array.length === 0) return [[]];
+
+      const last = array.pop()!;
+      const powersetWithoutLast = powersetHelper(array);
+      const powersetWithLast: number[][] = [];
+      for (let arr of powersetWithoutLast) {
+        powersetWithLast.push(arr);
+        powersetWithLast.push([...arr, last]);
+      }
+
+      return powersetWithLast;
+    }
+  }
 }
 
 export const __ = '__';

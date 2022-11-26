@@ -121,6 +121,23 @@
 
     type SpecialArray = Array<number | SpecialArray>;
   }
+  {
+    type SpecialArray = Array<number | SpecialArray>;
+
+    // O(n) time | O(d) space
+    // n = no. of elements in the array | d = depth of the most nested subarray
+    function productSum(array: SpecialArray, weight: number = 1): number {
+      let sum = 0;
+      for (let num of array) {
+        if (Array.isArray(num)) {
+          sum += weight * productSum(num, weight + 1);
+        } else {
+          sum += weight * num;
+        }
+      }
+      return sum;
+    }
+  }
 }
 
 export const ___ = '___';

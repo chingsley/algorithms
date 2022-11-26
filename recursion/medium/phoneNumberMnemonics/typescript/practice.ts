@@ -347,6 +347,72 @@ import { indent } from "../../../../utils/index";
       phoneNumberMnemonics("9999").length
     );
   }
+  {
+    // O(n*4^n) time | O(n*4^n) space
+    function phoneNumberMnemonics(phoneNumber: string): string[] {
+      if (phoneNumber.length === 0) return [""];
+
+      const firstChar = phoneNumber[0];
+      const restChars = phoneNumber.slice(1);
+      const mnemonicsOfRest = phoneNumberMnemonics(restChars);
+      const mnemonicsOfRestPlusFirst = [];
+      for (let ch of dict[firstChar]) {
+        for (let mnemonic of mnemonicsOfRest) {
+          mnemonicsOfRestPlusFirst.push(ch + mnemonic);
+        }
+      }
+      console.log(mnemonicsOfRestPlusFirst.length);
+      return mnemonicsOfRestPlusFirst;
+    }
+
+    const dict: { [key: string]: string; } = {
+      "0": "0",
+      "1": "1",
+      "2": "abc",
+      "3": "def",
+      "4": "ghi",
+      "5": "jkl",
+      "6": "mno",
+      "7": "pqrs",
+      "8": "tuv",
+      "9": "wxyz"
+    };
+  }
+  {
+    const dict: { [key: string]: string; } = {
+      "0": "0",
+      "1": "1",
+      "2": "abc",
+      "3": "def",
+      "4": "ghi",
+      "5": "jkl",
+      "6": "mno",
+      "7": "pqrs",
+      "8": "tuv",
+      "9": "wxyz"
+    };
+
+    // O(n*4^n) time | O(n*4^n) space
+    function phoneNumberMnemonics(phoneNumber: string): string[] {
+      return phoneNumberMnemonicsAtIdx(phoneNumber.split(''));
+    }
+
+    // O(n*4^n) time | O(n*4^n) space
+    function phoneNumberMnemonicsAtIdx(phoneNumber: string[]): string[] {
+      if (phoneNumber.length === 0) return [""];
+
+      const firstChar = phoneNumber.pop()!;
+      const mnemonicsOfRest = phoneNumberMnemonicsAtIdx(phoneNumber);
+      const mnemonicsOfRestPlusFirst = [];
+      for (let ch of dict[firstChar]) {
+        for (let mnemonic of mnemonicsOfRest) {
+          mnemonicsOfRestPlusFirst.push(mnemonic + ch);
+        }
+      }
+      console.log(mnemonicsOfRestPlusFirst.length);
+      return mnemonicsOfRestPlusFirst;
+    }
+  }
 }
 
 export const __ = '__';

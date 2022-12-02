@@ -47,3 +47,14 @@ console.log(howSum(7, [5, 3, 4, 7])); // expect: [ 1, 2, 2, 2 ]
 console.log(howSum(7, [2, 4])); // expect: null
 console.log(howSum(8, [2, 3, 5])); // expect: [ 2, 2, 2, 2 ]
 console.log(howSum(10000, [7, 14]));
+
+
+/**
+ * top to down, then from down back to top
+ * howSum(7, [2, 3, 4, 1, 7]) -> -> [1, 2, 2, 2]   memo = { 1: [1], 3: [1, 2], 5: [1, 2, 2], 7: [1, 2, 2, 2] }
+ *    howSum(5, [2, 3, 4, 1, 7]) -> [1, 2, 2]      memo = { 1: [1], 3: [1, 2], 5: [1, 2, 2] }
+ *        howSum(3, [2, 3, 4, 1, 7]) -> [1, 2]     memo = { 1: [1], 3: [1, 2] }
+ *            howSum(1, [2, 3, 4, 1, 7]) -> [1]    memo = { 1: [1] }
+ *                howSum(-1, [2, 3, 4, 1, 7])      null
+ */
+

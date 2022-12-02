@@ -24,6 +24,7 @@ const gridTraveler = (m, n, memo = {}) => {
   return memo[key];
 };
 
+
 console.log(gridTraveler(1, 1)); // 1
 console.log(gridTraveler(2, 3)); // 3
 console.log(gridTraveler(3, 2)); // 3
@@ -31,3 +32,4 @@ console.log(gridTraveler(3, 3)); // 6
 console.log(gridTraveler(18, 18)); // 2333606220
 console.log(gridTraveler(100, 100)); // 2.2750883079422938e+58
 console.log(gridTraveler(1800, 1800)); // Infinity
+

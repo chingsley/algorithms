@@ -43,7 +43,7 @@ const howSum = (targetSum, numbers, memo = {}) => {
 };
 
 console.log(howSum(7, [2, 3, 4, 1, 7])); // expect: [ 1, 2, 2, 2 ]
-console.log(howSum(7, [5, 3, 4, 7])); // expect: [ 1, 2, 2, 2 ]
+console.log(howSum(7, [5, 3, 4, 7])); // expect: [ 3, 4 ] or [7]
 console.log(howSum(7, [2, 4])); // expect: null
 console.log(howSum(8, [2, 3, 5])); // expect: [ 2, 2, 2, 2 ]
 console.log(howSum(10000, [7, 14]));

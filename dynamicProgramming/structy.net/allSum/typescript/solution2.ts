@@ -17,30 +17,28 @@
  *    E.g. for a call allSum(targetSum, numbers)
  *    Let t = targetSum, n = length of numbers
  *    without memoization:
- *          Time complexity = O((n^t)*m)
- *          Space complexity = O(t)
+ *          Time complexity = O((n^t))
+ *          Space complexity = O(t^2)
  */
-export function allSum(target: number, array: number[]): number[][] {
-  const result: number[][] = [];
-  allSumHelper(target, array, [], result);
+export function allSum(targetSum: number, numbers: number[]): number[][] {
+  if (targetSum === 0) return [[]];
+  if (targetSum < 0) return [];
+
+  const result = [];
+  for (let num of numbers) {
+    const res = allSum(targetSum - num, numbers);
+    for (let arr of res) {
+      arr.push(num);
+      result.push(arr);
+    }
+  }
   return result;
 }
 
-function allSumHelper(target: number, array: number[], currNumbers: number[], result: number[][]) {
-  if (target === 0) return result.push(currNumbers);
-  if (target < 0) return;
-
-  for (const num of array) {
-    const rem = target - num;
-    allSumHelper(rem, array, [...currNumbers, num], result);
-  }
-}
 
 
-console.log(allSum(7, [2, 3, 4, 1, 7])); // expect: 57 different combinations (use .length to check)
+console.log(allSum(7, [2, 3, 4, 1, 7]).length); // expect: 57 different combinations (use .length to check)
 console.log(allSum(7, [5, 3, 4, 7])); // expect: [ [ 3, 4 ], [ 4, 3 ], [ 7 ] ]
 console.log(allSum(7, [2, 4])); // expect: []
 console.log(allSum(8, [2, 3, 5])); // expect: [ [ 2, 2, 2, 2 ], [ 2, 3, 3 ], [ 3, 2, 3 ], [ 3, 3, 2 ], [ 3, 5 ], [ 5, 3 ] ]
 // console.log(allSum(10000, [7, 14])); // will take to long to run without memoization. Try implementing a memoized solution
-
-

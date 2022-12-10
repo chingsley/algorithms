@@ -1,4 +1,4 @@
-// O(w^t) time | O(t*w) space
+// O(w^t * w) time | O(t*w) space
 export function howConstruct(target: string, words: string[], idx: number = 0): string[] | null {
   if (idx === target.length) return [];
 

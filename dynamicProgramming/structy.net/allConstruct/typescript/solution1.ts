@@ -7,13 +7,12 @@ export function allConstruct(target: string, words: string[], idx: number = 0): 
     if (word !== target.slice(idx, idx + word.length)) continue;
 
     const res = allConstruct(target, words, idx + word.length);
-    if (res === null) continue;
-
     for (let arr of res) result.push([word, ...arr]);
   }
 
   return result;
 }
 
-console.log(allConstruct('abcd', ['ab', 'abc', 'cd', 'def', 'abcd']));
-console.log(allConstruct('abcdef', ['abc', 'def']));
+console.log(allConstruct('abcd', ['ab', 'abc', 'cd', 'def', 'abcd'])); // [ [ 'ab', 'cd' ], [ 'abcd' ] ]
+console.log(allConstruct('abcdef', ['abc', 'def'])); // expect: [ [ 'abc', 'def' ] ]
+console.log(allConstruct('abcdef', ['abc', 'def', 'ab', 'cd', 'ef'])); // expect: [ [ 'abc', 'def' ], [ 'ab', 'cd', 'ef' ] ]

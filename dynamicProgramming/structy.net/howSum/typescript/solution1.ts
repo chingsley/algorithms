@@ -21,7 +21,7 @@
  *          Time complexity = O(n * (n^t))
  *          Space complexity = O(t)
  */
-const howSum = (targetSum: number, numbers: number[]): number[] | null => {
+export const howSum = (targetSum: number, numbers: number[]): number[] | null => {
   if (targetSum === 0) return [];
   if (targetSum < 0) return null;
 

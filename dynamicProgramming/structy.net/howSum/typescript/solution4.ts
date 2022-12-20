@@ -20,3 +20,4 @@ console.log(howSum(7, [5, 3, 4, 7])); // expect: [ 3, 4 ] or [7]
 console.log(howSum(7, [2, 4])); // expect: null
 console.log(howSum(8, [2, 3, 5])); // expect: [ 2, 2, 2, 2 ] or [3, 5]
 console.log(howSum(10000, [7, 14])); // null
+console.log(howSum(1000, [2, 5, 10, 25]));

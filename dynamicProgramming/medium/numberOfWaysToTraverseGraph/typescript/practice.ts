@@ -153,6 +153,23 @@
       return result;
     }
   }
+  {
+    // O(wh) time | O(wh) space (with memoization)
+    interface Memo { [key: string]: number; };
+    function numberOfWaysToTraverseGraph(width: number, height: number): number {
+      const memo: Memo = {};
+      return waysOf(width, height, memo);
+    }
+
+    function waysOf(width: number, height: number, memo: Memo): number {
+      if (width === 1 || height === 1) return 1;
+      const key = [width, height].join(',');
+
+      if (key in memo) return memo[key];
+      memo[key] = waysOf(width - 1, height, memo) + waysOf(width, height - 1, memo);
+      return memo[key];
+    }
+  }
 }
 
 

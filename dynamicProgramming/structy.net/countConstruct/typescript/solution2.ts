@@ -21,6 +21,9 @@ console.log(countConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd'])); // ex
 console.log(countConstruct('abcdef', ['ab', 'abc', 'cd', 'ef', 'def'])); // expect 2;
 console.log(countConstruct('abcdef', ['abc', 'def', 'ab', 'cd', 'ef', 'abcd'])); // expect 3
 console.log(
+  countConstruct('enterapotentpot', ['a', 'p', 'ent', 'enter', 'ot', 'o', 't'])
+); // expect: 4
+console.log(
   countConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', [
     'e',
     'ee',

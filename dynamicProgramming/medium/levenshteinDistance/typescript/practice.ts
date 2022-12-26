@@ -137,6 +137,31 @@
       return matrix[str2.length][str1.length];
     }
   }
+  {
+    // O(nm) time | O(nm) space (n = str1.length; m = str2.length)
+    function levenshteinDistance(str1: string, str2: string): number {
+      const array: number[][] = new Array(str2.length + 1).fill(0).map(
+        () => new Array(str1.length + 1).fill(0)
+      );
+
+      for (let i = 0; i < array.length; i++) array[i][0] = i;
+      for (let j = 0; j < array[0].length; j++) array[0][j] = j;
+
+      for (let row = 1; row < array.length; row++) {
+        for (let col = 1; col < array[row].length; col++) {
+          const rowCh = str2[row - 1];
+          const colCh = str1[col - 1];
+          array[row][col] = rowCh === colCh ? array[row - 1][col - 1] : 1 + Math.min(
+            array[row - 1][col],
+            array[row][col - 1],
+            array[row - 1][col - 1]
+          );
+        }
+      }
+
+      return array[str2.length][str1.length];
+    }
+  }
 }
 
 export const ___ = '___';

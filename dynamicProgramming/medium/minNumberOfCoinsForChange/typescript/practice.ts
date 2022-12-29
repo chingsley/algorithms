@@ -1,3 +1,4 @@
+// NOTE: SEE structy's BEST-SUM CHALLENGE
 {
   {
     /**
@@ -115,6 +116,69 @@
       }
 
       return coins[n] < Infinity ? coins[n] : -1;
+    }
+  }
+  {
+    interface Memo { [key: number]: number; };
+
+    // O(nd) time | O(n) space (d = no. of values in denoms array)
+    function minNumberOfCoinsForChange(n: number, denoms: number[], memo: Memo = {}) {
+      if (n === 0) return 0;
+      if (n < 0) return -1;
+      if (n in memo) return memo[n];
+
+      let result = Infinity;
+      for (let denom of denoms) {
+        const res = minNumberOfCoinsForChange(n - denom, denoms, memo);
+        if (res < 0) continue;
+
+        result = Math.min(result, res);
+      }
+
+      memo[n] = result < Infinity ? result + 1 : -1;
+      return memo[n];
+    }
+  }
+  {
+    // O(nd) time | O(n) space (d = no. of values in denoms array)
+    function minNumberOfCoinsForChange(n: number, denoms: number[]) {
+      const minCoinsCount = countMinCoins(n, denoms);
+      if (minCoinsCount === Infinity) return -1;
+
+      return minCoinsCount;
+    }
+
+    interface Memo { [key: number]: number; };
+    function countMinCoins(n: number, denoms: number[], memo: Memo = {}) {
+      if (n === 0) return 0;
+      if (n < 0) return Infinity;
+      if (n in memo) return memo[n];
+
+      let minCoinsCount = Infinity;
+      for (let denom of denoms) {
+        const minCoinsForDenom = countMinCoins(n - denom, denoms, memo);
+        minCoinsCount = Math.min(minCoinsCount, minCoinsForDenom);
+      }
+
+      memo[n] = minCoinsCount + 1;
+      return memo[n];
+    }
+  }
+  {
+    // O(nm) time | O(n) space (m = length of denoms)
+    function minNumberOfCoinsForChange(n: number, denoms: number[]) {
+      const array = new Array(n + 1).fill(Infinity);
+      array[0] = 0;
+
+      for (let i = 0; i < array.length; i++) {
+        if (array[i] === Infinity) continue;
+        for (let num of denoms) {
+          if (i + num > array.length - 1) continue;
+          array[i + num] = Math.min(array[i + num], array[i] + 1);
+        }
+      }
+
+      return array[n] < Infinity ? array[n] : -1;
     }
   }
 }

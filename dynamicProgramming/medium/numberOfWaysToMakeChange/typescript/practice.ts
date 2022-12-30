@@ -8,65 +8,81 @@
      * @returns 
      */
     function numberOfWaysToMakeChange(n: number, denoms: number[]) {
-      const coins = new Array(n + 1).fill(0);
-      coins[0] = 1;
+      const combinations = new Array(n + 1).fill(0);
+      combinations[0] = 1;
 
       for (let coin of denoms) {
-        for (let i = 0; i < coins.length; i++) {
+        for (let i = 0; i < combinations.length; i++) {
           const amt = i;
           if (amt < coin) continue;
-          coins[amt] = coins[amt] + coins[amt - coin];
+          combinations[amt] = combinations[amt] + combinations[amt - coin];
         }
       }
 
-      return coins[n];
+      return combinations[n];
     }
   }
   {
     // O(n * d) time | O(n) space
     // d = length of denoms, n = target amount (first argument)
     function numberOfWaysToMakeChange(n: number, denoms: number[]) {
-      const coins = new Array(n + 1).fill(0);
-      coins[0] = 1;
+      const combinations = new Array(n + 1).fill(0);
+      combinations[0] = 1;
 
       for (let coin of denoms) {
-        for (let i = coin; i < coins.length; i++) {
+        for (let i = coin; i < combinations.length; i++) {
           const amount = i;
-          coins[amount] = coins[amount] + coins[amount - coin];
+          combinations[amount] = combinations[amount] + combinations[amount - coin];
         }
       }
 
-      return coins[n];
+      return combinations[n];
     }
   }
   {
     // O(n * d) time | o(n) space
     // d = length of denoms
     function numberOfWaysToMakeChange(n: number, denoms: number[]) {
-      const coins = new Array(n + 1).fill(0);
-      coins[0] = 1;
+      const combinations = new Array(n + 1).fill(0);
+      combinations[0] = 1;
       for (let coin of denoms) {
-        for (let amount = coin; amount < coins.length; amount++) {
-          coins[amount] += coins[amount - coin];
+        for (let amount = coin; amount < combinations.length; amount++) {
+          combinations[amount] += combinations[amount - coin];
         }
       }
-      return coins[n];
+      return combinations[n];
     }
   }
   {
     // O(nd) time | O(n) space
     // d = length of denoms
     function numberOfWaysToMakeChange(n: number, denoms: number[]) {
-      const coins = new Array(n + 1).fill(0);
-      coins[0] = 1;
+      const combinations = new Array(n + 1).fill(0);
+      combinations[0] = 1;
 
       for (let coin of denoms) {
-        for (let amount = coin; amount < coins.length; amount++) {
-          coins[amount] += coins[amount - coin];
+        for (let amount = coin; amount < combinations.length; amount++) {
+          combinations[amount] += combinations[amount - coin];
         }
       }
 
-      return coins[n];
+      return combinations[n];
+    }
+  }
+  {
+    type Amount = number;
+    function numberOfWaysToMakeChange(n: number, denoms: number[]) {
+      const waysOfAmounts = new Array(n + 1).fill(0);
+      waysOfAmounts[0] = 1;
+      for (let coin of denoms) {
+        for (let i: Amount = 0; i < waysOfAmounts.length; i++) {
+          if (coin > i) continue;
+          waysOfAmounts[i] += waysOfAmounts[i - coin];
+        }
+        // console.log(waysOfAmounts.join(','))
+      }
+
+      return waysOfAmounts[n];
     }
   }
 }

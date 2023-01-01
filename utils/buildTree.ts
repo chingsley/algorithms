@@ -9,7 +9,7 @@ class BST {
   }
 }
 
-export function buildTree(nodes: Node[], nodeId: string | null): BST | null {
+export default function buildTree(nodes: Node[], nodeId: string | null): BST | null {
   if (nodeId === null) return null;
 
   const node = nodes.find(({ id }) => id === nodeId);
@@ -44,6 +44,6 @@ type Node = {
   value: number;
 };
 
-console.log(
-  buildTree(tree.nodes, tree.root)
-);
+// console.log(
+//   buildTree(tree.nodes, tree.root)
+// );

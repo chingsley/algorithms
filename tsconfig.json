@@ -5,6 +5,7 @@
     "lib": [
       "ES2017",
       "DOM"
-    ]
+    ],
+    "moduleResolution": "node"
   },
 }

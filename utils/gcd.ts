@@ -1,4 +1,4 @@
-function getGCD(m: number, n: number): number {
+export default function getGCD(m: number, n: number): number {
   if (n === 0) return m;
   while ((m % n) !== 0) {
     console.log({ m, n }, m % n);
@@ -13,7 +13,7 @@ function getGCD(m: number, n: number): number {
 }
 
 console.log(
-  getGCD(-5, -10),
+  // getGCD(-5, -10),
   // getGCD(5, 10),
   // getGCD(6, 8),
   // getGCD(12, 68)

@@ -1,3 +1,5 @@
+import { print2DArr } from "../../../../utils";
+
 /**
  * Time: O(n * m)
  * Space: O(m * n)
@@ -37,16 +39,3 @@ export function levenshteinDistance(str1: string, str2: string): number {
 console.log(
   levenshteinDistance('replace', 'delete')
 );
-
-
-function print2DArr(arr: number[][]) {
-  let str = '| ';
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      str += arr[i][j] + ' | ';
-    }
-    str += '\n| ';
-  }
-  const str2 = str.replace(/\n\| $/, '');
-  console.log(str2);
-}

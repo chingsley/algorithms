@@ -27,12 +27,16 @@ export function squareOfZeroes(matrix: number[][]) {
 }
 
 function isSquareOfZeros([r1, c1, r2, c2]: number[], zeroCounts: number[][][]) {
+  const squareLength = c2 - c1 + 1;
   const [left, top] = zeroCounts[r1][c1];
   const [, bottom] = zeroCounts[r2][c1];
   const [right,] = zeroCounts[r1][c2];
-  return left === right &&
-    top === bottom &&
-    left === top;
+
+  const hasTopBorder = top >= squareLength;
+  const hasLeftBorder = left >= squareLength;
+  const hasBottomBorder = bottom >= squareLength;
+  const hasRightBorder = right >= squareLength;
+  return hasTopBorder && hasLeftBorder && hasBottomBorder && hasRightBorder;
 }
 
 function countZeroes(matrix: number[][]) {
@@ -62,12 +66,11 @@ function getPrevCellCounts([row, col]: number[], counts: number[][][]) {
   return [height, width];
 }
 
-const matrix = [
-  [0, 0, 0, 1],
-  [0, 1, 0, 0],
-  [0, 1, 0, 0],
-  [0, 1, 0, 1]
-];
-
-const result = squareOfZeroes(matrix);
-console.log(result); // should return true; fix bug!
+console.log(
+  squareOfZeroes([
+    [0, 0, 0, 1],
+    [0, 1, 0, 0],
+    [0, 1, 0, 0],
+    [0, 1, 0, 1]
+  ])
+); // expect true;

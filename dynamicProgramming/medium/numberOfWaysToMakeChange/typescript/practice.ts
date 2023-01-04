@@ -85,6 +85,23 @@
       return waysOfAmounts[n];
     }
   }
+  {
+    // O(m * n) time | O(n) space (m = length of denoms array)
+    function numberOfWaysToMakeChange(n: number, denoms: number[]) {
+      const combns = new Array(n + 1).fill(0);
+      combns[0] = 1;
+
+      for (let coin of denoms) {
+        for (let i = 0; i < combns.length; i++) {
+          const amount = i;
+          if (coin > amount) continue;
+          combns[amount] += combns[amount - coin];
+        }
+      }
+
+      return combns[n];
+    }
+  }
 }
 
 export const ___ = '___';

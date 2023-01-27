@@ -1,41 +1,45 @@
-// O(n* m^2 + nlog(n)) time | O(n) space
+// WITH MEMO
+// O(m) * O(n^2 * m) time = O(m^2 * n^2) time
+// O(m + n^2) space (n from recursion, m^2 from memo)
+// m = length of the strings array
+// n = length of the longest word in the strings array
 export function longestStringChain(strings: string[]) {
-  const sortedStr = [...strings].sort((a, b) => b.length - a.length);
-  const visited = new Array(strings.length).fill(false);
+  const memo: Memo = {};
+  let longest: string[] = [];
+  for (let word of strings) { // O(m) time
+    const wordLongest = getLongest(word, strings, memo); // O(n^2 * m) time
+    if (wordLongest.length > longest.length) longest = wordLongest;
+  }
+  return longest.length < 2 ? [] : longest.reverse();
+}
+
+// O(n * O(n * m)) time // n recursive calls, n * m operation in each recursive step
+// = O(n^2 * m) time
+function getLongest(word: string, strings: string[], memo: Memo): string[] {
+  if (word in memo) return JSON.parse(memo[word]);
 
   let longestChain: string[] = [];
-  for (let i = 0; i < sortedStr.length; i++) {
-    if (visited[i]) continue;
-    const currChain = getStrChainAt(i, sortedStr, visited);
-    if (currChain.length > longestChain.length) longestChain = currChain;
-  }
+  for (let i = 0; i < word.length; i++) { // O(n) time
+    const wordLessOneChar = word.slice(0, i) + word.slice(i + 1);
+    for (let wd of strings) { // O(m) time
+      if (wd === wordLessOneChar) {
+        const chain = getLongest(wordLessOneChar, strings, memo);
+        if (chain.length > longestChain.length) longestChain = chain;
+      }
+    }
+  } // O(n * m) time <--- for the nested for loop (by multiplying O(n) by O(m))
 
+  longestChain.push(word);
+  memo[word] = JSON.stringify(longestChain);
   return longestChain;
 }
 
-function getStrChainAt(i: number, sortedStr: string[], visited: boolean[]) {
-  const chain = [];
-  let currIdx: number | null = i;
-  while (currIdx !== null) {
-    visited[currIdx] = true;
-    const currStr = sortedStr[currIdx];
-    for (let j = 0; j < currStr.length; j++) {
-      const newWord = currStr.slice(0, j) + currStr.slice(j + 1);
-      currIdx = findMatch(newWord, currIdx! + 1, sortedStr);
-      if (currIdx === null) continue;
-
-      if (chain.length === 0) chain.push(currStr);
-      chain.push(newWord);
-      break;
-    }
-  }
-  return chain;
+interface Memo {
+  [key: string]: string;
 }
 
-function findMatch(newWord: string, startIdx: number, sortedStr: string[]) {
-  for (let k = startIdx; k < sortedStr.length; k++) {
-    if (sortedStr[k] === newWord) return k;
-  }
 
-  return null;
-}
+/**
+* Any solution you implement must pass this test case:
+* ["abdec", "abdc", "abde", "abc", "abd", "ade", "ae"]
+*/

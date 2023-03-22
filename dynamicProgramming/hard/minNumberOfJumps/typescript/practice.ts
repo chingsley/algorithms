@@ -27,6 +27,29 @@
       return minJumps + 1;
     }
   }
+  {
+    //O(n) time | O(n) space
+    function minNumberOfJumps(array: number[]) {
+      return minJumpsFromIdx(0, array, {});
+    }
+
+    function minJumpsFromIdx(idx: number, array: number[], memo: Memo) {
+      if (idx >= array.length - 1) return 0;
+      if (idx in memo) return memo[idx];
+
+      let minJumps = Infinity;
+      for (let i = 1; i <= array[idx]; i++) {
+        minJumps = Math.min(minJumps, minJumpsFromIdx(idx + i, array, memo));
+      }
+
+      memo[idx] = minJumps + 1;
+      return memo[idx];
+    }
+
+    interface Memo {
+      [key: number]: number;
+    }
+  }
 }
 
 export const __ = '__';

@@ -28,6 +28,46 @@
       return [sums[maxSumIdx][0], subSeq.reverse()];
     }
   }
+  {
+    function maxSumIncreasingSubsequence(array: number[]): [number, number[]] {
+      let maxSeq: number[] = [];
+      let sumMaxSeq = -Infinity;
+      const memo: Memo = {};
+      for (let i = 0; i < array.length; i++) {
+        const maxSeqAtIdx = getMaxSeqAtIdx(i, array, memo);
+        const sumMaxSeqAtIdx = maxSeqAtIdx.reduce((sum, n) => sum + n, 0);
+        if (sumMaxSeqAtIdx > sumMaxSeq) {
+          maxSeq = maxSeqAtIdx;
+          sumMaxSeq = sumMaxSeqAtIdx;
+
+        }
+      }
+      return [sumMaxSeq, maxSeq];
+    }
+
+    function getMaxSeqAtIdx(i: number, array: number[], memo: Memo): number[] {
+      if (i in memo) return JSON.parse(memo[i]);
+      // console.log(i)
+
+      let maxSeq: number[] = [];
+      let sumMaxSeq = -Infinity;
+      for (let j = i + 1; j < array.length; j++) {
+        if (array[j] <= array[i]) continue;
+        const maxSeqAtJ = getMaxSeqAtIdx(j, array, memo);
+        const sumMaxSeqAtJ = maxSeqAtJ.reduce((sum, n) => sum + n, 0);
+        if (sumMaxSeqAtJ > sumMaxSeq) {
+          maxSeq = maxSeqAtJ;
+          sumMaxSeq = sumMaxSeqAtJ;
+        }
+      }
+
+      memo[i] = JSON.stringify([array[i], ...maxSeq]);
+      return [array[i], ...maxSeq];
+    }
+
+    type Memo = { [key: number]: string; };
+
+  }
 }
 
 export const __ = '__';

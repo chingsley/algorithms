@@ -162,6 +162,32 @@
       return array[str2.length][str1.length];
     }
   }
+  {
+    // O(n * m) time | O(n * m) space (n = length of str1, m = length of str2)
+    function levenshteinDistance(str1: string, str2: string) {
+      const matrix: number[][] = new Array(str2.length + 1).fill(0).map(
+        () => new Array(str1.length + 1).fill(0).map((_, idx) => idx)
+      );
+
+      for (let i = 0; i < matrix.length; i++) matrix[i][0] = i;
+
+      for (let i = 1; i < matrix.length; i++) {
+        for (let j = 1; j < matrix[i].length; j++) {
+          if (str2[i - 1] === str1[j - 1]) {
+            matrix[i][j] = matrix[i - 1][j - 1];
+          } else {
+            matrix[i][j] = 1 + Math.min(
+              matrix[i - 1][j],
+              matrix[i][j - 1],
+              matrix[i - 1][j - 1]
+            );
+          }
+        }
+      }
+
+      return matrix[str2.length][str1.length];
+    }
+  }
 }
 
 export const ___ = '___';

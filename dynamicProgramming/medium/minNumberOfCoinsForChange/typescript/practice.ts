@@ -181,6 +181,24 @@
       return array[n] < Infinity ? array[n] : -1;
     }
   }
+  {
+    function minNumberOfCoinsForChange(n: number, denoms: number[]) {
+      const minChangeForTargets: number[] = new Array(n + 1).fill(Infinity);
+      minChangeForTargets[0] = 0;
+
+      for (let coin of denoms) {
+        for (let target = 0; target < minChangeForTargets.length; target++) {
+          if (coin > target) continue;
+          minChangeForTargets[target] = Math.min(
+            minChangeForTargets[target],
+            1 + minChangeForTargets[target - coin]
+          );
+        }
+      }
+
+      return minChangeForTargets[n] < Infinity ? minChangeForTargets[n] : -1;
+    }
+  }
 }
 
 export const __ = '__';

@@ -199,6 +199,51 @@
       return minChangeForTargets[n] < Infinity ? minChangeForTargets[n] : -1;
     }
   }
+  {// RECURSION
+    function minNumberOfCoinsForChange(n: number, denoms: number[]): number {
+      const minCoins = getMinCoins(n, denoms);
+      return minCoins < Infinity ? minCoins : -1;
+    }
+
+    interface Memo { [key: number]: number; }
+    function getMinCoins(n: number, denoms: number[], memo: Memo = { 0: 0 }): number {
+      if (n in memo) return memo[n];
+
+      let minCoins = Infinity;
+      for (let coin of denoms) {
+        if (coin > n) continue;
+        const currMinCoins = 1 + getMinCoins(n - coin, denoms, memo);
+        if (currMinCoins < minCoins) minCoins = currMinCoins;
+      }
+
+      memo[n] = minCoins;
+      return memo[n];
+    }
+  }
+  {
+    {// RECURSION
+      function minNumberOfCoinsForChange(n: number, denoms: number[]): number {
+        const minCoins = getMinCoins(n, denoms);
+        return minCoins < Infinity ? minCoins : -1;
+      }
+
+      interface Memo { [key: number]: number; }
+      function getMinCoins(n: number, denoms: number[], memo: Memo = {}): number {
+        if (n === 0) return 0;
+        if (n in memo) return memo[n];
+
+        let minCoins = Infinity;
+        for (let coin of denoms) {
+          if (coin > n) continue;
+          const currMinCoins = 1 + getMinCoins(n - coin, denoms, memo);
+          if (currMinCoins < minCoins) minCoins = currMinCoins;
+        }
+
+        memo[n] = minCoins;
+        return memo[n];
+      }
+    }
+  }
 }
 
 export const __ = '__';

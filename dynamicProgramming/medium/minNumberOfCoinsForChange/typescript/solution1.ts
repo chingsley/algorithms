@@ -43,6 +43,6 @@ function minNumberOfCoinsForChangeHelper(n: number, denoms: number[], memo: { [k
 
 
 // console.log(minNumberOfCoinsForChange(8, [2, 3, 5])); 
-console.log(minNumberOfCoinsForChange(7, [1, 5, 10]));
-console.log(minNumberOfCoinsForChange(7, [2, 4]));
-console.log(minNumberOfCoinsForChange(10000, [7, 14]));
+console.log(minNumberOfCoinsForChange(7, [1, 5, 10])); // 3
+console.log(minNumberOfCoinsForChange(7, [2, 4])); // -1
+console.log(minNumberOfCoinsForChange(10000, [7, 14])); // -1

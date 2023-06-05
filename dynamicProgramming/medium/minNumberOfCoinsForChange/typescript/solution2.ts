@@ -1,6 +1,6 @@
 /**
  * Time: O(n*m) = O(nm)
- * Space: O(n)  (Sice of numOfCoins)
+ * Space: O(n)  (Size of numOfCoins)
  * 
  * @param n number (targetAmount)
  * @param denoms (m) (array of coin values for making change)

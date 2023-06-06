@@ -19,12 +19,27 @@
  * @returns number
  */
 export function minCoinsForChange(n: number, denoms: number[]) {
-  const result = minCoinsForChangeHelper(n, denoms);
+  const result = getMincoins(n, denoms);
   return result ? result : [];
 }
 
-function minCoinsForChangeHelper(n: number, denoms: number[], memo: { [key: number]: number[]; } = {}): number[] {
-  return [];
+function getMincoins(n: number, denoms: number[], memo: { [key: number]: number[]; } = {}): number[] | null {
+  if (n === 0) return [];
+  if (n in memo) return memo[n];
+
+  let minCoins: number[] | null = null;
+  for (let coin of denoms) {
+    if (coin > n) continue;
+    const rem = n - coin;
+    const minCoinsRem = getMincoins(rem, denoms, memo);
+    if (minCoinsRem === null) continue;
+    if (minCoins === null || minCoinsRem.length + 1 < minCoins.length) {
+      minCoins = [...minCoinsRem, coin];
+    }
+  }
+
+  memo[n] = minCoins;
+  return memo[n];
 }
 
 

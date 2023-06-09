@@ -102,6 +102,22 @@
       return combns[n];
     }
   }
+  {
+    // O(n*d) time | O(n) space ( d = length of denoms)
+    function numberOfWaysToMakeChange(n: number, denoms: number[]) {
+      const arr: number[] = new Array(n + 1).fill(0);
+      arr[0] = 1;
+      for (let coin of denoms) {
+        for (let i = 1; i < arr.length; i++) {
+          if (coin > i) continue;
+          arr[i] += arr[i - coin];
+        }
+      }
+
+      return arr[n];
+    }
+
+  }
 }
 
 export const ___ = '___';

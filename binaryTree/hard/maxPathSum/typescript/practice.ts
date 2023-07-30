@@ -71,7 +71,6 @@ export class BinaryTree {
       const [leftMaxSum, leftMaxPathSum] = maxPathSumHelper(node.left);
       const [rightMaxSum, rightMaxPathSum] = maxPathSumHelper(node.right);
       const currMaxSum = Math.max(
-        node.value,
         node.value + leftMaxPathSum,
         node.value + rightMaxPathSum,
         node.value + leftMaxPathSum + rightMaxPathSum,

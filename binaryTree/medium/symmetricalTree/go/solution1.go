@@ -20,8 +20,7 @@ func SymmetricalTree(tree *BinaryTree) bool {
         rightStack = append(rightStack, tree.Right)
     }
 
-    var leftNode *BinaryTree
-    var rightNode *BinaryTree
+    var leftNode, rightNode *BinaryTree
     for len(leftStack) > 0 && len(rightStack) > 0 {
         leftNode, leftStack = leftStack[len(leftStack) - 1], leftStack[:len(leftStack) - 1]
         rightNode, rightStack = rightStack[len(rightStack) - 1], rightStack[:len(rightStack) - 1]

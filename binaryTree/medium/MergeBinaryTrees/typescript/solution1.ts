@@ -11,6 +11,12 @@ export class BinaryTree {
   }
 }
 
+
+// O(N) time
+// O(N + D) space (converges to O(N) space where N is much larger than D) 
+// (N = max(n1, n2), D = max(d1, d2))
+// where n1 = no. of nodes in tree1, n2 = no. of nodes in tree2
+//       d1 = depth of tree1, d2 = depth of tree 2
 export function mergeBinaryTrees(tree1: BinaryTree, tree2: BinaryTree) {
   const merged = new BinaryTree(tree1.value + tree2.value);
   merge(tree1.left, tree2.left, merged, true);

@@ -1,4 +1,4 @@
-import { buildTree } from '../../../../utils/buildTree';
+import buildTree from '../../../../utils/buildTree';
 import { BinaryTree } from './solution1';
 
 {
@@ -118,5 +118,28 @@ import { BinaryTree } from './solution1';
     console.log(
       heightBalancedBinaryTree(tree)
     );
+  }
+  {
+    // O(n) time | O(h) space (n = no. of nodes in tree, h = height of tree)
+    function heightBalancedBinaryTree(tree: BinaryTree) {
+      const [leftBalanced, leftHeight] = checkBalance(tree.left);
+      const [rightBalanced, rightHeight] = checkBalance(tree.right);
+      if (!leftBalanced || !rightBalanced) return false;
+      if (Math.abs(leftHeight - rightHeight) > 1) return false;
+
+      return true;
+    }
+
+    function checkBalance(node: BinaryTree | null): [boolean, number] {
+      if (node === null) return [true, 0];
+
+      const [leftBalanced, leftHeight] = checkBalance(node.left);
+      const [rightBalanced, rightHeight] = checkBalance(node.right);
+      if (!leftBalanced || !rightBalanced) return [false, -1];
+      if (Math.abs(leftHeight - rightHeight) > 1) return [false, -1];
+
+      return [true, Math.max(leftHeight, rightHeight) + 1];
+    }
+
   }
 }

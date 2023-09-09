@@ -251,6 +251,5 @@ export class BinaryTree {
 
       return currentNode;
     }
-
   }
 }

@@ -102,4 +102,60 @@ import { BinaryTree } from './solution1';
       }
     }
   }
+  {
+    // O(n) time | O(d) space (n = no. of nodes, d = depth of the tree)
+    function binaryTreeDiameter(tree: BinaryTree) {
+      const [depthOfLeftSubtree, longestPathInLeftSubtree] = parseTree(tree.left);
+      const [depthOfRightSubtree, longestPathInRightSubtree] = parseTree(tree.right);
+      return Math.max(
+        longestPathInLeftSubtree,
+        longestPathInRightSubtree,
+        depthOfLeftSubtree + depthOfRightSubtree
+      );
+    }
+
+    function parseTree(node: BinaryTree | null): [number, number] {
+      if (node === null) return [0, 0];
+
+      const [depthOfLeftSubtree, longestPathInLeftSubtree] = parseTree(node.left);
+      const [depthOfRightSubtree, longestPathInRightSubtree] = parseTree(node.right);
+
+      let pathAtCurrentNode = 0;
+      if (node.right && node.left) {
+        pathAtCurrentNode = depthOfLeftSubtree + depthOfRightSubtree;
+      }
+
+      const maxPathAtCurrentNode = Math.max(
+        longestPathInLeftSubtree,
+        longestPathInRightSubtree,
+        pathAtCurrentNode
+      );
+
+      const depthAtCurrentNode = 1 + Math.max(
+        depthOfLeftSubtree,
+        depthOfRightSubtree
+      );
+
+      return [depthAtCurrentNode, maxPathAtCurrentNode];
+    }
+  }
+  {
+    // O(n) time | O(d) space (n = no. of nodes, d = depth of the tree)
+    function binaryTreeDiameter(tree: BinaryTree) {
+      const [maxDaimeter] = parseTree(tree);
+      return maxDaimeter;
+    }
+
+    function parseTree(node: BinaryTree | null): [number, number] {
+      if (node === null) return [0, 0];
+
+      const [leftMaxDiam, leftMaxPath] = parseTree(node.left);
+      const [rightMaxDiam, rightMaxPath] = parseTree(node.right);
+
+      return [
+        Math.max(leftMaxDiam, rightMaxDiam, leftMaxPath + rightMaxPath),
+        1 + Math.max(leftMaxPath, rightMaxPath)
+      ];
+    }
+  }
 }

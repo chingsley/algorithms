@@ -36,4 +36,25 @@ import { BinaryTree } from './solution1';
       return tree;
     }
   }
+  {
+    class BinaryTree {
+      value: number;
+      left: BinaryTree | null;
+      right: BinaryTree | null;
+
+      constructor(value: number) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+      }
+    }
+
+    // O(n) time | O(d) space
+    function invertBinaryTree(tree: BinaryTree | null) {
+      if (tree === null) return;
+      [tree.left, tree.right] = [tree.right, tree.left];
+      invertBinaryTree(tree.left);
+      invertBinaryTree(tree.right);
+    }
+  }
 }

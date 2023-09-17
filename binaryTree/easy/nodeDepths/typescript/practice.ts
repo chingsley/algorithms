@@ -117,4 +117,19 @@ import { BinaryTree } from './solution1';
 
     interface TreeInfo { depthSum: number; };
   }
+  {
+    function nodeDepths(root: BinaryTree) {
+      return sumDepths(root, 0);
+    }
+
+    // O(n) time | O(h) space (n = no. of nodes, h = tree height)
+    function sumDepths(node: BinaryTree | null, currNodeDepth: number): number {
+      if (node === null) return 0;
+
+      const leftDepth = sumDepths(node.left, currNodeDepth + 1);
+      const rightDepth = sumDepths(node.right, currNodeDepth + 1);
+      return leftDepth + rightDepth + currNodeDepth;
+    }
+  }
+
 }

@@ -81,4 +81,43 @@ import { BinaryTree } from './solution1';
       traverse(node.right, sumAtNode, array);
     }
   }
+  {
+    // O(n) time | O(d + l) space
+    // n = no. of nodes, d = depth of tree, l = no. of leaft nodes
+    function branchSums(root: BinaryTree): number[] {
+      const sums: number[] = [];
+      sumBranches(root, 0, sums);
+      return sums;
+    }
+
+    function sumBranches(node: BinaryTree | null, runningSum: number, sums: number[]) {
+      if (node === null) return;
+
+      const currSum = runningSum + node.value;
+      if (node.left === null && node.right === null) {
+        sums.push(currSum);
+      } else {
+        sumBranches(node.left, currSum, sums);
+        sumBranches(node.right, currSum, sums);
+      }
+    }
+  }
+  {
+    // O(n^2) time (due to the spread operator at every node. The actual time complexity is better than O(n^2))
+    // O(d + l) space
+    // n = no. of nodes, d = depth of tree, l = no. of leaft nodes
+    function branchSums(root: BinaryTree): number[] {
+      return sumBranches(root, 0);
+    }
+
+    function sumBranches(node: BinaryTree | null, currSum: number): number[] {
+      if (node === null) return [];
+      if (!node.left && !node.right) return [currSum + node.value];
+
+      const leftSums = sumBranches(node.left, currSum + node.value);
+      const rightSums = sumBranches(node.right, currSum + node.value);
+      return [...leftSums, ...rightSums];
+
+    }
+  }
 }

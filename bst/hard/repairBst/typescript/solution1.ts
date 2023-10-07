@@ -11,7 +11,7 @@ export class BST {
   }
 }
 
-// O(n) time | O(h) space
+// O(n^2) time | O(h) space
 export function repairBst(tree: BST) {
   const sortedNodes: BST[] = [];
   traverseTree(tree, sortedNodes);

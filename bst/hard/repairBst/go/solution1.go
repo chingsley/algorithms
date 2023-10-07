@@ -11,24 +11,34 @@ type BST struct {
 }
 
 func RepairBst(tree *BST) *BST {
-	var sortedNodes []*BST
+	sortedNodes := &[]*BST{}
 	traverseNode(tree, sortedNodes)
 	return tree
 }
 
-// WORK IN PROGRESS
-// O(n) time | O(h) space
-func traverseNode(node *BST, sortedNodes []*BST) {
+// O(n^2) time | O(h) space
+func traverseNode(node *BST, sortedNodes *[]*BST) {
 	if node == nil {
 		return
 	}
+
 	traverseNode(node.Left, sortedNodes)
-	sortedNodes = append(sortedNodes, node)
-	i, j := len(sortedNodes)-2, len(sortedNodes)-1
-	for i >= 0 && sortedNodes[j].Value < sortedNodes[i].Value {
-		fmt.Println(i, j)
-		sortedNodes[i].Value, sortedNodes[j].Value = sortedNodes[j].Value, sortedNodes[i].Value
+	*sortedNodes = append(*sortedNodes, node)
+
+	i, j := len(*sortedNodes)-2, len(*sortedNodes)-1
+	for i >= 0 && (*sortedNodes)[j].Value < (*sortedNodes)[i].Value {
+		(*sortedNodes)[i].Value, (*sortedNodes)[j].Value = (*sortedNodes)[j].Value, (*sortedNodes)[i].Value
 		i, j = i-1, j-1
 	}
+
 	traverseNode(node.Right, sortedNodes)
+}
+
+func printArr(m interface{}, arr []*BST) {
+	var vals []int
+	for _, node := range arr {
+		vals = append(vals, node.Value)
+	}
+
+	fmt.Println(m, vals)
 }

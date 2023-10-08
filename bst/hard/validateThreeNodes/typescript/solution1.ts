@@ -33,7 +33,7 @@ function findDescendantNode(ancestor: BST, descendant: BST): BST | null {
 }
 
 
-class BST {
+export class BST {
   value: number;
   left: BST | null;
   right: BST | null;

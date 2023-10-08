@@ -1,3 +1,4 @@
+import { BST } from './solution1';
 {
   {
     // O(log(n)) time | O(1) space
@@ -177,6 +178,85 @@
         } else {
           currNode = currNode.right;
         }
+      }
+
+      return false;
+    }
+
+  }
+  {
+    // O(log(n) time) | O(1) space
+    // OR O(d) time | O(1) space
+    function validateThreeNodes(nodeOne: BST, nodeTwo: BST, nodeThree: BST) {
+      const [n1, n2, n3] = [nodeOne, nodeTwo, nodeThree];
+
+      if (findDec(n2, n3)) return findDec(n1, n2);
+      if (findDec(n2, n1)) return findDec(n3, n2);
+
+      return false;
+    }
+
+    function findDec(n1: BST, n2: BST): boolean {
+      let currNode: BST | null = n1;
+      while (currNode) {
+        if (currNode.value === n2.value) return true;
+        currNode = n2.value > currNode.value ? currNode.right : currNode.left;
+      }
+
+      return false;
+    }
+  }
+  {
+
+    // O(log(n) time) | O(1) space
+    // OR O(d) time | O(1) space
+    function validateThreeNodes(nodeOne: BST, nodeTwo: BST, nodeThree: BST) {
+      const [n1, n2, n3] = [nodeOne, nodeTwo, nodeThree];
+
+      if (findDec(n1, n2, n3)) return true;
+      return findDec(n3, n2, n1);
+    }
+
+    function findDec(n1: BST, n2: BST, n3: BST): boolean {
+      let currNode: BST | null = n1;
+      let nodeToFind = n2;
+      let res: boolean[] = [];
+      while (currNode) {
+        if (currNode.value === nodeToFind.value) {
+          res.push(true);
+          if (res.length === 2) {
+            return true;
+          } else {
+            nodeToFind = n3;
+          }
+        };
+        currNode = nodeToFind.value > currNode.value ? currNode.right : currNode.left;
+      }
+
+      return false;
+    }
+  }
+  {
+    // O(log(n) time) | O(1) space
+    // OR O(d) time | O(1) space
+    function validateThreeNodes(nodeOne: BST, nodeTwo: BST, nodeThree: BST) {
+      const [n1, n2, n3] = [nodeOne, nodeTwo, nodeThree];
+
+      if (findDecs(n1, n2, n3)) return true;
+      return findDecs(n3, n2, n1);
+    }
+
+    function findDecs(n1: BST, n2: BST, n3: BST): boolean {
+      let currNode: BST | null = n1;
+      let nodeToFind = n2;
+      let found = false;
+      while (currNode) {
+        if (currNode.value === nodeToFind.value) {
+          if (found) return true;
+          found = true;
+          nodeToFind = n3;
+        };
+        currNode = nodeToFind.value > currNode.value ? currNode.right : currNode.left;
       }
 
       return false;

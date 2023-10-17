@@ -127,8 +127,43 @@
       }
       return sameBsts(arrOneLeft, arrTwoLeft) && sameBsts(arrOneRight, arrTwoRight);
     }
+  }
+  {
+    // O(n^2) time | O(n^2) space
+    function sameBsts(arrayOne: number[], arrayTwo: number[]) {
+      if (arrayOne.length === 0 && arrayTwo.length === 0) return true;
+      if (arrayOne.length !== arrayTwo.length) return false;
+      if (arrayOne[0] !== arrayTwo[0]) return false;
 
+      const [arrayOneLeft, arrayTwoLeft,
+        arrayOneRight, arrayTwoRight
+      ] = parseArray(arrayOne, arrayTwo);
+      if (!sameBsts(arrayOneLeft, arrayTwoLeft)) return false;
+      if (!sameBsts(arrayOneRight, arrayTwoRight)) return false;
 
+      return true;
+    }
+
+    function parseArray(arr1: number[], arr2: number[]): number[][] {
+      const [arr1Left, arr2Left,
+        arr1Righ, arr2Right
+      ]: number[][] = [[], [], [], []];
+      for (let i = 1; i < arr1.length; i++) {
+        if (arr1[i] < arr1[0]) {
+          arr1Left.push(arr1[i]);
+        } else {
+          arr1Righ.push(arr1[i]);
+        }
+
+        if (arr2[i] < arr2[0]) {
+          arr2Left.push(arr2[i]);
+        } else {
+          arr2Right.push(arr2[i]);
+        }
+      }
+
+      return [arr1Left, arr2Left, arr1Righ, arr2Right];
+    }
   }
 }
 

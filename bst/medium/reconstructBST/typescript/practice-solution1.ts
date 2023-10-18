@@ -147,5 +147,27 @@ import { BST } from './solution1';
       return new BST(array[startIdx], left, right);
     }
   }
+  {
+    // O(n^2) time | O(n) space
+    function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+      return reconstruct(preOrderTraversalValues, 0, preOrderTraversalValues.length - 1);
+    }
+
+    function reconstruct(arr: number[], startIdx: number, endIdx: number): BST | null {
+      if (startIdx > endIdx) return null;
+
+      let br = endIdx + 1;
+      for (let i = startIdx + 1; i <= endIdx; i++) {
+        if (arr[i] >= arr[startIdx]) {
+          br = i;
+          break;
+        }
+      }
+
+      const left = reconstruct(arr, startIdx + 1, br - 1);
+      const right = reconstruct(arr, br, endIdx);
+      return new BST(arr[startIdx], left, right);;
+    }
+  }
 }
 

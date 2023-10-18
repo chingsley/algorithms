@@ -118,4 +118,22 @@ import { BST } from './solution2';
       return new BST(value, left, right);
     }
   }
+  {
+    function reconstructBst(preOrderTraversalValues: number[]): BST | null {
+      return createFromRange(-Infinity, Infinity, preOrderTraversalValues, [0]);
+    }
+
+    function createFromRange(bb: number, tb: number, arr: number[], currIdx: [number]): BST | null {
+      const [idx] = currIdx;
+      if (idx >= arr.length) return null;
+      if (arr[idx] < bb || arr[idx] > tb) return null;
+
+      currIdx[0] += 1;
+      return new BST(
+        arr[idx],
+        createFromRange(bb, arr[idx] - 1, arr, currIdx),
+        createFromRange(arr[idx], tb, arr, currIdx),
+      );
+    }
+  }
 }

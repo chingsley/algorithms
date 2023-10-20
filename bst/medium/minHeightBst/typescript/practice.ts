@@ -125,17 +125,6 @@ export class BST {
     */
   }
   {
-    class BST {
-      value: number;
-      left: BST | null;
-      right: BST | null;
-      constructor(value: number) {
-        this.value = value;
-        this.left = null;
-        this.right = null;
-      }
-    }
-
     function minHeightBst(array: number[]) {
       return reconstructFromRange([0, array.length - 1], array);
     }
@@ -148,6 +137,25 @@ export class BST {
       root.left = reconstructFromRange([leftIdx, midIdx - 1], array);
       root.right = reconstructFromRange([midIdx + 1, rightIdx], array);
       return root;
+    }
+  }
+  {
+    // O(n) time
+    // O(n) space (due to the size of the array created)
+    // O((1/2)n) space = O(n) space (due to recursive calls)
+    // n = no. elements in the array = no. of nodes in the created BST
+    function minHeightBst(array: number[]): BST | null {
+      return bstInRange(0, array.length - 1, array);
+    }
+
+    function bstInRange(i: number, j: number, arr: number[]): BST | null {
+      if (i > j) return null;
+
+      const midIdx = Math.floor((i + j) / 2);
+      const bst = new BST(arr[midIdx]);
+      bst.left = bstInRange(i, midIdx - 1, arr);
+      bst.right = bstInRange(midIdx + 1, j, arr);
+      return bst;
     }
   }
 }

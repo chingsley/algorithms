@@ -1,5 +1,3 @@
-// WORK IN PROGRESS
-
 // This is an input class. Do not edit.
 export class BinaryTree {
   value: number;
@@ -13,9 +11,8 @@ export class BinaryTree {
   }
 }
 
-
+// O(n) time | O(h) space
 export function sumBsts(tree: BinaryTree) {
-  // const [_, _, _, _, _, sum] = sumNodes(tree)
   return sumNodes(tree)[5];
 }
 
@@ -39,9 +36,9 @@ function sumNodes(node: BinaryTree | null): [boolean, number, number, number, nu
   return [isBST, min, max, nodeCount, nodeSums, total];
 }
 
-function isNodeBST(node: BinaryTree, maxLeft: number | null, minRight: number | null): boolean {
-  if (maxLeft && node.value <= maxLeft) return false;
-  if (minRight && node.value > minRight) return false;
+function isNodeBST(node: BinaryTree, maxLeft: number, minRight: number): boolean {
+  if (node.value <= maxLeft) return false;
+  if (node.value > minRight) return false;
 
   return true;
 }

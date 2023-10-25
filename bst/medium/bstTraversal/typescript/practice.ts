@@ -95,6 +95,37 @@ class BST {
       }
     }
   }
+  {
+    // O(n) time | O(h) space
+    // left - push - right
+    function inOrderTraverse(tree: BST | null, array: number[]) {
+      if (tree === null) return array;
+      inOrderTraverse(tree.left, array);
+      array.push(tree.value);
+      inOrderTraverse(tree.right, array);
+      return array;
+    }
+
+    // O(n) time | O(h) space
+    // push - left - right
+    function preOrderTraverse(tree: BST | null, array: number[]) {
+      if (tree === null) return array;
+      array.push(tree.value);
+      preOrderTraverse(tree.left, array);
+      preOrderTraverse(tree.right, array);
+      return array;
+    }
+
+    // O(n) time | O(h) space
+    // left - right - push
+    function postOrderTraverse(tree: BST | null, array: number[]) {
+      if (tree === null) return array;
+      postOrderTraverse(tree.left, array);
+      postOrderTraverse(tree.right, array);
+      array.push(tree.value);
+      return array;
+    }
+  }
 }
 
 

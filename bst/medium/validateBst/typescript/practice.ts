@@ -78,6 +78,46 @@ export class BST {
       const isValidRight = validateNode(node.right, [node.value, upperBound]);
       return isValidLeft && isValidRight;
     }
+  }
+  {
+    function validateBst(tree: BST) {
+      const [isBst] = checkValidBst(tree);
+      return isBst;
+    }
+
+    // O(n) time | O(h) space (n = no. of nodes, h = height of tree)
+    function checkValidBst(node: BST | null): [boolean, number, number] {
+      if (node === null) return [true, Infinity, -Infinity];
+
+      const [isLeftBst, minLeft, maxLeft] = checkValidBst(node.left);
+      const [isRightBst, minRight, maxRight] = checkValidBst(node.right);
+
+      const min = Math.min(node.value, minLeft, minRight);
+      const max = Math.max(node.value, maxLeft, maxRight);
+
+      if (isLeftBst && isRightBst &&
+        node.value > maxLeft && node.value <= minRight
+      ) return [true, min, max];
+
+      return [false, min, max];
+    }
+  }
+  {
+
+    // O(n) time | O(h) space (n = no. of nodes, h = height of tree)
+    function validateBst(tree: BST) {
+      return validateNodeInRange(tree, -Infinity, Infinity);
+    }
+
+    function validateNodeInRange(node: BST | null, min: number, max: number): boolean {
+      if (node === null) return true;
+      if (node.value < min || node.value >= max) return false;
+
+      const isValidLeft = validateNodeInRange(node.left, min, node.value);
+      const isValidRight = validateNodeInRange(node.right, node.value, max);
+      return isValidLeft && isValidRight;
+
+    }
 
   }
 }

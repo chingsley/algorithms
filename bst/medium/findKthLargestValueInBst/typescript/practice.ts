@@ -228,4 +228,38 @@ export class BST {
       reverseInorderTraverse(tree.left, k, trvInfo);
     }
   }
+  {
+
+    // O(n) time | O(n) space
+    function findKthLargestValueInBst(tree: BST | null, k: number) {
+      const sortedNodes: number[] = [];
+      visit(tree, k, sortedNodes);
+      return sortedNodes[k - 1];
+    }
+
+    function visit(node: BST | null, k: number, sortedNodes: number[]) {
+      if (node === null) return;
+      visit(node.right, k, sortedNodes);
+      sortedNodes.push(node.value);
+      visit(node.left, k, sortedNodes);
+    }
+
+  }
+  {
+    // O(k) time | O(k) space
+    function findKthLargestValueInBst(tree: BST | null, k: number) {
+      const sortedNodes: number[] = [];
+      visit(tree, k, sortedNodes);
+      return sortedNodes[k - 1];
+    }
+
+    function visit(node: BST | null, k: number, sortedNodes: number[]) {
+      if (node === null) return;
+      if (sortedNodes.length >= k) return;
+
+      visit(node.right, k, sortedNodes);
+      sortedNodes.push(node.value);
+      visit(node.left, k, sortedNodes);
+    }
+  }
 }

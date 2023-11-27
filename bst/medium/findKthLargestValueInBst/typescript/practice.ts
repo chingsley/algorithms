@@ -246,7 +246,7 @@ export class BST {
 
   }
   {
-    // O(k) time | O(k) space
+    // O(h + k) time | O(h + k) space
     function findKthLargestValueInBst(tree: BST | null, k: number) {
       const sortedNodes: number[] = [];
       visit(tree, k, sortedNodes);
@@ -260,6 +260,29 @@ export class BST {
       visit(node.right, k, sortedNodes);
       sortedNodes.push(node.value);
       visit(node.left, k, sortedNodes);
+    }
+  }
+  {
+    interface Visited {
+      count: number;
+      value: number;
+    }
+
+    // O(h + k) time | O(h) space (space complexity due to recursive calls)
+    function findKthLargestValueInBst(tree: BST, k: number) {
+      const visited: Visited = { count: 0, value: 0 };
+      traverse(tree, k, visited);
+      return visited.value;
+    }
+
+    function traverse(node: BST | null, k: number, visited: Visited) {
+      if (node === null) return;
+      if (visited.count >= k) return;
+
+      traverse(node.right, k, visited);
+      visited.count += 1;
+      if (visited.count === k) visited.value = node.value;
+      traverse(node.left, k, visited);
     }
   }
 }

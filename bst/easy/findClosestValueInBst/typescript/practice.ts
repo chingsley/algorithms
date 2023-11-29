@@ -156,4 +156,32 @@ import { BST } from './solution1';
       return closest;
     }
   }
+  {
+    /**
+ *
+ *USING ITERATION
+ */
+    // Average Case: O(log(n)) time | O(1) space
+    // Worst Case: O(n) time | O(1) space
+    function findClosestValueInBst(tree: BST, target: number): number {
+      let closest = tree.value;
+      let node: BST | null = tree;
+      while (node !== null) {
+        if (Math.abs(node.value - target) < Math.abs(closest - target)) {
+          closest = node.value;
+        }
+
+        if (target < node.value) {
+          node = node.left;
+        } else if (target > node.value) {
+          node = node.right;
+        } else {
+          return node.value;
+        }
+      }
+
+      return closest;
+    }
+
+  }
 }

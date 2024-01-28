@@ -4,6 +4,12 @@ import (
 	"unicode/utf8"
 )
 
+// m = no. of strings in substrings array,
+// n = no. of chars in the longest string of substrings array
+// s = no. of strings in strings array
+// p = no. of chars in the longest string of strings array
+// O((m * n) + (s * p)) time
+// O((m * n) + s) space
 func StringsMadeUpOfStrings(strings []string, substrings []string) []string {
 	trie := NewTrie()
 	for _, str := range substrings {

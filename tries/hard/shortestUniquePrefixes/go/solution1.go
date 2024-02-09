@@ -19,7 +19,7 @@ func ShortestUniquePrefixes(strings []string) []string {
 }
 
 type TrieNode struct {
-	Children  map[rune]*TrieNode
+	Children  map[rune]*TrieNode // Children: { 'a': {...}, 'b': {...}, 'c': {...}}
 	UsedCount int
 }
 

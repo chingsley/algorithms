@@ -2,7 +2,7 @@
   {
     function multiStringSearch(bigString: string, smallStrings: string[]) {
       const trie = new Trie();
-      trie.populate(bigString.split(' '));
+      trie.insert(bigString);
 
       const result: boolean[] = [];
       for (let str of smallStrings) {
@@ -34,10 +34,6 @@
         }
       }
 
-      populate(strArr: string[]) {
-        for (let str of strArr) this.insert(str);
-      }
-
       contains(str: string) {
         let currNode = this.root;
         for (let ch of str) {
@@ -48,5 +44,10 @@
         return true;
       }
     }
+
+    /*
+     for every ch in the bigString, is there are a word in the list, contained
+     in the trie that starts at this ch of the bigString?
+    */
   }
 }

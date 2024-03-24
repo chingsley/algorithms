@@ -152,6 +152,33 @@
       }
     }
   }
+  {
+    /**
+ * O(n * l) time | O(c) space
+ * where:
+ *    n = the number of words
+ *    l = the length of the longest word
+ *    c = number of unique characters across all words
+ */
+    function minimumCharactersForWords(words: string[]) {
+      const bank: { [key: string]: number; } = {};
+      for (let word of words) {
+        const dict: { [key: string]: number; } = {};
+        for (let ch of word) {
+          if (!dict[ch]) dict[ch] = 0;
+          dict[ch] += 1;
+
+          if (!bank[ch]) bank[ch] = 0;
+          if (bank[ch] < dict[ch]) bank[ch] += 1;
+        }
+      }
+
+      const result: string[] = [];
+      for (let ch in bank) while (bank[ch]-- > 0) result.push(ch);
+
+      return result;
+    }
+  }
 }
 
 export const ___ = '___';

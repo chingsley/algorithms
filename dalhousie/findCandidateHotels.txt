@@ -1,0 +1,58 @@
+1.   findHotelCandates(S, l, u):
+2.   if l > u then
+3.       return []
+4.   if l == u then
+5.       return S[l]
+   
+6.   m <- floor((l + u)/2)
+7.   left <- findHotelCandates(S, l, m)
+8.   right <- findHotelCandates(S, m + 1, u)
+9.  merged <- merge(left, right)
+   
+10.  filtered <- []
+11.  minPrice <- Infinity
+12.  for hotel in merged do:
+13.      if hotel.price < minPrice then
+14.          ADD hotel to filtered
+15.          minPrice <- hotel.price
+ 
+16.  return filtered
+
+
+
+17. merge(left, right):
+18. mergedList <- []
+19. i, j <- 0, 0
+20. while i < lenght(left) and j < length(right) do
+21.     left[i].distance < right[j].distance then
+22.         ADD left[i] to merged
+23.     else if left[i].distance == right[j].distance then
+24.         // for same distance, prioritize lower price
+25.         if left[i].price < right[j].price then
+26.             ADD left[i] to merged 
+27.             i = i + 1
+28.         else
+29.             AdD right[j] to merged
+30.             j = j + 1
+31.     else
+32.         ADD right[j] to merged
+33.         j = j + 1
+ 
+34. // Add remaining elements
+35. ADD remaining elements of left[i..end] TO merged
+36. ADD remaining elements of right[j..end] TO merged
+37. return merged
+
+
+PROVE THAT THE ALGORITHM WORKS
+To show the correctness of the algorithm, the algorithm uses the divide-and-conquer
+technique, to implicitly sort the hotels by distance while selecting candidate hotels
+Divide: Split the list of hotels into two halves (left and right).
+
+Recurse: Recursively process each half to find candidates.
+
+Merge: Combine the two sorted halves into a single list sorted by distance (ascending) and price (ascending for ties).
+
+Filter: Traverse the merged list, keeping only hotels where each subsequent hotel has a strictly lower price than all previous ones. This ensures no hotel is dominated by an earlier (closer or same-distance) hotel.
+
+ 

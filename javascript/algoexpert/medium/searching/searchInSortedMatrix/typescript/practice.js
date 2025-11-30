@@ -1,0 +1,131 @@
+{
+    {
+        // O(m + n) time | O(1) space
+        function searchInSortedMatrix(matrix, target) {
+            let [row, col] = [0, matrix[0].length - 1]; // starting from top-right corner
+            while (row < matrix.length && col >= 0) {
+                if (matrix[row][col] === target) {
+                    return [row, col];
+                }
+                else if (matrix[row][col] < target) {
+                    row += 1;
+                }
+                else {
+                    col -= 1;
+                }
+            }
+            return [-1, -1];
+        }
+    }
+    {
+        // O(m + n) time | O(1) space
+        function searchInSortedMatrix(matrix, target) {
+            let [row, col] = [matrix.length - 1, 0]; // starting from the bottom-left corner
+            while (row >= 0 && col < matrix[0].length) {
+                if (matrix[row][col] === target) {
+                    return [row, col];
+                }
+                else if (matrix[row][col] > target) {
+                    row -= 1;
+                }
+                else {
+                    col += 1;
+                }
+            }
+            return [-1, -1];
+        }
+    }
+    {
+        // O(m + n) time | O(1) space
+        // m = no. of rows | n = no. of columns
+        function searchInSortedMatrix(matrix, target) {
+            let [row, col] = [0, matrix[0].length - 1];
+            while (row < matrix.length && col >= 0) {
+                if (matrix[row][col] > target) {
+                    col -= 1;
+                }
+                else if (matrix[row][col] < target) {
+                    row += 1;
+                }
+                else {
+                    return [row, col];
+                }
+            }
+            return [-1, -1];
+        }
+    }
+    {
+        // O(m + n) time | O(1) space
+        // m = no. of rows | n = no. of columns
+        function searchInSortedMatrix(matrix, target) {
+            let [row, col] = [0, matrix[0].length - 1];
+            while (row < matrix.length && col >= 0) {
+                const value = matrix[row][col];
+                if (value > target) {
+                    col -= 1;
+                }
+                else if (value < target) {
+                    row += 1;
+                }
+                else {
+                    return [row, col];
+                }
+            }
+            return [-1, -1];
+        }
+    }
+    {
+        // O(m + n) time | O(1) space
+        // m = no. of rows | n = no. of colums
+        function searchInSortedMatrix(matrix, target) {
+            let [row, col] = [0, matrix[0].length - 1];
+            while (row < matrix.length && col >= 0) {
+                const value = matrix[row][col];
+                if (value === target) {
+                    return [row, col];
+                }
+                else if (target < value) {
+                    col -= 1;
+                }
+                else {
+                    row += 1;
+                }
+            }
+            return [-1, -1];
+        }
+    }
+    {
+        // O(m + n) time | O(1) space;
+        // m = no. of rows | c = no. of columns
+        function searchInSortedMatrix(matrix, target) {
+            let [row, col] = [0, matrix[0].length - 1];
+            while (row < matrix.length && col >= 0) {
+                const value = matrix[row][col];
+                if (target > value) {
+                    row += 1;
+                }
+                else if (target < value) {
+                    col -= 1;
+                }
+                else {
+                    return [row, col];
+                }
+            }
+            return [-1, -1];
+        }
+    }
+    {
+        // O(n + m) time | O(1) space
+        // n = no. of columns | m = no. of rows
+        function searchInSortedMatrix(matrix, target) {
+            let [row, col] = [0, matrix[0].length - 1];
+            while (row < matrix.length && col >= 0) {
+                if (matrix[row][col] === target)
+                    return [row, col];
+                target < matrix[row][col] ? col -= 1 : row += 1;
+            }
+            return [-1, -1];
+        }
+    }
+}
+export const __ = '__';

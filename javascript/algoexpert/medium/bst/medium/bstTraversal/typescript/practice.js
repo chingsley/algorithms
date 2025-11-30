@@ -1,0 +1,110 @@
+class BST {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+{
+    {
+        // O(n) time | O(n) space
+        function inOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            inOrderTraverse(tree.left, array);
+            array.push(tree.value);
+            inOrderTraverse(tree.right, array);
+            return array;
+        }
+        // O(n) time | O(n) space
+        function preOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            array.push(tree.value);
+            preOrderTraverse(tree.left, array);
+            preOrderTraverse(tree.right, array);
+            return array;
+        }
+        // O(n) time | O(n) space
+        function postOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            postOrderTraverse(tree.left, array);
+            postOrderTraverse(tree.right, array);
+            array.push(tree.value);
+            return array;
+        }
+    }
+    {
+        // push, go left, go right
+        // O(n) time | O(n) space
+        function preOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            array.push(tree.value);
+            preOrderTraverse(tree.left, array);
+            preOrderTraverse(tree.right, array);
+            return array;
+        }
+        // go left, push, go right
+        // O(n) time | O(n) space
+        function inOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            inOrderTraverse(tree.left, array);
+            array.push(tree.value);
+            inOrderTraverse(tree.right, array);
+            return array;
+        }
+        // go left, go right, push
+        // O(n) time | O(n) space
+        function postOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            postOrderTraverse(tree.left, array);
+            postOrderTraverse(tree.right, array);
+            array.push(tree.value);
+            return array;
+        }
+        class BST {
+            constructor(value) {
+                this.value = value;
+                this.left = null;
+                this.right = null;
+            }
+        }
+    }
+    {
+        // O(n) time | O(h) space
+        // left - push - right
+        function inOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            inOrderTraverse(tree.left, array);
+            array.push(tree.value);
+            inOrderTraverse(tree.right, array);
+            return array;
+        }
+        // O(n) time | O(h) space
+        // push - left - right
+        function preOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            array.push(tree.value);
+            preOrderTraverse(tree.left, array);
+            preOrderTraverse(tree.right, array);
+            return array;
+        }
+        // O(n) time | O(h) space
+        // left - right - push
+        function postOrderTraverse(tree, array) {
+            if (tree === null)
+                return array;
+            postOrderTraverse(tree.left, array);
+            postOrderTraverse(tree.right, array);
+            array.push(tree.value);
+            return array;
+        }
+    }
+}
+export const __ = '__';

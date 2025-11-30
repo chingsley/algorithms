@@ -1,0 +1,231 @@
+export class BinaryTree {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+        this.parent = null;
+    }
+}
+{
+    {
+        // O(n) time | O(1) space;
+        function findSuccessor(tree, node) {
+            if (node.right !== null)
+                return getLeastNodeInRightSubtree(node.right);
+            const rightMostParent = getRightMostParent(node);
+            return rightMostParent.parent;
+        }
+        function getLeastNodeInRightSubtree(node) {
+            let currNode = node;
+            while (currNode.left !== null) {
+                currNode = currNode.left;
+            }
+            return currNode;
+        }
+        function getRightMostParent(node) {
+            let currNode = node;
+            while (currNode.parent !== null && currNode === currNode.parent.right) {
+                currNode = currNode.parent;
+            }
+            return currNode;
+        }
+    }
+    {
+        // O(n) time | O(n) space;
+        function findSuccessor(tree, node) {
+            const array = [];
+            const treeInfo = { nodeIdx: -1 };
+            inOrderTraverse(tree, node, array, treeInfo);
+            return array[treeInfo.nodeIdx + 1] || null;
+        }
+        function inOrderTraverse(tree, node, array, treeInfo) {
+            if (tree === null)
+                return;
+            if (array.length === treeInfo.nodeIdx)
+                return; // --- OPTIMIZATION. We can stop recursion once we're sure the array the successor. For this to work, the initial value of the treeInfo.nodeIdx must be less that 0 (hence the -1), since the initial value of array.length is 0 for []
+            inOrderTraverse(tree.left, node, array, treeInfo);
+            array.push(tree);
+            if (tree === node)
+                treeInfo.nodeIdx = array.length - 1;
+            inOrderTraverse(tree.right, node, array, treeInfo);
+        }
+    }
+    {
+        // O(n) time | O(n) space
+        // n = no. of nodes in the tree;
+        function findSuccessor(tree, node) {
+            const treeInfo = {
+                nodes: [],
+                nodeIdx: -1
+            };
+            inOrderTraverse(tree, node, treeInfo);
+            if (treeInfo.nodeIdx > -1 && treeInfo.nodeIdx + 1 < treeInfo.nodes.length) {
+                return treeInfo.nodes[treeInfo.nodeIdx + 1];
+            }
+            else {
+                return null;
+            }
+        }
+        function inOrderTraverse(tree, node, treeInfo) {
+            if (tree === null)
+                return;
+            inOrderTraverse(tree.left, node, treeInfo);
+            treeInfo.nodes.push(tree);
+            if (tree === node) {
+                treeInfo.nodeIdx = treeInfo.nodes.length - 1;
+            }
+            inOrderTraverse(tree.right, node, treeInfo);
+        }
+    }
+    {
+        // O(h) time | O(1) space
+        // h = height of the tree;
+        function findSuccessor(tree, node) {
+            if (node.right !== null)
+                return getLeftMostChildIn(node.right);
+            const rightMostParent = getRightMostParent(node);
+            return rightMostParent.parent;
+        }
+        function getLeftMostChildIn(node) {
+            let currentNode = node;
+            while (currentNode.left !== null)
+                currentNode = currentNode.left;
+            return currentNode;
+        }
+        function getRightMostParent(node) {
+            let currentNode = node;
+            while (currentNode.parent !== null && currentNode === currentNode.parent.right) {
+                currentNode = currentNode.parent;
+            }
+            return currentNode;
+        }
+    }
+    {
+        // O(h) time 
+        //  O(h) space (due to the recursive calls)
+        // h = height of the tree;
+        function findSuccessor(tree, node) {
+            if (node.right !== null)
+                return getLeftMostChildIn(node.right);
+            const rightMostParent = getRightMostParent(node);
+            return rightMostParent.parent;
+        }
+        function getLeftMostChildIn(node) {
+            if (node.left === null)
+                return node;
+            return getLeftMostChildIn(node.left);
+        }
+        function getRightMostParent(node) {
+            if (node.parent === null || node !== node.parent.right)
+                return node;
+            return getRightMostParent(node.parent);
+        }
+    }
+    {
+        // O(n) time | O(1) space
+        // n = no. of tree nodes;
+        // O(1) space because ghe getRightMin and getRightMostParent functions
+        // are implemented iteratively
+        function findSuccessor(tree, node) {
+            if (node.right !== null) {
+                return getRightMin(node.right);
+            }
+            const rightMostParent = getRightMostParent(node);
+            return rightMostParent.parent;
+        }
+        function getRightMin(node) {
+            let currentNode = node;
+            while (currentNode.left !== null) {
+                currentNode = currentNode.left;
+            }
+            return currentNode;
+        }
+        function getRightMostParent(node) {
+            let currentNode = node;
+            while (currentNode.parent !== null && currentNode === currentNode.parent.right) {
+                currentNode = currentNode.parent;
+            }
+            return currentNode;
+        }
+        function getRightMinByRecursion(node) {
+            if (node.left === null)
+                return node;
+            return getRightMin(node.left);
+        }
+        function getRightMostParentByRecursion(node) {
+            if (!(node.parent !== null && node === node.parent.right)) {
+                return node;
+            }
+            return getRightMostParent(node.parent);
+        }
+    }
+    {
+        function findSuccessor(tree, node) {
+            const nodeInfo = { idx: 0 };
+            const array = [];
+            inOrderTraverse(tree, node, array, nodeInfo);
+            return array[nodeInfo.idx + 1] || null;
+        }
+        function inOrderTraverse(tree, node, array, nodeInfo) {
+            if (tree === null)
+                return;
+            inOrderTraverse(tree.left, node, array, nodeInfo);
+            array.push(tree);
+            if (node === tree)
+                nodeInfo.idx = array.length - 1;
+            inOrderTraverse(tree.right, node, array, nodeInfo);
+        }
+        ;
+    }
+    {
+        // O(n) time | O(n) space
+        function findSuccessor(tree, node) {
+            const nodeInfo = new NodeInfo();
+            const array = [];
+            inOrderTraverse(tree, node, array, nodeInfo);
+            // console.log(nodeInfo.index)
+            return array[nodeInfo.index + 1] || null;
+        }
+        function inOrderTraverse(tree, node, array, nodeInfo) {
+            if (tree === null)
+                return;
+            inOrderTraverse(tree.left, node, array, nodeInfo);
+            array.push(tree);
+            if (tree === node)
+                nodeInfo.index = array.length - 1;
+            inOrderTraverse(tree.right, node, array, nodeInfo);
+        }
+        class NodeInfo {
+            constructor() {
+                this.index = 0;
+            }
+        }
+    }
+    {
+        // O(d) time | O(1) space
+        function findSuccessor(tree, node) {
+            if (node.right !== null) {
+                // return left-most node in the right subtree
+                return getLeftMostNode(node.right);
+            }
+            else {
+                const rightMostParent = getRightMostParent(node);
+                return rightMostParent.parent;
+            }
+        }
+        function getLeftMostNode(node) {
+            let currentNode = node;
+            while (currentNode.left !== null) {
+                currentNode = currentNode.left;
+            }
+            return currentNode;
+        }
+        function getRightMostParent(node) {
+            let currentNode = node;
+            while (currentNode.parent && currentNode.parent.right === currentNode) {
+                currentNode = currentNode.parent;
+            }
+            return currentNode;
+        }
+    }
+}

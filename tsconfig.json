@@ -3,6 +3,7 @@
     "outDir": "javascript/algoexpert/medium",
     "target": "es6",
     "lib": [
+      "ES2015",
       "ES2017",
       "DOM"
     ],

@@ -1,0 +1,152 @@
+export class BST {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+    insert(value) {
+        if (value < this.value) {
+            if (this.left === null) {
+                this.left = new BST(value);
+            }
+            else {
+                this.left.insert(value);
+            }
+        }
+        else {
+            if (this.right === null) {
+                this.right = new BST(value);
+            }
+            else {
+                this.right.insert(value);
+            }
+        }
+    }
+    insertByIteration(value) {
+        let currentNode = this;
+        while (true) {
+            if (value < currentNode.value) {
+                if (currentNode.left === null) {
+                    currentNode.left = new BST(value);
+                    break;
+                }
+                else {
+                    currentNode = currentNode.left;
+                }
+            }
+            else {
+                if (currentNode.right === null) {
+                    currentNode.right = new BST(value);
+                    break;
+                }
+                else {
+                    currentNode = currentNode.right;
+                }
+            }
+        }
+    }
+}
+// SOLUTIONS (PRACTICES)
+{
+    {
+        function minHeightBst(array) {
+            return constructFromRange(0, array.length - 1, array);
+        }
+        function constructFromRange(startIdx, endIdx, array) {
+            if (endIdx < startIdx)
+                return null;
+            const midIdx = Math.floor((startIdx + endIdx) / 2);
+            const value = array[midIdx];
+            const bst = new BST(value);
+            bst.left = constructFromRange(startIdx, midIdx - 1, array);
+            bst.right = constructFromRange(midIdx + 1, endIdx, array);
+            return bst;
+        }
+    }
+    {
+        /**
+         * Time: (n) time
+         * Space (n) space
+         * where n - no. of nodes in the BST = no. of items in the array
+         *
+         * @param array Array of sorted distinct numbers
+         * @returns BST
+         */
+        function minHeightBst(array) {
+            return reconstructFromList(array, null, 0, array.length - 1);
+        }
+        function reconstructFromList(array, bst, i, j) {
+            if (i > j)
+                return null;
+            const midIdx = Math.floor((i + j) / 2);
+            if (bst === null) {
+                bst = new BST(array[midIdx]);
+            }
+            else {
+                bst.insertByIteration(array[midIdx]);
+            }
+            reconstructFromList(array, bst, i, midIdx - 1);
+            reconstructFromList(array, bst, midIdx + 1, j);
+            return bst;
+        }
+    }
+    {
+        // O(n) time | o(n) space
+        // n = length of array
+        function minHeightBst(array) {
+            return reconstructFromRange(0, array.length - 1, array);
+        }
+        function reconstructFromRange(startIdx, endIdx, array) {
+            if (startIdx > endIdx)
+                return null;
+            const midIdx = Math.floor((startIdx + endIdx) / 2);
+            const bst = new BST(array[midIdx]);
+            bst.left = reconstructFromRange(startIdx, midIdx - 1, array);
+            bst.right = reconstructFromRange(midIdx + 1, endIdx, array);
+            return bst;
+        }
+        /*
+            left:                      right;
+            0 + 8; // 2 = 4            0 + 8 // 2 = 4
+            0 + 3; // 2 = 1;           5 + 8 // 2 = 6
+            0 + 0; // 2 = 0;           7 + 8 // 2 = 7
+            0 + -1                     8 + 8; // 2 = 8
+                                       9 + 8
+        
+            [1, 2, 5, 7, 10, 13, 14, 15, 22];
+            0  1  2  3   4   5   6   7   8;
+        */
+    }
+    {
+        function minHeightBst(array) {
+            return reconstructFromRange([0, array.length - 1], array);
+        }
+        function reconstructFromRange([leftIdx, rightIdx], array) {
+            if (leftIdx > rightIdx)
+                return null;
+            const midIdx = Math.floor((leftIdx + rightIdx) / 2);
+            const root = new BST(array[midIdx]);
+            root.left = reconstructFromRange([leftIdx, midIdx - 1], array);
+            root.right = reconstructFromRange([midIdx + 1, rightIdx], array);
+            return root;
+        }
+    }
+    {
+        // O(n) time
+        // O(n) space (due to the size of the array created)
+        // O((1/2)n) space = O(n) space (due to recursive calls)
+        // n = no. elements in the array = no. of nodes in the created BST
+        function minHeightBst(array) {
+            return bstInRange(0, array.length - 1, array);
+        }
+        function bstInRange(i, j, arr) {
+            if (i > j)
+                return null;
+            const midIdx = Math.floor((i + j) / 2);
+            const bst = new BST(arr[midIdx]);
+            bst.left = bstInRange(i, midIdx - 1, arr);
+            bst.right = bstInRange(midIdx + 1, j, arr);
+            return bst;
+        }
+    }
+}

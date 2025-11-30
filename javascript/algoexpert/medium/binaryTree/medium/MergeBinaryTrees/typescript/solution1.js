@@ -1,0 +1,35 @@
+// This is an input class. Do not edit.
+export class BinaryTree {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+// O(N) time
+// O(N + D) space (converges to O(N) space where N is much larger than D) 
+// (N = max(n1, n2), D = max(d1, d2))
+// where n1 = no. of nodes in tree1, n2 = no. of nodes in tree2
+//       d1 = depth of tree1, d2 = depth of tree 2
+export function mergeBinaryTrees(tree1, tree2) {
+    const merged = new BinaryTree(tree1.value + tree2.value);
+    merge(tree1.left, tree2.left, merged, true);
+    merge(tree1.right, tree2.right, merged, false);
+    return merged;
+}
+function merge(node1, node2, currNode, isLeft) {
+    if (node1 === null && node2 === null)
+        return;
+    let [node1LeftChild, node1RightChild, val1] = node1 != null ? [node1.left, node1.right, node1.value] : [null, null, 0];
+    const [node2LeftChild, node2RightChild, val2] = node2 != null ? [node2.left, node2.right, node2.value] : [null, null, 0];
+    if (isLeft) {
+        currNode.left = new BinaryTree(val1 + val2);
+        currNode = currNode.left;
+    }
+    else {
+        currNode.right = new BinaryTree(val1 + val2);
+        currNode = currNode.right;
+    }
+    merge(node1LeftChild, node2LeftChild, currNode, true);
+    merge(node1RightChild, node2RightChild, currNode, false);
+}

@@ -1,0 +1,122 @@
+{
+    { // O(n) time | O(n) space
+        // n = length of the array;
+        function nextGreaterElement(array) {
+            const result = new Array(array.length).fill(-1);
+            const idxStack = [0];
+            for (let i = 1; i < (2 * array.length); i++) {
+                const idx = i % array.length;
+                while (idxStack.length > 0 && array[idx] > array[idxStack[idxStack.length - 1]]) {
+                    result[idxStack.pop()] = array[idx];
+                }
+                idxStack.push(idx);
+            }
+            return result;
+        }
+    }
+    {
+        function nextGreaterElement(array) {
+            const result = new Array(array.length).fill(-1);
+            const idxStack = [0];
+            for (let i = 1; i < (2 * array.length); i++) {
+                const idx = i % array.length;
+                while (idxStack.length > 0 && array[idx] > array[idxStack[idxStack.length - 1]]) {
+                    result[idxStack.pop()] = array[idx];
+                }
+                idxStack.push(idx);
+            }
+            return result;
+        }
+    }
+    {
+        // O(n) time | O(n) space
+        // n = length of array
+        function nextGreaterElement(array) {
+            const idxStack = [0];
+            const result = new Array(array.length).fill(-1);
+            for (let i = 1; i < (2 * array.length); i++) {
+                const idx = i % array.length;
+                while (idxStack.length > 0 && array[idx] > array[idxStack[idxStack.length - 1]]) {
+                    result[idxStack.pop()] = array[idx];
+                }
+                idxStack.push(idx);
+            }
+            return result;
+        }
+    }
+    {
+        function nextGreaterElement(array) {
+            const idxStack = [0];
+            const result = new Array(array.length).fill(-1);
+            for (let i = 1; i < (2 * array.length); i++) {
+                const idx = i % array.length;
+                while (idxStack.length > 0 && array[idx] > array[idxStack[idxStack.length - 1]]) {
+                    result[idxStack.pop()] = array[idx];
+                }
+                idxStack.push(idx);
+            }
+            return result;
+        }
+    }
+    {
+        // O(n) time | O(n) space
+        function nextGreaterElement(array) {
+            const result = new Array(array.length).fill(-1);
+            const idxStack = [0];
+            for (let i = 1; i < (2 * array.length); i++) {
+                const idx = i % array.length;
+                while (idxStack.length > 0 && array[idx] > array[idxStack[idxStack.length - 1]]) {
+                    result[idxStack.pop()] = array[idx];
+                }
+                idxStack.push(idx);
+            }
+            return result;
+        }
+    }
+    {
+        // O(n) time | O(n) space
+        function nextGreaterElement(array) {
+            let result = new Array(array.length).fill(-1);
+            const idxStack = [0];
+            for (let i = 0; i < (2 * array.length); i++) {
+                const idx = i % array.length;
+                while (idxStack.length > 0 && array[idx] > array[idxStack[idxStack.length - 1]]) {
+                    result[idxStack.pop()] = array[idx];
+                }
+                idxStack.push(idx);
+            }
+            return result;
+        }
+    }
+    {
+        // O(n) time | O(n) space
+        function nextGreaterElement(array) {
+            const result = new Array(array.length).fill(-1);
+            const idxStack = [0];
+            for (let i = 1; i < (2 * array.length); i++) {
+                const ir = i % array.length;
+                while (idxStack.length > 0 && array[ir] > array[idxStack[idxStack.length - 1]]) {
+                    result[idxStack.pop()] = array[ir];
+                }
+                idxStack.push(ir);
+            }
+            return result;
+        }
+    }
+    {
+        // O(n) time | O(n) space; (n = length of array)
+        function nextGreaterElement(array) {
+            const idxStack = [0];
+            const result = new Array(array.length).fill(-1);
+            for (let i = 1; i < 2 * array.length; i++) {
+                const currIdx = i % array.length;
+                while (idxStack.length > 0 && array[currIdx] > array[idxStack[idxStack.length - 1]]) {
+                    result[idxStack.pop()] = array[currIdx];
+                }
+                idxStack.push(currIdx);
+            }
+            return result;
+        }
+    }
+}
+export const ___ = '___';

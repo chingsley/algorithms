@@ -1,0 +1,161 @@
+{
+    {
+        function reverseWordsInString(strToReverse) {
+            const resArr = [];
+            const SPACE = ' ';
+            let i = strToReverse.length - 1;
+            let j = strToReverse.length;
+            while (i >= 0) {
+                const ch = strToReverse[i];
+                const leftCh = strToReverse[i - 1];
+                if (ch !== SPACE && (leftCh === SPACE || i === 0)) {
+                    resArr.push(strToReverse.slice(i, j));
+                }
+                if (ch === SPACE) {
+                    resArr.push(strToReverse[i]);
+                    if (leftCh && leftCh !== SPACE) {
+                        j = i;
+                    }
+                }
+                i--;
+            }
+            return resArr.join('');
+        }
+        // console.log(
+        //   reverseWordsInString("AlgoExpert is the best!")
+        // );
+    }
+    {
+        function reverseWordsInString(strToReverse) {
+            let output = [];
+            let j = strToReverse.length;
+            for (let i = strToReverse.length - 1; i >= 0; i--) {
+                const ch = strToReverse[i];
+                if (ch === ' ') {
+                    output.push(strToReverse.slice(i + 1, j));
+                    output.push(' ');
+                    j = i;
+                }
+                console.log({ i, j, output });
+            }
+            output.push(strToReverse.slice(0, j));
+            return output.join('');
+        }
+        console.log(reverseWordsInString("  AlgoExpert is the best!"), '.');
+    }
+    {
+        /**
+     * O(n) time
+     * O(n) space; b/c of the revArr
+     * where n = length of the strToReverse
+     *
+     * @param strToReverse
+     * @returns
+     */
+        function reverseWordsInString(string) {
+            let i = string.length - 1;
+            let endOfWord = string.length;
+            let revArr = [];
+            const SPACE_CHAR = ' ';
+            while (i >= 0) {
+                if (string[i] === SPACE_CHAR) {
+                    revArr.push(string.slice(i + 1, endOfWord));
+                    while (string[i] === SPACE_CHAR && i >= 0) {
+                        revArr.push(SPACE_CHAR);
+                        i -= 1;
+                    }
+                    endOfWord = i + 1;
+                }
+                else {
+                    i -= 1;
+                }
+            }
+            if (endOfWord > 0)
+                revArr.push(string.slice(0, endOfWord));
+            return revArr.join('');
+        }
+    }
+    {
+        /**
+     * O(n) time
+     * O(n) space; b/c of the resArr. NOTE resArr.length >= stack.length, therefore, it dwarfs the space complexity due to the stack
+     * where n = length of the strToReverse
+     * @param strToReverse
+     * @returns
+     */
+        function reverseWordsInString(strToReverse) {
+            const resArr = [];
+            const stack = [];
+            const SPACE_CHAR = " ";
+            for (let i = strToReverse.length - 1; i >= 0; i--) {
+                const char = strToReverse[i];
+                if (char === SPACE_CHAR) {
+                    while (stack.length > 0)
+                        resArr.push(stack.pop());
+                    resArr.push(char);
+                }
+                else {
+                    stack.push(char);
+                }
+            }
+            while (stack.length > 0)
+                resArr.push(stack.pop());
+            return resArr.join('');
+        }
+    }
+    {
+        // O(n) time | O(n) space
+        function reverseWordsInString(strToReverse) {
+            let output = [];
+            let wordEndIdx = strToReverse.length;
+            for (let i = strToReverse.length - 1; i >= 0; i--) {
+                const ch = strToReverse[i];
+                if (ch === ' ') {
+                    output.push(strToReverse.slice(i + 1, wordEndIdx));
+                    output.push(' ');
+                    wordEndIdx = i;
+                }
+            }
+            output.push(strToReverse.slice(0, wordEndIdx));
+            return output.join('');
+        }
+    }
+    {
+        // O(n) time | O(n) space
+        // n = length of strToReverse
+        function reverseWordsInString(strToReverse) {
+            let i = strToReverse.length - 1;
+            let wordEndIdx = strToReverse.length;
+            const resArr = [];
+            while (i >= 0) {
+                if (strToReverse[i] === ' ') {
+                    if (strToReverse[i + 1] !== ' ')
+                        resArr.push(strToReverse.slice(i + 1, wordEndIdx));
+                    resArr.push(' ');
+                    wordEndIdx = i;
+                }
+                i -= 1;
+            }
+            resArr.push(strToReverse.slice(0, wordEndIdx));
+            return resArr.join('');
+        }
+    }
+    {
+        // O(n) time | O(n) space
+        // n = length of strToReverse
+        function reverseWordsInString(strToReverse) {
+            let wordEndIdx = strToReverse.length;
+            const strArr = [];
+            for (let i = strToReverse.length - 1; i >= 0; i--) {
+                if (strToReverse[i] === ' ') {
+                    strArr.push(strToReverse.slice(i + 1, wordEndIdx));
+                    strArr.push(' ');
+                    wordEndIdx = i;
+                }
+            }
+            strArr.push(strToReverse.slice(0, wordEndIdx));
+            return strArr.join('');
+        }
+    }
+}
+export const ___ = '___';

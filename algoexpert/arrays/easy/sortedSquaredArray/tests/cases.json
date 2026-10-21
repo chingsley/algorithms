@@ -1,0 +1,41 @@
+{
+  "problem": "sortedSquaredArray",
+  "functionName": "sortedSquaredArray",
+  "cases": [
+    {
+      "name": "mixed negatives and positives",
+      "args": [[-9, 1, 2, 3, 5, 6, 8]],
+      "expected": [1, 4, 9, 25, 36, 64, 81]
+    },
+    {
+      "name": "single zero",
+      "args": [[0]],
+      "expected": [0]
+    },
+    {
+      "name": "single positive",
+      "args": [[3]],
+      "expected": [9]
+    },
+    {
+      "name": "all negative",
+      "args": [[-5, -3, -1]],
+      "expected": [1, 9, 25]
+    },
+    {
+      "name": "all positive",
+      "args": [[1, 2, 3]],
+      "expected": [1, 4, 9]
+    },
+    {
+      "name": "symmetric around zero",
+      "args": [[-2, -1, 0, 1, 2]],
+      "expected": [0, 1, 1, 4, 4]
+    },
+    {
+      "name": "two elements",
+      "args": [[-1, 2]],
+      "expected": [1, 4]
+    }
+  ]
+}

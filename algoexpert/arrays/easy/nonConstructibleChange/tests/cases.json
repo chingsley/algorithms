@@ -1,0 +1,42 @@
+{
+  "problem": "nonConstructibleChange",
+  "functionName": "nonConstructibleChange",
+  "goFunctionName": "NonConstructibleChange",
+  "cases": [
+    {
+      "name": "classic algoexpert example",
+      "args": [[5, 7, 1, 1, 2, 3, 22]],
+      "expected": 20
+    },
+    {
+      "name": "gap at four",
+      "args": [[1, 2, 5]],
+      "expected": 4
+    },
+    {
+      "name": "extends through seven",
+      "args": [[1, 2, 4]],
+      "expected": 8
+    },
+    {
+      "name": "single one-cent coin",
+      "args": [[1]],
+      "expected": 2
+    },
+    {
+      "name": "large coin only",
+      "args": [[20]],
+      "expected": 1
+    },
+    {
+      "name": "multiple ones",
+      "args": [[1, 1, 1, 1]],
+      "expected": 5
+    },
+    {
+      "name": "unsorted input",
+      "args": [[109, 2000, 8765, 19]],
+      "expected": 1
+    }
+  ]
+}

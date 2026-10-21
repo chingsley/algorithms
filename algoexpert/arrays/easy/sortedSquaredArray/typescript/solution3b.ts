@@ -5,7 +5,7 @@
  * @returns array
  */
 export function sortedSquaredArray(array: number[]) {
-  let res: number[] = new Array().fill(0);
+  let res: number[] = new Array(array.length).fill(0);
 
   let i = 0;
   let j = array.length - 1;

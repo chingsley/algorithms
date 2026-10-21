@@ -1,0 +1,15 @@
+---
+description: AlgoExpert Go practice file layout (package line, imports)
+globs: algoexpert/**/go/practice.go
+alwaysApply: false
+---
+
+# AlgoExpert `go/practice.go` files
+
+Every new or edited `practice.go` under `algoexpert/**/go/` must be valid Go source:
+
+1. **First line:** `package practice` (practice stubs; use `package main` for runnable `solution1.go` files).
+2. **Imports:** Add a standard `import` block immediately after the package line when using stdlib (`sort`, `math`, etc.).
+3. **Template:** Copy from `algoexpert/_templates/go/practice.go` when creating a new problem folder.
+
+Never start the file with `func` — the compiler error `expected 'package', found 'func'` means the package declaration is missing.

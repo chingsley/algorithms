@@ -10,7 +10,7 @@
 export function twoNumberSum(array: number[], targetSum: number) {
   const complements: { [key: string]: number; } = {};
   for (const num of array) {
-    if (complements[targetSum - num]) {
+    if (targetSum - num in complements) {
       /*
       we return the result instead of pushing it to a result array
       because the question says "...assume that there will

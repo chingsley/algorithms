@@ -1,0 +1,53 @@
+{
+  "problem": "tournamentWinner",
+  "functionName": "tournamentWinner",
+  "cases": [
+    {
+      "name": "algoexpert sample bracket",
+      "args": [
+        [["HTML", "C#"], ["C#", "Python"], ["Python", "HTML"]],
+        [0, 0, 1]
+      ],
+      "expected": "Python"
+    },
+    {
+      "name": "single match home wins",
+      "args": [[["A", "B"]], [1]],
+      "expected": "A"
+    },
+    {
+      "name": "single match away wins",
+      "args": [[["A", "B"]], [0]],
+      "expected": "B"
+    },
+    {
+      "name": "clear leader after multiple rounds",
+      "args": [
+        [["X", "Y"], ["X", "Z"], ["Y", "Z"]],
+        [1, 1, 0]
+      ],
+      "expected": "X"
+    },
+    {
+      "name": "away team comeback",
+      "args": [
+        [["Red", "Blue"], ["Blue", "Green"], ["Green", "Red"]],
+        [0, 1, 0]
+      ],
+      "expected": "Blue"
+    },
+    {
+      "name": "longer tournament",
+      "args": [
+        [
+          ["a", "b"],
+          ["a", "c"],
+          ["b", "c"],
+          ["a", "b"]
+        ],
+        [1, 1, 0, 0]
+      ],
+      "expected": "a"
+    }
+  ]
+}

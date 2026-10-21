@@ -1,0 +1,39 @@
+---
+description: Run and add tests for algoexpert solutions (npm run test)
+globs: algoexpert/**/tests/**,algoexpert/**/solution*.{ts,py,go},scripts/**
+alwaysApply: false
+---
+
+# AlgoExpert solution tests
+
+## Run tests
+
+From repo root:
+
+```bash
+npm run test <path-to-solution-file>
+```
+
+Example: `npm run test algoexpert/arrays/easy/twoNumberSum/typescript/solution2.ts`
+
+## Shared cases (one suite per problem)
+
+- Put `tests/cases.json` next to each problem folder (sibling of `typescript/`, `python/`, `go/`).
+- Same JSON drives TypeScript, Python, and Go for that problem.
+- Use `match: "unorderedPair"` when order of a two-element result does not matter (`twoNumberSum`).
+- Set `goFunctionName` when the Go export is PascalCase (e.g. `TransposeMatrix`).
+
+## New TypeScript / Python solutions
+
+No extra wiring: any `solution*.ts` or `solution*.py` under a folder that has `tests/cases.json` is picked up by the runner.
+
+## New Go solutions
+
+1. Copy `algoexpert/_templates/go/practice.go` for practice stubs; use `package main` and PascalCase exports for solutions.
+2. Add `go.mod` in the problem’s `go/` directory (`go 1.21`).
+3. Copy `suite_test.go` from a sibling problem’s `go/` folder and trim the `TestSolution` body to that problem only (each `go/` package builds all `.go` files in the folder).
+4. Tag optional `practice.go` with `//go:build practice` so it does not mix packages with `package main` solutions.
+
+## Ignore
+
+Do not point tests at `practice.ts` / `practice.go` — multiple drafts per file.

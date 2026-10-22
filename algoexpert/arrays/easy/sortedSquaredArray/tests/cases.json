@@ -1,6 +1,7 @@
 {
   "problem": "sortedSquaredArray",
   "functionName": "sortedSquaredArray",
+  "goFunctionName": "sortedSquares",
   "cases": [
     {
       "name": "mixed negatives and positives",

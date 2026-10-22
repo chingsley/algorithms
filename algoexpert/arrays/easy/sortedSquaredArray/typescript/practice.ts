@@ -86,6 +86,27 @@
     }
 
   }
+  {
+    function sortedSquares(nums: number[]): number[] {
+      const result = new Array(nums.length).fill(0);
+      let [i, j, r] = [0, nums.length - 1, nums.length - 1];
+      while (i <= j) {
+        const left = Math.abs(nums[i]);
+        const right = Math.abs(nums[j]);
+        // console.log({i, j, r, left, right});
+        if (left >= right) {
+          result[r] = nums[i] * nums[i];
+          i += 1;
+        } else {
+          result[r] = nums[j] * nums[j];
+          j -= 1;
+        }
+        r -= 1;
+      }
+
+      return result;
+    };
+  }
 }
 
 export const ___ = '___';

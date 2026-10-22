@@ -44,10 +44,29 @@ def main():
         suite = json.load(f)
 
     module = load_module(solution_path)
-    fn = getattr(module, function_name, None)
-    if fn is None or not callable(fn):
-        print(f"No callable {function_name} in {solution_path}", file=sys.stderr)
+
+    def matching_callables():
+        found = []
+        for name in dir(module):
+            if name.startswith("_"):
+                continue
+            obj = getattr(module, name)
+            if callable(obj) and (
+                name == function_name or name.startswith(function_name)
+            ):
+                found.append(name)
+        return sorted(found)
+
+    names = matching_callables()
+    if not names:
+        hint = " (file may be empty or missing a top-level function)"
+        print(
+            f"No callable {function_name} in {solution_path}{hint}",
+            file=sys.stderr,
+        )
         sys.exit(2)
+
+    fn = getattr(module, names[0])
 
     results = []
     for case in suite["cases"]:

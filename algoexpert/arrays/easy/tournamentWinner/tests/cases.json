@@ -1,6 +1,7 @@
 {
   "problem": "tournamentWinner",
   "functionName": "tournamentWinner",
+  "goFunctionName": "TournamentWinner",
   "cases": [
     {
       "name": "algoexpert sample bracket",

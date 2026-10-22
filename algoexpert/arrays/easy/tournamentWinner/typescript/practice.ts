@@ -123,6 +123,25 @@
       return champion.name;
     }
   }
+  {
+    function tournamentWinner(competitions: string[][], results: number[]) {
+      let champion: { team: string, score: number; } = { team: '', score: 0 };
+      const scores: { [key: string]: number; } = {};
+
+      for (let i = 0; i < results.length; i++) {
+        const [homeTeam, awayTeam] = competitions[i];
+        scores[homeTeam] = scores[homeTeam] || 0;
+        scores[awayTeam] = scores[awayTeam] || 0;
+        const winner = results[i] === 1 ? homeTeam : awayTeam;
+        scores[winner] += 3;
+        if (scores[winner] > champion.score) {
+          champion = { team: winner, score: scores[winner] };
+        }
+      }
+
+      return champion.team;
+    }
+  }
 }
 
 export const ___ = '___';

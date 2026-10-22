@@ -12,7 +12,7 @@
  */
 export function tournamentWinner(competitions: string[][], results: number[]) {
   const teamScores: {[key: string]: number} = {};
-  let overallWinnerWithScore = ['', 0]
+  let overallWinnerWithScore: [string, number] = ['', 0];
   for(let i = 0; i < competitions.length; i++) {
     const winner = results[i] === 1 ? competitions[i][0] : competitions[i][1];
     if(winner in teamScores) {

@@ -1,4 +1,4 @@
-# O(m x n) time | O(1) space
+# O(m x n) time | O(m x n) space
 # for an m by n matrix
 def transposeMatrix(matrix):
     transposed = []

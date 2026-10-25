@@ -168,4 +168,27 @@ import * as _ from './solution1'; // this is just to silence typescript duplicat
     5, 1, 4, 2;
     */
   }
+  {/**
+    * Leetcode 238. Product of Array Except Self: productExceptSelf
+   * O(n) time | O(n) space
+   * n = length of array
+   * @param nums numbers array
+   * @returns products array
+   */
+    function arrayOfProducts(nums: number[]): number[] {
+      const rightProd: number[] = new Array(nums.length).fill(1);
+      for (let j = nums.length - 2; j >= 0; j--) {
+        rightProd[j] = rightProd[j + 1] * nums[j + 1];
+      }
+
+      let currentLeftProd = 1;
+      const result: number[] = [rightProd[0]];
+      for (let i = 1; i < nums.length; i++) {
+        currentLeftProd *= nums[i - 1];
+        result.push(rightProd[i] * currentLeftProd);
+      }
+
+      return result;
+    };
+  }
 }

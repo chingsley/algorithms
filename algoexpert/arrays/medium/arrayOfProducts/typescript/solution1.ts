@@ -8,6 +8,14 @@
  * in the input array other than input[i]
  * 
  * NOTE: You're expected to solve this problem without using division
+ * [5, 1, 4, 2] -> [8, 40, 10, 20]
+ * [1, 2, 3, 4, 5] -> [120, 60, 40, 30, 24] -> 5 * 4 * 3 * 2 * 1 = 120  
+ * [3, 2, 1] -> [2, 3, 6]
+ * 
+ * [5, 1, 4, 2]
+ * Left = [1, 5, 5, 20]
+ * Right = [8, 8, 2, 1]
+ * Result = [8, 40, 10, 20]
  * 
  * Solution:
  * Time: O(n) time

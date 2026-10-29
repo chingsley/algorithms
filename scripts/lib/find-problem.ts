@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const SOLUTION_RE = /^solution[\w]*\.(ts|py|go)$/i;
+const SOLUTION_RE = /^(solution[\w]*|practice)\.(ts|py|go)$/i;
 
 export function resolveSolutionPath(input: string, repoRoot: string): string {
   const abs = path.isAbsolute(input)
@@ -13,7 +13,7 @@ export function resolveSolutionPath(input: string, repoRoot: string): string {
   const base = path.basename(abs);
   if (!SOLUTION_RE.test(base)) {
     throw new Error(
-      `Expected a solution file matching solution*.ts|py|go, got: ${base}`
+      `Expected a solution or practice file matching solution*.ts|py|go or practice.ts|py|go, got: ${base}`
     );
   }
   return abs;

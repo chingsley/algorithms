@@ -1,0 +1,42 @@
+{
+  "problem": "bestSeat",
+  "functionName": "bestSeat",
+  "goFunctionName": "BestSeat",
+  "cases": [
+    {
+      "name": "prompt example one",
+      "args": [[1, 0, 0, 0, 1, 0, 1]],
+      "expected": 2
+    },
+    {
+      "name": "prompt example two",
+      "args": [[1, 0, 0, 1, 0, 0, 0, 1]],
+      "expected": 5
+    },
+    {
+      "name": "single empty seat",
+      "args": [[1, 0, 1]],
+      "expected": 1
+    },
+    {
+      "name": "two empty seats pick best index",
+      "args": [[1, 0, 0, 1]],
+      "expected": 1
+    },
+    {
+      "name": "no empty seats",
+      "args": [[1, 1, 1]],
+      "expected": -1
+    },
+    {
+      "name": "longer middle gap",
+      "args": [[1, 0, 0, 0, 0, 1]],
+      "expected": 2
+    },
+    {
+      "name": "multiple gaps pick largest",
+      "args": [[1, 0, 1, 0, 0, 0, 0, 1]],
+      "expected": 4
+    }
+  ]
+}

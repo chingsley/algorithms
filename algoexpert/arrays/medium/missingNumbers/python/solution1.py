@@ -13,6 +13,6 @@ def missingNumbers(nums):
     for num1 in range(1, len(nums) + 2):
         num2 = prodOfMissingNums / num1
         if num2 % 1 == 0 and num2 <= len(nums) + 2:
-            return [num1, num2]
+            return [int(num1), int(num2)]
 
     return []

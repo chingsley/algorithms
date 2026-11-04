@@ -37,6 +37,11 @@
       "name": "multiple gaps pick largest",
       "args": [[1, 0, 1, 0, 0, 0, 0, 1]],
       "expected": 4
+    },
+    {
+      "name": "long row with several empty blocks",
+      "args": [[1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]],
+      "expected": 12
     }
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "problem": "majorityElement",
+  "functionName": "majorityElement",
+  "goFunctionName": "MajorityElement",
+  "cases": [
+    {
+      "name": "sample from comments",
+      "args": [
+        [
+          3,
+          3,
+          4,
+          2,
+          4,
+          4,
+          2,
+          4,
+          4
+        ]
+      ],
+      "expected": 4
+    },
+    {
+      "name": "clear majority",
+      "args": [
+        [
+          2,
+          2,
+          1,
+          2,
+          3,
+          2
+        ]
+      ],
+      "expected": 2
+    }
+  ]
+}

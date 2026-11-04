@@ -1,0 +1,56 @@
+{
+  "problem": "bestSeatV2",
+  "functionName": "maxDistToClosest",
+  "goFunctionName": "maxDistToClosest",
+  "cases": [
+    {
+      "name": "leetcode style row",
+      "args": [
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "name": "trailing empty seats",
+      "args": [
+        [
+          1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "expected": 3
+    },
+    {
+      "name": "single gap",
+      "args": [
+        [
+          0,
+          1
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "name": "middle gap",
+      "args": [
+        [
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "expected": 1
+    }
+  ]
+}

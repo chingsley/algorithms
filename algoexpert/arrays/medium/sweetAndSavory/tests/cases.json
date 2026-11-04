@@ -1,0 +1,39 @@
+{
+  "problem": "sweetAndSavory",
+  "functionName": "sweetAndSavory",
+  "goFunctionName": "SweetAndSavory",
+  "cases": [
+    {
+      "name": "sample dishes",
+      "args": [
+        [
+          -3,
+          -5,
+          1,
+          7
+        ],
+        8
+      ],
+      "expected": [
+        -3,
+        7
+      ]
+    },
+    {
+      "name": "exact target pair",
+      "args": [
+        [
+          -7,
+          -5,
+          -1,
+          4
+        ],
+        5
+      ],
+      "expected": [
+        -1,
+        4
+      ]
+    }
+  ]
+}

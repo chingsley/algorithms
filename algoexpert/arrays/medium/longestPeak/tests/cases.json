@@ -1,0 +1,46 @@
+{
+  "problem": "longestPeak",
+  "functionName": "longestPeak",
+  "cases": [
+    {
+      "name": "prompt sample",
+      "args": [
+        [
+          1,
+          3,
+          2,
+          1,
+          4,
+          6,
+          10,
+          5,
+          5
+        ]
+      ],
+      "expected": 5
+    },
+    {
+      "name": "no peak",
+      "args": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "name": "simple peak",
+      "args": [
+        [
+          1,
+          3,
+          1
+        ]
+      ],
+      "expected": 3
+    }
+  ]
+}

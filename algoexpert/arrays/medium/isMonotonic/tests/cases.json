@@ -1,0 +1,60 @@
+{
+  "problem": "isMonotonic",
+  "functionName": "isMonotonic",
+  "cases": [
+    {
+      "name": "non-decreasing",
+      "args": [
+        [
+          1,
+          2,
+          2,
+          3
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "name": "non-increasing",
+      "args": [
+        [
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "name": "not monotonic",
+      "args": [
+        [
+          1,
+          3,
+          2
+        ]
+      ],
+      "expected": false
+    },
+    {
+      "name": "single element",
+      "args": [
+        [
+          1
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "name": "flat",
+      "args": [
+        [
+          5,
+          5,
+          5
+        ]
+      ],
+      "expected": true
+    }
+  ]
+}

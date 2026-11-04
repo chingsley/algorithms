@@ -1,0 +1,60 @@
+{
+  "problem": "firstDuplicateValue",
+  "functionName": "firstDuplicateValue",
+  "cases": [
+    {
+      "name": "example 1",
+      "args": [
+        [
+          2,
+          1,
+          5,
+          2,
+          3,
+          3,
+          4
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "name": "example 2",
+      "args": [
+        [
+          2,
+          1,
+          5,
+          3,
+          3,
+          2,
+          4
+        ]
+      ],
+      "expected": 3
+    },
+    {
+      "name": "no duplicate",
+      "args": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expected": -1
+    },
+    {
+      "name": "duplicate near end",
+      "args": [
+        [
+          1,
+          2,
+          3,
+          2
+        ]
+      ],
+      "expected": 2
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "problem": "zeroSumSubarray",
+  "functionName": "zeroSumSubarray",
+  "goFunctionName": "ZeroSumSubarray",
+  "cases": [
+    {
+      "name": "has zero sum subarray",
+      "args": [
+        [
+          4,
+          2,
+          -3,
+          -1,
+          2,
+          1,
+          5,
+          4,
+          -2
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "name": "no zero sum subarray",
+      "args": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expected": false
+    },
+    {
+      "name": "single zero",
+      "args": [
+        [
+          0
+        ]
+      ],
+      "expected": true
+    }
+  ]
+}

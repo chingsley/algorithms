@@ -1,0 +1,49 @@
+{
+  "problem": "missingNumbers",
+  "functionName": "missingNumbers",
+  "goFunctionName": "MissingNumbers",
+  "cases": [
+    {
+      "name": "sample input",
+      "args": [
+        [
+          1,
+          4,
+          3
+        ]
+      ],
+      "expected": [
+        2,
+        5
+      ]
+    },
+    {
+      "name": "two element input",
+      "args": [
+        [
+          2,
+          3
+        ]
+      ],
+      "expected": [
+        1,
+        4
+      ]
+    },
+    {
+      "name": "four element range",
+      "args": [
+        [
+          1,
+          2,
+          4,
+          5
+        ]
+      ],
+      "expected": [
+        3,
+        6
+      ]
+    }
+  ]
+}

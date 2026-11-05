@@ -1,0 +1,20 @@
+Python math.abs | python absolute value
+................................................................
+abs(value)
+................................................................
+
+
+Python loop by index | Python range
+................................................................
+for i in range(len(array))
+................................................................
+
+
+Python math.ceil | python ceiling operator
+................................................................
+works for all integers:
+result = -(-currZerosCount // 2)
+
+works for positive integers:
+result = (currZerosCount + 1) // 2
+................................................................

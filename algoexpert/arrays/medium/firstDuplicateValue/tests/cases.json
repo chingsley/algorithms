@@ -1,6 +1,7 @@
 {
   "problem": "firstDuplicateValue",
   "functionName": "firstDuplicateValue",
+  "goFunctionName": "firstDuplicateValue",
   "cases": [
     {
       "name": "example 1",

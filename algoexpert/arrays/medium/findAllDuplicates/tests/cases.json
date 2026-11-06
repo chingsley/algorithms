@@ -1,0 +1,36 @@
+{
+  "problem": "findAllDuplicates",
+  "functionName": "findDuplicates",
+  "cases": [
+    {
+      "name": "leetcode example two duplicates",
+      "args": [[4, 3, 2, 7, 8, 2, 3, 1]],
+      "expected": [2, 3]
+    },
+    {
+      "name": "leetcode example one duplicate",
+      "args": [[1, 1, 2]],
+      "expected": [1]
+    },
+    {
+      "name": "single element no duplicate",
+      "args": [[1]],
+      "expected": []
+    },
+    {
+      "name": "no duplicates",
+      "args": [[1, 2, 3, 4]],
+      "expected": []
+    },
+    {
+      "name": "pair of the same value",
+      "args": [[2, 2]],
+      "expected": [2]
+    },
+    {
+      "name": "duplicates not adjacent",
+      "args": [[1, 3, 4, 2, 2, 3]],
+      "expected": [2, 3]
+    }
+  ]
+}

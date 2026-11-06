@@ -18,3 +18,9 @@ result = -(-currZerosCount // 2)
 works for positive integers:
 result = (currZerosCount + 1) // 2
 ................................................................
+
+
+Python array.push | python array.append
+................................................................
+array.append(num)
+................................................................

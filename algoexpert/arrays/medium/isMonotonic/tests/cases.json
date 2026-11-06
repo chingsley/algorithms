@@ -1,6 +1,7 @@
 {
   "problem": "isMonotonic",
   "functionName": "isMonotonic",
+  "goFunctionName": "isMonotonic",
   "cases": [
     {
       "name": "non-decreasing",

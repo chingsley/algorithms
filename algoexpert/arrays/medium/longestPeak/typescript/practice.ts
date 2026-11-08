@@ -169,4 +169,29 @@ import * as _ from './solution1';
       return [rightIdx - leftIdx + 1, rightIdx];
     }
   }
+  {
+    // O(n) time | O(1) space
+    function longestPeak(arr: number[]): number {
+      let max = 0;
+      let peakIdx = 1;
+      const isPeak = (i: number) => arr[i - 1] < arr[i] && arr[i + 1] < arr[i];
+      while (peakIdx < arr.length - 1) {
+        if (!isPeak(peakIdx)) { // Check whether the current element is a peak before searching left and right
+          peakIdx += 1;
+          continue;
+        }
+
+        let [i, j] = [peakIdx, peakIdx];
+        while (i - 1 >= 0 && arr[i - 1] < arr[i]) i--;
+        while (j + 1 < arr.length && arr[j + 1] < arr[j]) j++;
+        if (i !== peakIdx && j !== peakIdx) {
+          max = Math.max(max, j - i + 1);
+        }
+
+        peakIdx = j + 1;
+      }
+
+      return max;
+    };
+  }
 }

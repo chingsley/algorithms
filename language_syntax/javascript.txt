@@ -1,0 +1,17 @@
+...................................
+An problem is that count++ and count-- return the old value of count, not the updated value.
+An an important JavaScript/TypeScript behaviour.
+
+count = majNum === num ? count++ : count--;
+it's like saying:
+if (majNum === num) {
+  count = count++; // which returns the old count value not the incremented value.
+} else {
+  count = count--; // which returns the old count value not the decremented value.
+}
+
+Instead use: 
+count = majNum === num ? count + 1 : count - 1; 
+OR
+count += majNum === num ? 1 : -1;
+...................................

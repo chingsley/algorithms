@@ -1,6 +1,7 @@
 {
   "problem": "mergeOverlapingIntervals",
   "functionName": "mergeOverlappingIntervals",
+  "goFunctionName": "mergeOverlappingIntervals",
   "cases": [
     {
       "name": "classic merge",
@@ -79,6 +80,46 @@
           1,
           5
         ]
+      ]
+    },
+    {
+      "name": "unsorted overlapping intervals",
+      "args": [
+        [
+          [2, 6],
+          [1, 3],
+          [8, 10],
+          [15, 18]
+        ]
+      ],
+      "expected": [
+        [1, 6],
+        [8, 10],
+        [15, 18]
+      ]
+    },
+    {
+      "name": "touching endpoints",
+      "args": [
+        [
+          [1, 4],
+          [4, 5]
+        ]
+      ],
+      "expected": [
+        [1, 5]
+      ]
+    },
+    {
+      "name": "later interval starts first",
+      "args": [
+        [
+          [4, 7],
+          [1, 4]
+        ]
+      ],
+      "expected": [
+        [1, 7]
       ]
     }
   ]

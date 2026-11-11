@@ -94,6 +94,33 @@
     }
 
   }
+  {
+    /**
+* Input (intervals):
+* [[1,3],[2,6],[8,10],[15,18]] (sort first if insorted)
+* output (merged):
+* [[1,3]     ]
+* [[1,6]     ]
+* [[1,6], [8,10], ...     ]
+* ...
+* O(n log n) time | O(n) space
+ */
+    function mergeOverlappingIntervals(intervals: number[][]): number[][] {
+      intervals.sort((a, b) => a[0] - b[0]);
+      const merged = [intervals[0]];
+      for (let i = 1; i < intervals.length; i++) {
+        const [start1, end1] = merged[merged.length - 1];
+        const [start2, end2] = intervals[i];
+        if (end1 >= start2) {
+          merged[merged.length - 1] = [start1, Math.max(end1, end2)];
+        } else {
+          merged.push([start2, end2]);
+        }
+      }
+
+      return merged;
+    };
+  }
 }
 
 export const ___ = '___';

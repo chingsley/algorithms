@@ -51,3 +51,22 @@ for i := 1; i < len(intervals); i++ {
 ................................................................
 
 
+Go array sum | Go sum array elements
+................................................................
+arr = [1, 2, 3, 4, 5]
+total = sum(arr)
+................................................................
+
+
+Go math.Floor | Go math.Ceil (expects float64)
+................................................................
+assuming X is an int
+floorX = int(math.Floor(float64(X)))
+ceilX = int(math.Ceil(float64(X)))
+
+But if x is float64
+floorX = math.Floor(X)
+ceilX = math.Ceil(X)
+................................................................
+
+
